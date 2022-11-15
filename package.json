@@ -1,0 +1,16 @@
+{
+  "name": "projet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev-client": "npm run dev --prefix ./client",
+    "dev-server": "npm run dev --prefix ./server",
+    "prod-client": "npm run build --prefix ./client && npm run preview --prefix ./client",
+    "prod-server": "npm run build --prefix ./server && npm start --prefix ./server",
+    "prod": "npm run prod-server && npm run prod-client",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
