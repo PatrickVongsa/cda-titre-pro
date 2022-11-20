@@ -9,3 +9,344 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+//**
+//* Activity 
+//* représente le secteur d'activité d'un propspect
+//**
+model Activity {
+  id          Int        @id @default(autoincrement())
+  name        String?    @db.VarChar(255)
+  prospects   Prospect[]
+  is_archived Boolean
+}
+
+//**
+//* Catalog
+//* représente les diiférentes prestations de l'entreprise
+//**
+model Catalog {
+  id                      Int                       @id @default(autoincrement())
+  name                    String?                   @db.VarChar(255)
+  description             String                    @db.Text
+  price_ht                Float
+  is_archived             Boolean
+  Estimation_cost_catalog Estimation_cost_catalog[]
+  Invoice_catalog         Invoice_catalog[]
+}
+
+//**
+//* Company
+//* représente les infos de l'entreprise
+//**
+model Company {
+  id          Int     @id @default(autoincrement())
+  address     String? @db.VarChar(255)
+  postal_code String? @db.VarChar(6)
+  city        String? @db.VarChar(255)
+  country     String? @db.VarChar(255)
+  phone       String? @db.VarChar(10)
+  email       String? @db.VarChar(255)
+  siret       String? @db.VarChar(14)
+  tva_number  String? @db.VarChar(14)
+}
+
+//**
+//* Contact
+//* représente un contact appartenant à un prospect
+//**
+model Contact {
+  id                  Int      @id @default(autoincrement())
+  firstname           String?  @db.VarChar(155)
+  lastname            String?  @db.VarChar(155)
+  occupation          String?  @db.VarChar(255)
+  phone               String?  @db.VarChar(10)
+  email               String?  @db.VarChar(255)
+  is_prefered_contact Boolean? @default(false)
+  prospect            Prospect @relation(fields: [piste_id], references: [id])
+  piste_id            Int
+  is_archived         Boolean
+}
+
+//**
+//* Days off
+//* représente les demandes de congés d'un membre de l'équipe
+//**
+model Days_off {
+  id                 Int             @id @default(autoincrement())
+  start_date         DateTime        @db.DateTime(0)
+  end_date           DateTime        @db.DateTime(0)
+  days_off_status    Days_off_status @relation(fields: [days_off_status_id], references: [id])
+  days_off_status_id Int
+}
+
+//**
+//* Days off status
+//* représente les demandes de congés d'un membre de l'équipe
+//**
+model Days_off_status {
+  id       Int        @id @default(autoincrement())
+  name     String     @db.VarChar(255)
+  Days_off Days_off[]
+}
+
+//**
+//* Emergency contact
+//* représente les contact d'urgence des membres de l'équipe
+//**
+model Emergency_contact {
+  id             Int              @id @default(autoincrement())
+  firstname      String           @db.VarChar(255)
+  lastname       String           @db.VarChar(255)
+  who_is         String           @db.VarChar(255)
+  phone          String           @db.VarChar(10)
+  Emergency_user Emergency_user[]
+}
+
+//**
+//* Emergency contact - User
+//* Table pivot entre emergency contact et user
+//**
+model Emergency_user {
+  user                 User              @relation(fields: [user_id], references: [id])
+  user_id              Int
+  emergency_contact    Emergency_contact @relation(fields: [emergency_contact_id], references: [id])
+  emergency_contact_id Int
+
+  @@id([user_id, emergency_contact_id])
+}
+
+//**
+//* Estimation cost
+//* représente le devis pour le prospect / client
+//**
+model Estimation_cost {
+  id                      Int                       @id @default(autoincrement())
+  client                  Prospect                  @relation(fields: [client_id], references: [id])
+  client_id               Int
+  tva                     Tva                       @relation(fields: [tva_id], references: [id])
+  tva_id                  Int
+  total                   Float
+  version                 String
+  is_archived             Boolean
+  Estimation_cost_catalog Estimation_cost_catalog[]
+}
+
+//**
+//* Estimation cost - Catalogue
+//* table pivot entre estimation cost et catalogue
+//**
+model Estimation_cost_catalog {
+  estimation_cost    Estimation_cost @relation(fields: [estimation_cost_id], references: [id])
+  estimation_cost_id Int
+  catalog            Catalog         @relation(fields: [catalog_id], references: [id])
+  catalog_id         Int
+  price_applied      Float
+
+  @@id([estimation_cost_id, catalog_id])
+}
+
+//**
+//* Intéraction
+//* représente les différentes intéractions avec un prospect/client
+//**
+model Interaction {
+  id             Int      @id @default(autoincrement())
+  report         String   @db.Text
+  reported_by    User     @relation(fields: [reported_by_id], references: [id], name: "reportedByUserId")
+  reported_by_id Int
+  reported_at    DateTime @db.DateTime(0)
+  prospect       Prospect @relation(fields: [piste_id], references: [id])
+  piste_id       Int
+  modified_by    User     @relation(fields: [modified_by_id], references: [id], name: "modifiedByUserId")
+  modified_by_id Int
+  modified_at    DateTime @db.DateTime(0)
+  is_archived    Boolean
+}
+
+//**
+//* Invoice
+//* représente la facture pour le client
+//**
+model Invoice {
+  id              Int               @id @default(autoincrement())
+  client          Prospect          @relation(fields: [client_id], references: [id])
+  client_id       Int
+  tva             Tva               @relation(fields: [tva_id], references: [id])
+  tva_id          Int
+  total           Float
+  version         String
+  is_archived     Boolean
+  Invoice_catalog Invoice_catalog[]
+}
+
+//**
+//* Invoice - Catalogue
+//* table pivot entre estimation cost et catalogue
+//**
+model Invoice_catalog {
+  catalog       Catalog @relation(fields: [catalog_id], references: [id])
+  catalog_id    Int
+  price_applied Float
+  invoice       Invoice @relation(fields: [invoice_id], references: [id])
+  invoice_id    Int
+
+  @@id([invoice_id, catalog_id])
+}
+
+//**
+//* Project
+//* représente un projet pour un client
+//**
+model Project {
+  id                Int            @id @default(autoincrement())
+  name              String?        @db.VarChar(155)
+  description       String?        @db.Text
+  start_date        DateTime       @db.DateTime(0)
+  due_date          DateTime       @db.DateTime(0)
+  project_type      Project_type   @relation(fields: [project_type_id], references: [id])
+  project_type_id   Int
+  project_amount    Int
+  did_deposit       Boolean
+  has_financement   Boolean
+  has_fully_paid    Boolean
+  project_status    Project_status @relation(fields: [project_status_id], references: [id])
+  project_status_id Int
+  link              String?        @db.VarChar(255)
+  github_link       String?        @db.VarChar(255)
+  host              String?        @db.VarChar(255)
+  ora_name          String?        @db.VarChar(255)
+  project_user      Project_user[]
+}
+
+//**
+//* Project Status
+//* représente le status d'un projet
+//**
+model Project_status {
+  id      Int       @id @default(autoincrement())
+  name    String?   @db.VarChar(155)
+  project Project[]
+}
+
+//**
+//* Project type
+//* représente le type d'un projet
+//**
+model Project_type {
+  id      Int       @id @default(autoincrement())
+  name    String?   @db.VarChar(155)
+  project Project[]
+}
+
+//**
+//* Project - User
+//* Table pivot entre projet et user
+//**
+model Project_user {
+  user       User    @relation(fields: [user_id], references: [id])
+  user_id    Int
+  project    Project @relation(fields: [project_id], references: [id])
+  project_id Int
+
+  @@id([user_id, project_id])
+}
+
+//**
+//* Prospect 
+//* représente un prospect potentiel
+//* peut devenir client suivant un booléen
+//**
+model Prospect {
+  id               Int               @id @default(autoincrement())
+  company_name     String?           @db.VarChar(255)
+  address          String?           @db.VarChar(255)
+  postal_code      String?           @db.VarChar(6)
+  city             String?           @db.VarChar(255)
+  country          String?           @db.VarChar(255)
+  phone            String?           @db.VarChar(10)
+  email            String?           @db.VarChar(255)
+  company_logo     String?           @db.VarChar(255)
+  website_url      String?           @db.VarChar(255)
+  facebook_url     String?           @db.VarChar(255)
+  instagram_url    String?           @db.VarChar(255)
+  linkedin_url     String?           @db.VarChar(255)
+  contacted_at     DateTime?         @db.DateTime(0)
+  estimate_budget  Int?
+  need_description String?           @db.Text
+  has_website      Boolean?
+  website_year     Int?
+  other_need       String?           @db.Text
+  is_client        Boolean?          @default(false)
+  siret_number     String?           @db.VarChar(20)
+  contacts         Contact[]
+  assigned_to      User              @relation(fields: [assigned_to_id], references: [id])
+  assigned_to_id   Int
+  prospect_status  Prospect_status   @relation(fields: [piste_status_id], references: [id])
+  piste_status_id  Int
+  source           Source            @relation(fields: [source_id], references: [id])
+  source_id        Int
+  activity         Activity          @relation(fields: [activity_id], references: [id])
+  activity_id      Int
+  interactions     Interaction[]
+  is_archived      Boolean
+  Estimation_cost  Estimation_cost[]
+  Invoice          Invoice[]
+}
+
+//**
+//* Propspect Status
+//* représente les différents status du tunnel de prospection
+//**
+model Prospect_status {
+  id           Int        @id @default(autoincrement())
+  name         String?    @db.VarChar(100)
+  color        String?    @db.VarChar(7)
+  order_number Int?
+  prospects    Prospect[]
+  is_archived  Boolean?
+}
+
+//**
+//* Source
+//* représente la source de provenance d'un prospect
+//**
+model Source {
+  id          Int        @id @default(autoincrement())
+  name        String?    @db.VarChar(255)
+  prospects   Prospect[]
+  is_archived Boolean?
+}
+
+//**
+//* Tva
+//* représente la TVA appliquée
+//**
+model Tva {
+  id              Int               @id @default(autoincrement())
+  name            String?           @db.VarChar(255)
+  tva_value       Float
+  Estimation_cost Estimation_cost[]
+  Invoice         Invoice[]
+}
+
+//**
+//* User
+//* représente un membre de l'équipe
+//**
+model User {
+  id                   Int              @id @default(autoincrement())
+  firstname            String?          @db.VarChar(155)
+  lastname             String?          @db.VarChar(155)
+  address              String?          @db.VarChar(255)
+  postal_code          String?          @db.VarChar(6)
+  city                 String?          @db.VarChar(255)
+  occupation           String           @db.VarChar(255)
+  contrat_type         String           @db.VarChar(255)
+  prospects            Prospect[]
+  is_archived          Boolean
+  interaction_created  Interaction[]    @relation(name: "reportedByUserId")
+  interaction_modified Interaction[]    @relation(name: "modifiedByUserId")
+  project_user         Project_user[]
+  Emergency_user       Emergency_user[]
+}
