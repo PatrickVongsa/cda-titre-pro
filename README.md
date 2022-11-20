@@ -44,11 +44,28 @@ deploy : https://xxxxxx.xxx
     - then go to http://localhost:5173
   
 
-5. Start production environment :
+5. Start dev environment :
     ```shell
-    docker ... 
+    docker compose -f docker-compose.dev.yml up -d
     ```
-    then go to http://localhost:xxxx
+    then go to http://localhost:3000
+
+6. Start production environment :
+    ```shell
+    docker compose -f docker-compose.prod.yml up -d
+    ```
+    then go to http://localhost:4173
+
+## Docker after modification
+If you have made modifications and you already built a docker compose, run the following command to rebuild :
+- Dev environment :
+  ```shell
+    docker compose -f docker-compose.dev.yml up -d --build
+    ```
+- Production environment :
+    ```shell
+    docker compose -f docker-compose.prod.yml up -d --build
+    ```
 
 ---
 
