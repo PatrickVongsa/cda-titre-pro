@@ -41,20 +41,30 @@ deploy : https://xxxxxx.xxx
     ```shell
     npm run dev-serveur
     ```
-    - then go to http://localhost:5173
+    - then go to http://localhost:3000 for client
+    - then go to http://localhost:5000 for server
+
+5. Start dev environnement :
+   ```shell
+   npm run prod
+   ```
+    - then go to http://localhost:4173 for client
+    - then go to http://localhost:5000 for server
   
 
-5. Start dev environment :
+6. Start dev environment with Docker :
     ```shell
     docker compose -f docker-compose.dev.yml up -d
     ```
-    then go to http://localhost:3000
+    - then go to http://localhost:3000 for client
+    - then go to http://localhost:5000 for server
 
-6. Start production environment :
+7. Start production environment Docker :
     ```shell
     docker compose -f docker-compose.prod.yml up -d
     ```
-    then go to http://localhost:4173
+    - then go to http://localhost:4173 for client
+    - then go to http://localhost:5000 for server
 
 ## Docker after modification
 If you have made modifications and you already built a docker compose, run the following command to rebuild :
