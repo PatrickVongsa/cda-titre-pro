@@ -2,7 +2,6 @@ services:
   server:
     build: ./server
     environment:
-      - NODE_ENV=production
       - WDS_SOCKET_PORT=5000
       - WATCHPACK_POLLING=true
     env_file:
@@ -14,7 +13,7 @@ services:
   client:
     build: ./client
     environment:
-      - WDS_SOCKET_PORT=4173
+      - WDS_SOCKET_PORT=3000
       - WATCHPACK_POLLING=true
     ports:
       - 3000:3000
