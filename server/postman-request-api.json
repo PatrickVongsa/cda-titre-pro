@@ -1,0 +1,778 @@
+{
+	"info": {
+		"_postman_id": "11711f8d-3f29-4a40-922e-0d43e55e6804",
+		"name": "crm-erp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "piste_status",
+			"item": [
+				{
+					"name": "All piste status GET",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/piste_status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"piste_status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "piste status POST",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test 2.5\",\n    \"is_archive\": \"false\",\n    \"color\": \"#67891\",\n    \"order_number\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/piste_status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"piste_status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "one piste status GET",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/piste_status/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"piste_status",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update one piste status PUT",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test 1\",\n    \"is_archive\": \"false\",\n    \"color\": \"#12345\",\n    \"order_number\": \"2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/piste_status/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"piste_status",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete one piste status DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/piste_status/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"piste_status",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "# Request for table piste_status"
+		},
+		{
+			"name": "source",
+			"item": [
+				{
+					"name": "All sources GET",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/sources",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"sources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "source POST",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"source test\",\n    \"is_archive\": \"false\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/sources",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"sources"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "one source GET",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/sources/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"sources",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update one source PUT",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test 1\",\n    \"is_archive\": \"false\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/sources/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"sources",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete one source DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/sources/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"sources",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "# Request for table piste_status"
+		},
+		{
+			"name": "activity",
+			"item": [
+				{
+					"name": "All activities GET",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/activities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "source POST",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"activity test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/activities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"activities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "one source GET",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/activities/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"activities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update one source PUT",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/activities/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"activities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete one source DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/activities/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"activities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "# Request for table piste_status"
+		},
+		{
+			"name": "piste",
+			"item": [
+				{
+					"name": "All pistes GET",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/pistes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"pistes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "piste POST",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company_name\": \"company jest test\",\n    \"address\": \"123, rue de là-bas\",\n    \"postal_code\": \"81150\",\n    \"city\": \"Marssac sur Tarn\",\n    \"country\": \"France\",\n    \"phone\": \"0563532269\",\n    \"email\": \"jest@mail.com\",\n    \"company_logo\": \"jest.jpg\",\n    \"website_url\": \"companyjest.com\",\n    \"facebook_url\": \"https://facebook.com/companyjest\",\n    \"instagram_url\": \"https://instagram.com/companyjest\",\n    \"linkedin_url\": \"https://linkedin.com/companyjest\",\n    \"tweeter_url\": \"https://tweeter.com/companyjest\",\n    \"contacted_at\": \"2017-06-01T08:30\",\n    \"estimate_budget\": \"3000\",\n    \"need_description\": \"ceci est une description qui décrit le besoin de la company en question\",\n    \"has_website\": \"true\",\n    \"website_year\": \"2020\",\n    \"is_selling_product\": \"false\",\n    \"other_need\": \"\",\n    \"is_client\": \"false\",\n    \"siret_number\": \"12345678901234\",\n    \"did_deposit\": \"false\",\n    \"has_financement\": \"false\",\n    \"has_fully_paid\": \"false\",\n    \"is_invoice_sent\": \"false\",\n    \"assigned_to_id\": 1,\n    \"piste_status_id\": 5,\n    \"source_id\": 1,\n    \"activity_id\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/pistes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"pistes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "one piste GET",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/pistes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"pistes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update one piste PUT",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"company_name\": \"company jest test modifié\",\n    \"address\": \"123, rue de là-bas\",\n    \"postal_code\": \"81150\",\n    \"city\": \"Marssac sur Tarn\",\n    \"country\": \"France\",\n    \"phone\": \"0563532269\",\n    \"email\": \"jest@mail.com\",\n    \"company_logo\": \"jest.jpg\",\n    \"website_url\": \"companyjest.com\",\n    \"facebook_url\": \"https://facebook.com/companyjest\",\n    \"instagram_url\": \"https://instagram.com/companyjest\",\n    \"linkedin_url\": \"https://linkedin.com/companyjest\",\n    \"tweeter_url\": \"https://tweeter.com/companyjest\",\n    \"contacted_at\": \"2017-06-01T08:30\",\n    \"estimate_budget\": \"3000\",\n    \"need_description\": \"ceci est une description qui décrit le besoin de la company en question modifié\",\n    \"has_website\": \"true\",\n    \"website_year\": \"2020\",\n    \"is_selling_product\": \"false\",\n    \"other_need\": \"modifié\",\n    \"is_client\": \"false\",\n    \"siret_number\": \"12345678901234\",\n    \"did_deposit\": \"false\",\n    \"has_financement\": \"false\",\n    \"has_fully_paid\": \"false\",\n    \"is_invoice_sent\": \"false\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/pistes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"pistes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete one piste DELETE",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/pistes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"pistes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "# Request for table piste_status"
+		},
+		{
+			"name": "contact",
+			"item": [
+				{
+					"name": "GET all contact",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/contacts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST create contact",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"firstname\": \"test\",\n    \"lastname\": \"test\",\n    \"occupation\": \"test\",\n    \"phone\": \"0601010101\",\n    \"email\": \"testn@email.com\",\n    \"is_prefered_contact\": true,\n    \"piste_id\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/contacts",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"contacts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET one contact",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/contacts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"contacts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT update contact",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"firstname\": \"Jean\",\n    \"lastname\": \"Jeanjean\",\n    \"occupation\": \"Gérant modifié\",\n    \"phone\": \"0601010101\",\n    \"email\": \"terjean@email.com\",\n    \"is_prefered_contact\": true,\n    \"piste_id\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/contacts/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"contacts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE delete contact",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 1,\n    \"firstname\": \"Jean\",\n    \"lastname\": \"Jeanjean\",\n    \"occupation\": \"Gérant modifié\",\n    \"phone\": \"0601010101\",\n    \"email\": \"terjean@email.com\",\n    \"is_prefered_contact\": true,\n    \"piste_id\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/contacts/6",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"contacts",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "interaction",
+			"item": [
+				{
+					"name": "GET all interaction",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/interactions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"interactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "POST create interaction",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"report\": \"blablabla voilà mon intéraction.\",\n    \"reported_by_id\": \"1\",\n    \"reported_at\": \"2022-06-01T10:00\",\n    \"piste_id\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/interactions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"interactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET one interaction",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/interactions/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"interactions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "PUT update interaction",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"report\": \"blablabla voilà mon intéraction. modifié\",\n    \"reported_by_id\": \"1\",\n    \"reported_at\": \"2022-06-01T10:00\",\n    \"piste_id\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/api/interactions/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"interactions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE delete interaction",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/api/interactions/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"api",
+								"interactions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
