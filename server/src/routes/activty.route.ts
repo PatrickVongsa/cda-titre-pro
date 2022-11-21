@@ -4,6 +4,7 @@ import {
   getOneActivity,
   createActivity,
   updateActivity,
+  archiveActivity,
   deleteActivity,
 } from '../controllers/activity.controller';
 
@@ -15,5 +16,6 @@ router
   .get(getOneActivity)
   .put(updateActivity)
   .delete(deleteActivity);
+router.route('/archive/:id').put(archiveActivity)
 
 export default router;

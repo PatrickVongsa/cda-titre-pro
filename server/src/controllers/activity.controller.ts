@@ -1,6 +1,6 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // @desc Get all activities
@@ -20,12 +20,16 @@ const getActivities = async (req: Request, res: Response) => {
 // @access Private
 const getOneActivity = async (req: Request, res: Response) => {
   const id = req.params.id;
-  const activity = await prisma.activity.findUnique({
-    where: {
-      id: Number(id),
-    },
-  });
-  res.status(200).json(activity);
+  try {
+    const activity = await prisma.activity.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+    res.status(200).json(activity);
+  } catch (err) {
+    res.status(500).json({ err });
+  }
 };
 
 // @desc Create one activity
@@ -33,14 +37,17 @@ const getOneActivity = async (req: Request, res: Response) => {
 // @access Private
 const createActivity = async (req: Request, res: Response) => {
   const { name } = req.body;
-
-  const result = await prisma.activity.create({
-    data: {
-      name,
-      is_archived: false,
-    },
-  });
-  res.status(200).json(result);
+  try {
+    const result = await prisma.activity.create({
+      data: {
+        name,
+        is_archived: false,
+      },
+    });
+    res.status(200).json(result);
+  } catch (err) {
+    res.status(500).json({ err });
+  }
 };
 
 // @desc Update one activity
@@ -48,26 +55,55 @@ const createActivity = async (req: Request, res: Response) => {
 // @access Private
 const updateActivity = async (req: Request, res: Response) => {
   const id = req.params.id;
-  const { name, is_archived } = req.body;
+  const { name } = req.body;
   try {
     const activity = await prisma.activity.findUnique({
       where: {
         id: Number(id),
       },
     });
+
+    if (!activity) return res.status(404).json({ error: `Activity with ID ${id} was not found...` });
+
     const updatedActivity = await prisma.activity.update({
       where: { id: Number(id) },
       data: {
         ...activity,
         name,
+        is_archived: false,
+      },
+    });
+    res.status(200).json(updatedActivity);
+  } catch (error) {
+    res.status(500).json({ error: `Activity with ID ${id} does not exist in the database` });
+  }
+};
+
+// @desc Archive one activity
+// @route PUT /api/activities/archive/:id
+// @access Private
+const archiveActivity = async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const { is_archived } = req.body;
+  try {
+    const activity = await prisma.activity.findUnique({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (!activity) return res.status(404).json({ error: `Activity with ID ${id} was not found...` });
+
+    const updatedActivity = await prisma.activity.update({
+      where: { id: Number(id) },
+      data: {
+        ...activity,
         is_archived,
       },
     });
     res.status(200).json(updatedActivity);
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: `Activity with ID ${id} does not exist in the database` });
+    res.status(500).json({ error: `Activity with ID ${id} does not exist in the database` });
   }
 };
 
@@ -76,18 +112,16 @@ const updateActivity = async (req: Request, res: Response) => {
 // @access Private
 const deleteActivity = async (req: Request, res: Response) => {
   const id = req.params.id;
-  const activity = await prisma.activity.delete({
-    where: {
-      id: Number(id),
-    },
-  });
-  res.status(200).json(activity);
+  try {
+    const activity = await prisma.activity.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+    res.status(200).json(activity);
+  } catch (error) {
+    res.status(500).json({ error: `Activity with ID ${id} does not exist in the database` });
+  }
 };
 
-export {
-  getActivities,
-  getOneActivity,
-  createActivity,
-  updateActivity,
-  deleteActivity,
-};
+export { getActivities, getOneActivity, createActivity, updateActivity, archiveActivity, deleteActivity };
