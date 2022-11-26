@@ -5,8 +5,8 @@ import catalogRouter from './routes/catalog.route';
 import companyRouter from './routes/company.route';
 import contactRouter from './routes/contact.route';
 import daysOffRouter from './routes/days_off.route';
-// import daysOffStatusRouter from './routes/day_off_status.route';
-// import emergencyContactRouter from './routes/emergency_contact.route';
+import daysOffStatusRouter from './routes/days_off_status.route';
+import emergencyContactRouter from './routes/emergency_contact.route';
 // import estimationCostRouter from './routes/estimation_cost.route';
 // import interactionRouter from './routes/interaction.route';
 // import invoiceRouter from './routes/invoice.route';
@@ -59,12 +59,12 @@ app.use('/api/days-off', daysOffRouter);
 /**
  * Route API pour l'entité Days_off_status
  */
-// app.use('/api/days-off-status', daysOffStatusRouter);
+app.use('/api/days-off-status', daysOffStatusRouter);
 
 /**
  * Route API pour l'entité Emergency_contact
  */
-// app.use('/api/emergency-contact', emergencyContactRouter);
+app.use('/api/emergency-contacts', emergencyContactRouter);
 
 /**
  * Route API pour l'entité estimation_cost
