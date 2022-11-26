@@ -99,7 +99,7 @@ const archiveSource = async (req: Request, res: Response) => {
       where: { id: Number(id) },
       data: {
         ...source,
-        is_archived,
+        is_archived: is_archived === "true",
       },
     });
     res.status(200).json(updatedSource);

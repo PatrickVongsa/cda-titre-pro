@@ -131,6 +131,7 @@ const updateProspect = async (req: Request, res: Response) => {
     source_id,
     activity_id,
   } = req.body;
+
   try {
     const prospect = await prisma.prospect.findUnique({
       where: {
@@ -138,7 +139,9 @@ const updateProspect = async (req: Request, res: Response) => {
       },
     });
 
-    if (!prospect) return res.status(404).json({ error: `Prospect with ID ${id} was not found...` });
+    if (!prospect) {
+      return res.status(404).json({ error: `Prospect with ID ${id} was not found...` });
+    }
 
     const updatedProspect = await prisma.prospect.update({
       where: { id: Number(id) },
@@ -156,11 +159,11 @@ const updateProspect = async (req: Request, res: Response) => {
         facebook_url,
         instagram_url,
         linkedin_url,
-        contacted_at,
-        estimate_budget,
+        contacted_at: new Date(contacted_at),
+        estimate_budget: Number(estimate_budget),
         need_description,
         has_website: has_website === 'true',
-        website_year,
+        website_year: Number(website_year),
         other_need,
         is_client: is_client === 'true',
         siret_number,
@@ -196,12 +199,12 @@ const archiveProspect = async (req: Request, res: Response) => {
       where: { id: Number(id) },
       data: {
         ...prospect,
-        is_archived,
+        is_archived: is_archived === "true",
       },
     });
     res.status(200).json(updatedProspect);
   } catch (error) {
-    res.status(500).json({ error: `Prospect with ID ${id} does not exist in the database` });
+    res.status(500).json({ error: `Prospect with ID ${id} does not exist in the database`, message: error });
   }
 };
 

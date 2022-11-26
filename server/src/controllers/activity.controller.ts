@@ -99,7 +99,7 @@ const archiveActivity = async (req: Request, res: Response) => {
       where: { id: Number(id) },
       data: {
         ...activity,
-        is_archived,
+        is_archived: is_archived === "true",
       },
     });
     res.status(200).json(updatedActivity);

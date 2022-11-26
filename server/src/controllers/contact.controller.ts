@@ -111,7 +111,7 @@ const archiveContact = async (req: Request, res: Response) => {
       where: { id: Number(id) },
       data: {
         ...contact,
-        is_archived,
+        is_archived: is_archived === "true",
       },
     });
     res.status(200).json(updatedContact);
