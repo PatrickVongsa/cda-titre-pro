@@ -103,7 +103,7 @@ const archiveProspectStatus = async (req: Request, res: Response) => {
       where: { id: Number(id) },
       data: {
         ...status,
-        is_archived: is_archived === 'true' ? true : false,
+        is_archived: is_archived === 'true',
       },
     });
     res.status(200).json(updatedProspectStatus);

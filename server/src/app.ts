@@ -17,7 +17,7 @@ import prospectRouter from './routes/prospect.route';
 // import projectStatusRouter from './routes/project_status.route';
 // import projectTypeRouter from './routes/project_type.route';
 // import tvaRouter from './routes/tva.route';
-// import userRouter from './routes/user.route';
+import userRouter from './routes/user.route';
 
 const app = express();
 
@@ -119,7 +119,6 @@ app.use('/api/prospect-status', prospectStatusRouter);
 /**
  * Route API pour l'entité User
  */
-//  app.use('/api/users', userRouter);
-
+app.use('/api/users', userRouter);
 
 export default app;
