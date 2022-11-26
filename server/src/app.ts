@@ -4,7 +4,7 @@ import activityRouter from './routes/activty.route';
 import contactRouter from './routes/contact.route';
 import souceRouter from './routes/source.route';
 import prospect_statusRouter from './routes/prospect_status.route';
-// import pisteRouter from './routes/piste.route';
+import prospectRouter from './routes/prospect.route';
 // import interactionRouter from './routes/interaction.route';
 
 const app = express();
@@ -35,12 +35,16 @@ app.use('/api/contacts', contactRouter);
 app.use('/api/sources', souceRouter);
 
 /**
+ * Route API pour l'entité Prospect
+ */
+app.use('/api/prospects', prospectRouter);
+
+/**
  * Route API pour l'entité Prospect_status
  */
 app.use('/api/prospect-status', prospect_statusRouter);
 
 
-// app.use('/api/pistes', pisteRouter);
 // app.use('/api/interactions', interactionRouter);
 
 export default app;
