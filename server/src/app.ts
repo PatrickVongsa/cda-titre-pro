@@ -15,7 +15,7 @@ import prospectStatusRouter from './routes/prospect_status.route';
 import prospectRouter from './routes/prospect.route';
 import projectRouter from './routes/project.route';
 import projectStatusRouter from './routes/project_status.route';
-// import projectTypeRouter from './routes/project_type.route';
+import projectTypeRouter from './routes/project_type.route';
 // import tvaRouter from './routes/tva.route';
 import userRouter from './routes/user.route';
 
@@ -109,7 +109,7 @@ app.use('/api/prospect-status', prospectStatusRouter);
 /**
  * Route API pour l'entité Project_type
  */
-//  app.use('/api/projects-type', projectTypeRouter);
+ app.use('/api/projects-types', projectTypeRouter);
 
 /**
  * Route API pour l'entité Tva
