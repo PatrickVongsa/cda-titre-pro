@@ -2,7 +2,7 @@ import express from 'express';
 
 import activityRouter from './routes/activty.route';
 import catalogRouter from './routes/catalog.route';
-// import companyRouter from './routes/company.route';
+import companyRouter from './routes/company.route';
 import contactRouter from './routes/contact.route';
 // import daysOffRouter from './routes/day_off.route';
 // import daysOffStatusRouter from './routes/day_off_status.route';
@@ -44,7 +44,7 @@ app.use('/api/catalogs', catalogRouter);
 /**
  * Route API pour l'entité Company
  */
-// app.use('/api/company', companyRouter);
+app.use('/api/company', companyRouter);
 
 /**
  * Route API pour l'entité Contact
