@@ -37,14 +37,11 @@ const getOneProjectStatus = async (req: Request, res: Response) => {
 // @route POST /api/project-status
 // @access Private
 const createProjectStatus = async (req: Request, res: Response) => {
-  const { name, color, order_number } = req.body;
+  const { name } = req.body;
   try {
     const result = await prisma.project_status.create({
       data: {
         name,
-        color,
-        order_number: Number(order_number),
-        is_archived: false,
       },
     });
     res.status(200).json(result);
@@ -58,7 +55,7 @@ const createProjectStatus = async (req: Request, res: Response) => {
 // @access Private
 const updateProjectStatus = async (req: Request, res: Response) => {
   const id = req.params.id;
-  const { name, color, order_number } = req.body;
+  const { name } = req.body;
   try {
     const status = await prisma.project_status.findUnique({
       where: {
@@ -73,9 +70,6 @@ const updateProjectStatus = async (req: Request, res: Response) => {
       data: {
         ...status,
         name,
-        color,
-        order_number: Number(order_number),
-        is_archived: false,
       },
     });
     res.status(200).json(updatedProjectStatus);

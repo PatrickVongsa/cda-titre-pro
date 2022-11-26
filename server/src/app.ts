@@ -13,7 +13,7 @@ import emergencyContactRouter from './routes/emergency_contact.route';
 import souceRouter from './routes/source.route';
 import prospectStatusRouter from './routes/prospect_status.route';
 import prospectRouter from './routes/prospect.route';
-// import projectRouter from './routes/project.route';
+import projectRouter from './routes/project.route';
 import projectStatusRouter from './routes/project_status.route';
 // import projectTypeRouter from './routes/project_type.route';
 // import tvaRouter from './routes/tva.route';
@@ -99,7 +99,7 @@ app.use('/api/prospect-status', prospectStatusRouter);
 /**
  * Route API pour l'entité Project
  */
-//  app.use('/api/projects', projectRouter);
+ app.use('/api/projects', projectRouter);
 
 /**
  * Route API pour l'entité Project_status
