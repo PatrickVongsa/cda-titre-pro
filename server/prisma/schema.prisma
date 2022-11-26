@@ -300,11 +300,11 @@ model Prospect {
 //**
 model Prospect_status {
   id           Int        @id @default(autoincrement())
-  name         String?    @db.VarChar(100)
-  color        String?    @db.VarChar(7)
-  order_number Int?
+  name         String     @db.VarChar(100)
+  color        String     @db.VarChar(7)
+  order_number Int
   prospects    Prospect[]
-  is_archived  Boolean?
+  is_archived  Boolean
 }
 
 //**
