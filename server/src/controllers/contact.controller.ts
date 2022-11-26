@@ -72,7 +72,7 @@ const updateContact = async (req: Request, res: Response) => {
 
     if (!contact) return res.status(404).json({ error: `Contact with ID ${id} was not found...` });
 
-    const updatedActivity = await prisma.contact.update({
+    const updatedContact = await prisma.contact.update({
       where: { id: Number(id) },
       data: {
         ...contact,
@@ -86,7 +86,7 @@ const updateContact = async (req: Request, res: Response) => {
         is_archived: false,
       },
     });
-    res.status(200).json(updatedActivity);
+    res.status(200).json(updatedContact);
   } catch (error) {
     res.status(500).json({ error: `Contact with ID ${id} does not exist in the database` });
   }
@@ -107,14 +107,14 @@ const archiveContact = async (req: Request, res: Response) => {
 
     if (!contact) return res.status(404).json({ error: `Contact with ID ${id} was not found...` });
 
-    const updatedActivity = await prisma.contact.update({
+    const updatedContact = await prisma.contact.update({
       where: { id: Number(id) },
       data: {
         ...contact,
         is_archived,
       },
     });
-    res.status(200).json(updatedActivity);
+    res.status(200).json(updatedContact);
   } catch (error) {
     res.status(500).json({ error: `Contact with ID ${id} does not exist in the database` });
   }
