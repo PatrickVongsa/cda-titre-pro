@@ -8,14 +8,14 @@ import daysOffRouter from './routes/days_off.route';
 import daysOffStatusRouter from './routes/days_off_status.route';
 import emergencyContactRouter from './routes/emergency_contact.route';
 // import estimationCostRouter from './routes/estimation_cost.route';
-// import interactionRouter from './routes/interaction.route';
+import interactionRouter from './routes/interaction.route';
 // import invoiceRouter from './routes/invoice.route';
 import souceRouter from './routes/source.route';
 import prospectStatusRouter from './routes/prospect_status.route';
 import prospectRouter from './routes/prospect.route';
-// import projectRouter from './routes/project.route';
+import projectRouter from './routes/project.route';
 import projectStatusRouter from './routes/project_status.route';
-// import projectTypeRouter from './routes/project_type.route';
+import projectTypeRouter from './routes/project_type.route';
 // import tvaRouter from './routes/tva.route';
 import userRouter from './routes/user.route';
 
@@ -74,7 +74,7 @@ app.use('/api/emergency-contacts', emergencyContactRouter);
 /**
  * Route API pour l'entité Interaction
  */
-// app.use('/api/interactions', interactionRouter);
+app.use('/api/interactions', interactionRouter);
 
 /**
  * Route API pour l'entité Invoice
@@ -99,7 +99,7 @@ app.use('/api/prospect-status', prospectStatusRouter);
 /**
  * Route API pour l'entité Project
  */
-//  app.use('/api/projects', projectRouter);
+ app.use('/api/projects', projectRouter);
 
 /**
  * Route API pour l'entité Project_status
@@ -109,7 +109,7 @@ app.use('/api/prospect-status', prospectStatusRouter);
 /**
  * Route API pour l'entité Project_type
  */
-//  app.use('/api/projects-type', projectTypeRouter);
+ app.use('/api/projects-types', projectTypeRouter);
 
 /**
  * Route API pour l'entité Tva
