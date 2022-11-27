@@ -104,12 +104,12 @@ app.use('/api/prospect-status', prospectStatusRouter);
 /**
  * Route API pour l'entité Project_status
  */
- app.use('/api/projects-status', projectStatusRouter);
+ app.use('/api/project-status', projectStatusRouter);
 
 /**
  * Route API pour l'entité Project_type
  */
- app.use('/api/projects-types', projectTypeRouter);
+ app.use('/api/project-types', projectTypeRouter);
 
 /**
  * Route API pour l'entité Tva
