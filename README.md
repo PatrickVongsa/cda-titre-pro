@@ -84,3 +84,18 @@ If you have made modifications and you already built a docker compose, run the f
 ---
 
 ## Tests server
+
+1. Drop your local database
+2. Create a new one
+3. Go to "server" directory
+    ```shell
+    cd server/
+    ```
+4. Run the command
+    ```shell
+    npx prisma db push
+    ```
+5. Run the test
+    ```shell
+    npm run test
+    ```
