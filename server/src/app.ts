@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
 
 /**
  * Route API pour l'entité Activity
+ * tested in prospect.test.ts
  */
 app.use('/api/activities', activityRouter);
 
@@ -43,11 +44,13 @@ app.use('/api/catalogs', catalogRouter);
 
 /**
  * Route API pour l'entité Company
+ * tested in company.test.ts
  */
 app.use('/api/company', companyRouter);
 
 /**
  * Route API pour l'entité Contact
+ * tested in prospect.test.ts
  */
 app.use('/api/contacts', contactRouter);
 
@@ -73,6 +76,7 @@ app.use('/api/emergency-contacts', emergencyContactRouter);
 
 /**
  * Route API pour l'entité Interaction
+ * ****NOT tested in prospect.test.ts****
  */
 app.use('/api/interactions', interactionRouter);
 
@@ -83,31 +87,37 @@ app.use('/api/interactions', interactionRouter);
 
 /**
  * Route API pour l'entité Source
+ * tested in prospect.test.ts
  */
 app.use('/api/sources', souceRouter);
 
 /**
  * Route API pour l'entité Prospect
+ * tested in prospect.test.ts
  */
 app.use('/api/prospects', prospectRouter);
 
 /**
  * Route API pour l'entité Prospect_status
+ * tested in prospect.test.ts
  */
 app.use('/api/prospect-status', prospectStatusRouter);
 
 /**
  * Route API pour l'entité Project
+ * tested in project.test.ts
  */
  app.use('/api/projects', projectRouter);
 
 /**
  * Route API pour l'entité Project_status
+ * tested in project.test.ts
  */
  app.use('/api/project-status', projectStatusRouter);
 
 /**
  * Route API pour l'entité Project_type
+ * tested in project.test.ts
  */
  app.use('/api/project-types', projectTypeRouter);
 
@@ -118,6 +128,7 @@ app.use('/api/prospect-status', prospectStatusRouter);
 
 /**
  * Route API pour l'entité User
+ * tested in prospect.test.ts
  */
 app.use('/api/users', userRouter);
 
