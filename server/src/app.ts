@@ -8,7 +8,7 @@ import daysOffRouter from './routes/days_off.route';
 import daysOffStatusRouter from './routes/days_off_status.route';
 import emergencyContactRouter from './routes/emergency_contact.route';
 // import estimationCostRouter from './routes/estimation_cost.route';
-// import interactionRouter from './routes/interaction.route';
+import interactionRouter from './routes/interaction.route';
 // import invoiceRouter from './routes/invoice.route';
 import souceRouter from './routes/source.route';
 import prospectStatusRouter from './routes/prospect_status.route';
@@ -74,7 +74,7 @@ app.use('/api/emergency-contacts', emergencyContactRouter);
 /**
  * Route API pour l'entité Interaction
  */
-// app.use('/api/interactions', interactionRouter);
+app.use('/api/interactions', interactionRouter);
 
 /**
  * Route API pour l'entité Invoice
