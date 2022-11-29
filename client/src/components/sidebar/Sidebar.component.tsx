@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 import "./sidebar.styles.css";
 
 import Logo from "../../assets/logo.webp";
-import User from '../../assets/user.jpeg'
+import User from "../../assets/user.jpeg";
 
 import {
   FaAngleRight,
@@ -35,50 +36,85 @@ function Sidebar() {
 
       <nav>
         <ul>
-          <li className="nav-item active">
-            <FaHome />
-            <span>Tableau de bord</span>
-          </li>
-          <li className="nav-item">
-            <FaUserTag />
-            <span>Prospects</span>
-          </li>
-          <li className="nav-item">
-            <FaUserTie />
-            <span>Clients</span>
-          </li>
-          <li className="nav-item">
-            <FaBusinessTime />
-            <span>Planning</span>
-          </li>
-          <li className="nav-item">
-            <FaCode />
-            <span>Projets</span>
-          </li>
-          <li className="nav-item">
-            <FaFileInvoiceDollar />
-            <span>Devis / Factures</span>
-          </li>
-          <li className="nav-item">
-            <FaUser />
-            <span>Employés</span>
-          </li>
+          <NavLink to="/">
+            {({ isActive }) => (
+              <li className={`nav-item ${isActive ? "active" : ""}`}>
+                <FaHome />
+                <span>Tableau de bord</span>
+              </li>
+            )}
+          </NavLink>
+          <NavLink to="/prospects">
+            {({ isActive }) => (
+              <li className={`nav-item ${isActive ? "active" : ""}`}>
+              <FaUserTag />
+              <span>Prospects</span>
+            </li>
+            )}
+          </NavLink>
+          <NavLink to="/clients">
+            {({ isActive }) => (
+              <li className={`nav-item ${isActive ? "active" : ""}`}>
+              <FaUserTie />
+              <span>Clients</span>
+            </li>
+            )}
+          </NavLink>
+          <NavLink to="/planning">
+            {({ isActive }) => (
+              <li className={`nav-item ${isActive ? "active" : ""}`}>
+              <FaBusinessTime />
+              <span>Planning</span>
+            </li>
+            )}
+          </NavLink>
+          <NavLink to="/projects">
+          {({ isActive }) => (
+            <li className={`nav-item ${isActive ? "active" : ""}`}>
+              <FaCode />
+              <span>Projets</span>
+            </li>
+            )}
+          </NavLink>
+          <NavLink to="/estimation-invoice">
+          {({ isActive }) => (
+            <li className={`nav-item ${isActive ? "active" : ""}`}>
+              <FaFileInvoiceDollar />
+              <span>Devis / Factures</span>
+            </li>
+            )}
+          </NavLink>
+          <NavLink to="/employees">
+          {({ isActive }) => (
+            <li className={`nav-item ${isActive ? "active" : ""}`}>
+              <FaUser />
+              <span>Employés</span>
+            </li>
+            )}
+          </NavLink>
         </ul>
 
         <hr />
 
         <div className="user">
           <img src={User} alt="..." />
-          <h3>Patrick Vongsa</h3>
+          <div className="description">
+            <h3>Patrick Vongsa</h3>
+            <p>Développeur Web</p>
+          </div>
         </div>
 
         <hr />
 
         <ul>
-          <li className="nav-item">
-            <FaCog />
-            <span>Paramètres</span>
-          </li>
+          <NavLink to="/parameters">
+            {({ isActive }) => (
+              <li className={`nav-item ${isActive ? "active" : ""}`}>
+              <FaCog />
+              <span>Paramètres</span>
+            </li>
+            )}
+          </NavLink>
           <li className="nav-item">
             <MdOutlineLogout />
             <span>Se déconnecter</span>

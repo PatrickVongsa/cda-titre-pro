@@ -1,14 +1,11 @@
+import { Outlet } from "react-router-dom";
 import Sidebar from "./sidebar/Sidebar.component";
 
-interface IProps {
-  children: React.ReactNode;
-}
-
-const Layout = ({ children }: IProps) => {
+const Layout = () => {
   return (
     <>
       <Sidebar />
-      <main>{children}</main>
+      <Outlet />
     </>
   );
 };

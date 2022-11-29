@@ -1,5 +1,5 @@
 .sidebar {
-    width: 150px;
+    width: 125px;
     height: 100%;
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
@@ -13,7 +13,7 @@
 }
 
 .sidebar.open {
-    width: 360px;
+    width: 300px;
 }
 
 .sidebar .logo {
@@ -25,6 +25,7 @@
     width: 100px;
     transition: .4s;
 }
+
 .sidebar.open .logo img {
     width: 150px;
     transition: .4s;
@@ -32,14 +33,20 @@
 
 .sidebar .user {
     flex-grow: 1;
-    width: 100%;
+    width: 65px;
     display: grid;
     align-items: center;
+    justify-items: flex-start;
+}
+
+.sidebar.open .user {
+    width: 100%;
     justify-items: center;
+    animation: .4s ease-in-out;
 }
 
 .sidebar .user img {
-    height: 75px;
+    height: 65px;
     transition: .4s;
 }
 
@@ -47,10 +54,10 @@
     height: 100px;
 }
 
-.sidebar .user h3 {
-    color: #000;
+.sidebar .user .description {
     font-size: 1.25rem;
     margin-top: 12px;
+    text-align: center;
     font-variant: small-caps;
     pointer-events: none;
     scale: 0;
@@ -58,21 +65,25 @@
     margin: 0;
 }
 
-.sidebar.open .user h3 {
+.sidebar .user h3 {
+    color: #000;
+    font-size: 1.25rem;
+    font-variant: small-caps;
+    pointer-events: none;
+    scale: 0;
+    opacity: 0;
+    margin: 0;
+}
+
+.sidebar.open .user .description {
     scale: 1;
     opacity: 1;
     transition: .4s;
     transition-delay: .2s;
 }
 
-.sidebar .nav-title {
-    color: #dadada;
-    margin: 40px 0 18px;
-    pointer-events: none;
-    opacity: 0;
-}
-
-.sidebar.open .nav-title {
+.sidebar.open .user h3 {
+    scale: 1;
     opacity: 1;
     transition: .4s;
     transition-delay: .2s;
@@ -97,9 +108,9 @@
     justify-content: flex-start;
     border-radius: 4px;
     width: 100%;
-    height: 56px;
-    padding: 0 16px;
-    margin: 8px 0;
+    height: 48px;
+    padding: 0 1rem;
+    margin: .5rem 0;
     color: #000;
     transition: .3s;
 }
@@ -119,16 +130,16 @@
 }
 
 .sidebar nav .nav-item span {
-    width: 0;
     font-size: 18px;
     margin-left: 1rem;
     opacity: 0;
+    width: 20%;
     pointer-events: none;
 }
 
 .sidebar.open nav .nav-item span {
-    width: 80%;
     opacity: 1;
+    width: 80%;
     pointer-events: visible;
     transition: .4s;
     transition-delay: .2s;
@@ -136,9 +147,7 @@
 
 .sidebar hr {
     width: 100%;
-    height: 2px;
-    border-radius: 3px;
-    background: rgba(255, 255, 255, .1);
+    border-top: 1px solid #000;
     opacity: 0;
     margin: 0;
 }
@@ -168,4 +177,32 @@
 
 .sidebar.open .toggle svg {
     transform: rotateY(180deg);
+}
+
+@media (max-height: 915px) {
+    .sidebar nav .nav-item {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        border-radius: 4px;
+        width: 100%;
+        height: 48px;
+        padding: 0 1rem;
+        margin: .25rem 0;
+        color: #000;
+        transition: .3s;
+    }
+
+    .sidebar .user h3 {
+        display: none;
+    }
+
+    .sidebar.open .user img {
+        height: 75px;
+    }
+
+    .sidebar nav {
+        gap: .5rem;
+    }
 }
