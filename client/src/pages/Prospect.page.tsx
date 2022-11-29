@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import { DragAndDrop } from "../components/dragndrop/DragAndDrop.component";
+import Header from "../components/header/Header.component";
 
 function Prospect() {
   return (
-    <div>Prospect</div>
-  )
+    <div className="page-content">
+      <Header pageTitle="Prospect" />
+      <DragAndDrop />
+    </div>
+  );
 }
 
-export default Prospect
+export default Prospect;
