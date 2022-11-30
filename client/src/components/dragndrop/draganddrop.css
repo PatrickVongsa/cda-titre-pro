@@ -3,47 +3,48 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-  }
-  
-  .container-main {
+}
+
+.container-main {
     min-height: 85vh;
-  }
-  
-  /* TITLE */
-  .title {
+}
+
+/* TITLE */
+.title {
     text-align: center;
     padding: 2rem 0;
     gap: .5rem;
-  }
-  
-  .title>h1 {
+}
+
+.title>h1 {
     font-size: 3.5rem;
     font-weight: 900;
-  }
-  
-  .title>span {
+}
+
+.title>span {
     font-size: 1.5rem;
     letter-spacing: 1px;
     font-weight: lighter;
-  }
-  
-  /* LAYOUT CARDS */
-  .grid {
+}
+
+/* LAYOUT CARDS */
+.grid {
     flex: 1;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fill, 350px);
+    justify-content: flex-start;
     gap: 2rem;
     width: 100%;
     padding-bottom: 1rem;
-  }
-  
-  .layout-cards {
-    border: 2px solid #ffffff8c;
+}
+
+.layout-cards {
+    border: 2px solid #f8f8f8;
     border-radius: 5px;
     transition: all .3s linear;
-  }
-  
-  .layout-cards>p {
+}
+
+.layout-cards>p {
     border-radius: 5px;
     background-color: black;
     color: #fff;
@@ -51,54 +52,54 @@
     padding: 1rem 0;
     font-weight: bold;
     text-transform: capitalize;
-  }
-  
-  
-  .layout-dragging {
-    background: #ffffff17;
-    border: 2px dashed #ffffff8c;
-  }
-  
-  /* SINGLE CARD */
-  .card-container {
+}
+
+
+.layout-dragging {
+    background: #f8f8f8;
+    border: 2px dashed #0000008c;
+}
+
+/* SINGLE CARD */
+.card-container {
     margin: 1rem 1rem 0 1rem;
     background-color: slateblue;
     border-radius: 5px;
     padding: 1rem;
     cursor: pointer;
     animation: fadeIn .3s ease-in-out;
-  }
-  
-  @keyframes fadeIn {
+}
+
+@keyframes fadeIn {
     0% {
-      opacity: 0;
-      transform: translateY(20px);
+        opacity: 0;
+        transform: translateY(20px);
     }
-  
+
     100% {
-      opacity: 1;
-      transform: translateY(0)
+        opacity: 1;
+        transform: translateY(0)
     }
-  }
-  
-  .card-container>p {
+}
+
+.card-container>p {
     font-weight: bold;
     font-size: 1.5rem;
-  }
-  
-  
-  @media screen and (max-width: 800px) {
-  
-  
+}
+
+
+@media screen and (max-width: 800px) {
+
+
     .grid {
-      grid-template-columns: 1fr;
-      grid-template-rows: 1fr;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
     }
-  
+
     .layout-cards {
-      overflow-y: scroll;
-      height: 250px;
-      min-height: 150px;
-      max-height: 250px;
+        overflow-y: scroll;
+        height: 250px;
+        min-height: 150px;
+        max-height: 250px;
     }
-  }
+}
