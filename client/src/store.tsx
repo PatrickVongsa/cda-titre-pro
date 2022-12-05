@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import counterReducer from "./reudx/prospectStatusSlice";
+import counterReducer from "./redux/prospectStatusSlice";
 
 export default configureStore({
   reducer: {

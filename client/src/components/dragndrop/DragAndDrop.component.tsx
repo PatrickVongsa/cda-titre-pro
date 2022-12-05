@@ -1,4 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+
+import { allProspectStatus } from "../../api/statusProspect.api";
+
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
 import { ContainerCards } from "./ContainerCards.component";
 
@@ -33,23 +36,30 @@ export const data: Data[] = [
   },
 ];
 
-const typesHero: string[] = ["good", "normal", "bad"];
-
 export const DragAndDrop = () => {
-  const { isDragging, listItems, handleDragging, handleUpdateList } = useDragAndDrop(data)
-
+  const [prospectStatusList, setProspectStatusList] = useState(null);
+  useEffect(() => {
+    allProspectStatus().then((res) => {
+      console.log(res);
+      setProspectStatusList(res);
+    });
+  }, []);
+  const { isDragging, listItems, handleDragging, handleUpdateList } =
+    useDragAndDrop(data);
+  console.log(prospectStatusList);
   return (
     <div className="grid">
-      {typesHero.map((container) => (
-        <ContainerCards
-          status={container}
-          key={container}
-          items={data}
-          isDragging={isDragging}
-          handleDragging={handleDragging}
-          handleUpdateList={handleUpdateList}
-        />
-      ))}
+      {prospectStatusList.length &&
+        prospectStatusList.map((container) => (
+          <ContainerCards
+            status={container}
+            key={container.id}
+            items={listItems}
+            isDragging={isDragging}
+            handleDragging={handleDragging}
+            handleUpdateList={handleUpdateList}
+          />
+        ))}
     </div>
   );
 };
