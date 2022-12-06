@@ -50,7 +50,6 @@ export const DragAndDrop = () => {
   return (
     <div className="grid">
       {!loading &&
-        status.length &&
         status.map((container: IProspectStatus) => (
           <ContainerCards
             name={container.name}
