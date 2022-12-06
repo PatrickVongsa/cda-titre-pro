@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 
 import activityRouter from './routes/activty.route';
 import catalogRouter from './routes/catalog.route';
@@ -20,6 +21,8 @@ import projectTypeRouter from './routes/project_type.route';
 import userRouter from './routes/user.route';
 
 const app = express();
+
+app.use(cors())
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

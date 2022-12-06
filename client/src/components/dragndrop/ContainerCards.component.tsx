@@ -4,7 +4,7 @@ import "./draganddrop.css";
 
 interface Props {
   items: Data[];
-  status: string;
+  name: string;
   isDragging: boolean;
   handleDragging: (dragging: boolean) => void;
   handleUpdateList: (id: number, status: string) => void;
@@ -12,7 +12,7 @@ interface Props {
 
 export const ContainerCards = ({
   items = [],
-  status,
+  name,
   isDragging,
   handleDragging,
   handleUpdateList,
@@ -24,7 +24,7 @@ export const ContainerCards = ({
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const id = +e.dataTransfer.getData("text");
-    handleUpdateList(id, status);
+    handleUpdateList(id, name);
     handleDragging(false);
   };
 
@@ -34,10 +34,10 @@ export const ContainerCards = ({
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
-      <p>{status} hero</p>
+      <p>{name}</p>
       {items.map(
         (item) =>
-          status === item.status && (
+          name === item.status && (
             <CardItem
               data={item}
               key={item.id}
