@@ -7,6 +7,9 @@ const instance = axios.create({
 });
 
 export const allProspectStatus = async () => {
-  console.log("fired!")
   return (await instance.get("/"))?.data;
+};
+
+export const addOneProspectStatus = async (newProspectStatus: IProspectStatus) => {
+  return (await instance.post("/", newProspectStatus))?.data;
 };

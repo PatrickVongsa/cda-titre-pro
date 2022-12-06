@@ -24,7 +24,7 @@ export const ContainerCards = ({
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const id = +e.dataTransfer.getData("text");
-    handleUpdateList(id, status);
+    handleUpdateList(id, name);
     handleDragging(false);
   };
 
@@ -37,7 +37,7 @@ export const ContainerCards = ({
       <p>{name}</p>
       {items.map(
         (item) =>
-          status === item.status && (
+          name === item.status && (
             <CardItem
               data={item}
               key={item.id}

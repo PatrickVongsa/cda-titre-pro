@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
-
-import { allProspectStatus } from "../../api/statusProspect.api";
+import { useEffect } from "react";
+import { useAppSelector, useAppDispatch } from "../../hooks/redux.hook";
+import { getProspectStatus } from "../../redux/prospectStatusSlice";
 
 import { useDragAndDrop } from "../../hooks/useDragAndDrop";
 import { ContainerCards } from "./ContainerCards.component";
@@ -17,43 +17,44 @@ export const data: Data[] = [
   {
     id: 1,
     content: "Aqua-man",
-    status: "good",
+    status: "nouveau",
   },
   {
     id: 2,
     content: "Flash",
-    status: "normal",
+    status: "assigné",
   },
   {
     id: 3,
     content: "Green Lantern",
-    status: "good",
+    status: "assigné",
   },
   {
     id: 4,
     content: "Batman",
-    status: "bad",
+    status: "gagné",
   },
 ];
 
 export const DragAndDrop = () => {
-  const [prospectStatusList, setProspectStatusList] = useState(null);
+  const { status, loading } = useAppSelector((state) => state.prospectStatus);
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    allProspectStatus().then((res) => {
-      console.log(res);
-      setProspectStatusList(res);
-    });
+    dispatch(getProspectStatus());
   }, []);
+
   const { isDragging, listItems, handleDragging, handleUpdateList } =
     useDragAndDrop(data);
-  console.log(prospectStatusList);
+
   return (
     <div className="grid">
-      {prospectStatusList.length &&
-        prospectStatusList.map((container) => (
+      {!loading &&
+        status.length &&
+        status.map((container: IProspectStatus) => (
           <ContainerCards
-            status={container}
-            key={container.id}
+            name={container.name}
+            key={container.id + container.name}
             items={listItems}
             isDragging={isDragging}
             handleDragging={handleDragging}

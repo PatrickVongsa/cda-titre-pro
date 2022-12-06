@@ -7,7 +7,7 @@ function Prospect() {
   return (
     <div className="page-content">
       <Header
-        pageTitle="Prospect"
+        pageTitle="Prospects"
         searchBar={true}
         tabs={true}
         createButton={true}

@@ -25,7 +25,8 @@ function App() {
           <Route path="prospects" element={<Prospect />} />
           <Route path="clients" element={<Client />} />
           <Route path="contacts" element={<Contact />} />
-          <Route path="evenements" element={<Planning />} />
+          <Route path="planning" element={<Planning />} />
+          <Route path="projects" element={<Project />} />
           <Route path="opportunites" element={<Project />} />
           <Route path="estimation-invoice" element={<Invoice />} />
           <Route path="parameters" element={<Parameters />} />
