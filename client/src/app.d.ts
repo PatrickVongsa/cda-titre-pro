@@ -1,3 +1,9 @@
+interface IActivity {
+  id?: number;
+  name: string;
+  is_archived?: boolean;
+}
+
 interface IProspectStatus {
   id?: number;
   name: string;
@@ -32,4 +38,10 @@ interface IProject {
   github_link?: string;
   host?: string;
   ora_name?: string;
+}
+
+interface ISource {
+  id?: number;
+  name: string;
+  is_archived?: boolean;
 }
