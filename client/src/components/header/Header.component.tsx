@@ -7,9 +7,10 @@ interface IProps {
   searchBar: boolean;
   createButton: boolean;
   tabs: boolean;
+  openModal: () => void;
 }
 
-function Header({ pageTitle, searchBar, createButton, tabs }: IProps) {
+function Header({ pageTitle, searchBar, createButton, tabs, openModal }: IProps) {
   return (
     <div className="header">
       <h1>{pageTitle}</h1>
@@ -21,7 +22,7 @@ function Header({ pageTitle, searchBar, createButton, tabs }: IProps) {
         )}
         {createButton && (
           <div>
-            <button>+ Créer</button>
+            <button onClick={() => openModal()}>+ Créer</button>
           </div>
         )}
         {tabs && (

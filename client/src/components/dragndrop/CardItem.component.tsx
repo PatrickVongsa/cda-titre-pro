@@ -1,9 +1,7 @@
 import "./draganddrop.css";
 
-import { Data } from "./DragAndDrop.component";
-
 interface Props {
-  data: Data;
+  data: IProspect;
   handleDragging: (dragging: boolean) => void;
 }
 
@@ -21,7 +19,7 @@ export const CardItem = ({ data, handleDragging }: Props) => {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
     >
-      <p>{data.content}</p>
+      <p>{data.company_name}</p>
     </div>
   );
 };

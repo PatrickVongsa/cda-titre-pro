@@ -1,55 +1,31 @@
-import { useEffect } from "react";
-import { useAppSelector, useAppDispatch } from "../../hooks/redux.hook";
-import { getProspectStatus } from "../../redux/prospectStatusSlice";
+import { useState, useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../../hooks/redux.hook';
+import { getProspectStatus } from '../../redux/prospectStatusSlice';
+import { getProspects } from '../../redux/prospectSlice';
 
-import { useDragAndDrop } from "../../hooks/useDragAndDrop";
-import { ContainerCards } from "./ContainerCards.component";
+import { useDragAndDrop } from '../../hooks/useDragAndDrop';
+import { ContainerCards } from './ContainerCards.component';
 
-import "./draganddrop.css";
-
-export interface Data {
-  id: number;
-  content: string;
-  status: string;
-}
-
-export const data: Data[] = [
-  {
-    id: 1,
-    content: "Aqua-man",
-    status: "nouveau",
-  },
-  {
-    id: 2,
-    content: "Flash",
-    status: "assigné",
-  },
-  {
-    id: 3,
-    content: "Green Lantern",
-    status: "assigné",
-  },
-  {
-    id: 4,
-    content: "Batman",
-    status: "gagné",
-  },
-];
+import './draganddrop.css';
+import Prospect from '../../pages/Prospect.page';
 
 export const DragAndDrop = () => {
-  const { status, loading } = useAppSelector((state) => state.prospectStatus);
+  const { status, loading: loadingStatus } = useAppSelector((state) => state.prospectStatus);
+  const { prospects, loading: loadingProspect } = useAppSelector((state) => state.prospects);
+
   const dispatch = useAppDispatch();
 
+  
   useEffect(() => {
+    dispatch(getProspects());
     dispatch(getProspectStatus());
   }, []);
-
-  const { isDragging, listItems, handleDragging, handleUpdateList } =
-    useDragAndDrop(data);
+  
+  const { isDragging, listItems, handleDragging, handleUpdateList } = useDragAndDrop(prospects, status);
 
   return (
     <div className="grid">
-      {!loading &&
+      {!loadingStatus &&
         status.map((container: IProspectStatus) => (
           <ContainerCards
             name={container.name}

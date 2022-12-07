@@ -268,6 +268,7 @@ function Project() {
               return <p key={i}>{project.name}</p>;
             })}
         </div>
+        
       </section>
     </div>
   );

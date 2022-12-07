@@ -19,8 +19,9 @@ function Parameters() {
 
   const dispatch = useAppDispatch();
 
+  //PROSPECT
+  //Add new prospect status
   const canSave = [name, color, order].every(Boolean) && addRequestStatus === 'idle';
-
   const onSaveProspectStatusClicked = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (canSave) {
@@ -37,25 +38,7 @@ function Parameters() {
       }
     }
   };
-  const onSaveProjectStatusClicked = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      await dispatch(addProjectStatus({ name: projectStatusName })).unwrap();
-      setProjectStatusName('');
-    } catch (err) {
-      console.error('Failed to save the post: ', err);
-    }
-  };
-  const onSaveProjectTypeClicked = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    try {
-      await dispatch(addProjectType({ name: projectTypeName })).unwrap();
-      setProjectTypeName('');
-    } catch (err) {
-      console.error('Failed to save the post: ', err);
-    }
-  };
-
+  //Add new activity
   const onSaveActivityClicked = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -65,12 +48,34 @@ function Parameters() {
       console.error('Failed to save the post: ', err);
     }
   };
-
+  //Add new source
   const onSaveSourceClicked = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       await dispatch(addSource({ name: sourceName })).unwrap();
       setSourceName('');
+    } catch (err) {
+      console.error('Failed to save the post: ', err);
+    }
+  };
+
+  //PROJECT
+  //Add new project status
+  const onSaveProjectStatusClicked = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await dispatch(addProjectStatus({ name: projectStatusName })).unwrap();
+      setProjectStatusName('');
+    } catch (err) {
+      console.error('Failed to save the post: ', err);
+    }
+  };
+  //Add new project type
+  const onSaveProjectTypeClicked = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await dispatch(addProjectType({ name: projectTypeName })).unwrap();
+      setProjectTypeName('');
     } catch (err) {
       console.error('Failed to save the post: ', err);
     }
@@ -137,7 +142,7 @@ function Parameters() {
         </form>
       </div>
 
-      <div>
+      {/* <div>
         <h3>Ajouter un status project</h3>
         <form onSubmit={(e) => onSaveProjectStatusClicked(e)}>
           <div>
@@ -173,7 +178,7 @@ function Parameters() {
             <button type="submit">Ajouter</button>
           </div>
         </form>
-      </div>
+      </div> */}
     </section>
   );
 }
