@@ -9,7 +9,14 @@ const prisma = new PrismaClient();
 // @access Private
 const getProspects = async (req: Request, res: Response) => {
   try {
-    const prospects = await prisma.prospect.findMany();
+    const prospects = await prisma.prospect.findMany({
+      include: {
+        assigned_to: true,
+        source: true,
+        activity: true,
+        prospect_status: true,
+      },
+    });
     res.status(200).json(prospects);
   } catch (err) {
     res.status(500).json({ err });
@@ -93,6 +100,12 @@ const createProspect = async (req: Request, res: Response) => {
         activity_id: Number(activity_id),
         is_archived: false,
       },
+      include: {
+        assigned_to: true,
+        source: true,
+        activity: true,
+        prospect_status: true,
+      },
     });
     res.status(200).json(result);
   } catch (err) {
@@ -172,6 +185,12 @@ const updateProspect = async (req: Request, res: Response) => {
         source_id: Number(source_id),
         activity_id: Number(activity_id),
         is_archived: false,
+      },
+      include: {
+        assigned_to: true,
+        source: true,
+        activity: true,
+        prospect_status: true,
       },
     });
     res.status(200).json(updatedProspect);

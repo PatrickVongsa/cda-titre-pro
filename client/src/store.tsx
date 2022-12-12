@@ -1,16 +1,22 @@
 import { configureStore } from "@reduxjs/toolkit";
 
+import activitySlice from "./redux/activitySlice";
 import prospectStatusSlice from "./redux/prospectStatusSlice";
 import projectStatusSlice from "./redux/projectStatusSlice";
 import projectTypeSlice from "./redux/projectTypeSlice";
 import projectSlice from "./redux/projectSlice";
+import prospectSlice from "./redux/prospectSlice";
+import sourceSlice from "./redux/sourceSlice";
 
 export const store = configureStore({
   reducer: {
+    activities: activitySlice,
     prospectStatus: prospectStatusSlice,
     projectStatus: projectStatusSlice,
     projectType: projectTypeSlice,
     projects: projectSlice,
+    prospects: prospectSlice,
+    sources: sourceSlice,
   },
 });
 

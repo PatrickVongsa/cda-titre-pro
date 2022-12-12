@@ -1,10 +1,8 @@
-import { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
 
-import "./sidebar.styles.css";
-
-import Logo from "../../assets/logo.webp";
-import User from "../../assets/user.jpeg";
+import Logo from '../../assets/logo.webp';
+import User from '../../assets/user.jpeg';
 
 import {
   FaAngleRight,
@@ -16,107 +14,149 @@ import {
   FaBusinessTime,
   FaFileInvoiceDollar,
   FaCog,
-} from "react-icons/fa";
-import { MdOutlineLogout } from "react-icons/md";
+} from 'react-icons/fa';
+import { MdOutlineLogout } from 'react-icons/md';
 
 function Sidebar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className={`sidebar ${open ? "open" : ""}`}>
-      <div className="logo">
-        <img src={Logo} alt="Webgo Agency logo" />
+    <div className="md:left-0 md:flex-col md:min-w-64 md:w-64 md:top-0 md:bottom-0 md:overflow-y-auto md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between py-2 px-6">
+      <div className="w-full">
+        <Link
+          to="/"
+          className="md:block md:pb-2 text-blue-gray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-2 px-0"
+        >
+          <img src={Logo} alt="Webgo Agency logo" width={150} height={68} className="mx-auto" />
+        </Link>
+        <hr className="my-4 md:min-w-full" />
       </div>
 
-      <hr />
-
-      <div className="toggle" onClick={() => setOpen(!open)}>
-        <FaAngleRight />
-      </div>
-
-      <nav>
-        <ul>
+      <nav className="grow flex flex-col justify-between">
+        <ul className="md:flex-col md:min-w-full flex flex-col list-none gap-1">
           <NavLink to="/">
             {({ isActive }) => (
-              <li className={`nav-item ${isActive ? "active" : ""}`}>
-                <FaHome />
+              <li
+                className={
+                  'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
+                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                }
+              >
+                <FaHome className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
                 <span>Tableau de bord</span>
               </li>
             )}
           </NavLink>
           <NavLink to="/prospects">
             {({ isActive }) => (
-              <li className={`nav-item ${isActive ? "active" : ""}`}>
-              <FaUserTag />
-              <span>Prospects</span>
-            </li>
+              <li
+                className={
+                  'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
+                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                }
+              >
+                <FaUserTag className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
+                <span>Prospects</span>
+              </li>
             )}
           </NavLink>
           <NavLink to="/clients">
             {({ isActive }) => (
-              <li className={`nav-item ${isActive ? "active" : ""}`}>
-              <FaUserTie />
-              <span>Clients</span>
-            </li>
+              <li
+                className={
+                  'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
+                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                }
+              >
+                <FaUserTie className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
+                <span>Clients</span>
+              </li>
             )}
           </NavLink>
           <NavLink to="/planning">
             {({ isActive }) => (
-              <li className={`nav-item ${isActive ? "active" : ""}`}>
-              <FaBusinessTime />
-              <span>Planning</span>
-            </li>
+              <li
+                className={
+                  'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
+                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                }
+              >
+                <FaBusinessTime className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
+                <span>Planning</span>
+              </li>
             )}
           </NavLink>
           <NavLink to="/projects">
-          {({ isActive }) => (
-            <li className={`nav-item ${isActive ? "active" : ""}`}>
-              <FaCode />
-              <span>Projets</span>
-            </li>
+            {({ isActive }) => (
+              <li
+                className={
+                  'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
+                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                }
+              >
+                <FaCode className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
+                <span>Projets</span>
+              </li>
             )}
           </NavLink>
           <NavLink to="/estimation-invoice">
-          {({ isActive }) => (
-            <li className={`nav-item ${isActive ? "active" : ""}`}>
-              <FaFileInvoiceDollar />
-              <span>Devis / Factures</span>
-            </li>
+            {({ isActive }) => (
+              <li
+                className={
+                  'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
+                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                }
+              >
+                <FaFileInvoiceDollar className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
+                <span>Devis / Factures</span>
+              </li>
             )}
           </NavLink>
           <NavLink to="/employees">
-          {({ isActive }) => (
-            <li className={`nav-item ${isActive ? "active" : ""}`}>
-              <FaUser />
-              <span>Employés</span>
-            </li>
+            {({ isActive }) => (
+              <li
+                className={
+                  'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
+                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                }
+              >
+                <FaUser className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
+                <span>Employés</span>
+              </li>
             )}
           </NavLink>
+          <hr className="my-4 md:min-w-full" />
         </ul>
 
-        <hr />
-
-        <div className="user">
-          <img src={User} alt="..." />
-          <div className="description">
+        <div className="flex flex-col justify-center items-center gap-4">
+          <img src={User} alt="..." width={100} />
+          <div className="description text-center">
             <h3>Patrick Vongsa</h3>
             <p>Développeur Web</p>
           </div>
         </div>
 
-        <hr />
-
-        <ul>
+        <ul className="md:flex-col md:min-w-full flex flex-col list-none gap-1">
+          <hr className="my-4 md:min-w-full" />
           <NavLink to="/parameters">
             {({ isActive }) => (
-              <li className={`nav-item ${isActive ? "active" : ""}`}>
-              <FaCog />
-              <span>Paramètres</span>
-            </li>
+              <li
+                className={
+                  'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
+                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                }
+              >
+                <FaCog className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
+                <span>Paramètres</span>
+              </li>
             )}
           </NavLink>
-          <li className="nav-item">
-            <MdOutlineLogout />
+          <li
+            className={
+              'flex items-center text-xs uppercase py-3 font-bold px-4 cursor-pointer text-blue-gray-800 hover:bg-blue-gray-100 rounded-md'
+            }
+          >
+            <MdOutlineLogout className={'mr-2 text-xl ' + 'opacity-75'} />
             <span>Se déconnecter</span>
           </li>
         </ul>
