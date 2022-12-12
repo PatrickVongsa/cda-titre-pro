@@ -18,7 +18,7 @@ function App() {
   const [count, setCount] = useState(0);
 
   return (
-    <div className="app">
+    <div className="flex flex-row w-screen h-screen overflow-hidden">
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />

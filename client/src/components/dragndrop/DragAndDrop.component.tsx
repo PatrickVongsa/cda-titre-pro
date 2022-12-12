@@ -6,9 +6,6 @@ import { getProspects } from '../../redux/prospectSlice';
 import { useDragAndDrop } from '../../hooks/useDragAndDrop';
 import { ContainerCards } from './ContainerCards.component';
 
-import './draganddrop.css';
-import Prospect from '../../pages/Prospect.page';
-
 export const DragAndDrop = () => {
   const { status, loading: loadingStatus } = useAppSelector((state) => state.prospectStatus);
   const { prospects, loading: loadingProspect } = useAppSelector((state) => state.prospects);
@@ -24,11 +21,12 @@ export const DragAndDrop = () => {
   const { isDragging, listItems, handleDragging, handleUpdateList } = useDragAndDrop(prospects, status);
 
   return (
-    <div className="grid">
+    <div className="flex flex-row justify-start items-start overflow-y-hidden overflow-x-auto pb-4 gap-4 h-[90%]">
       {!loadingStatus &&
         status.map((container: IProspectStatus) => (
           <ContainerCards
             name={container.name}
+            color={container.color}
             key={container.id + container.name}
             items={listItems}
             isDragging={isDragging}

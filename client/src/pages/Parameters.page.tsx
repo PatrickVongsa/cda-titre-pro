@@ -82,7 +82,7 @@ function Parameters() {
   };
 
   return (
-    <section>
+    <section className="relative p-4 grow h-screen w-[calc(100%-64rem)]">
       <div>
         <h3>Ajouter un status prospect</h3>
         <form onSubmit={(e) => onSaveProspectStatusClicked(e)}>

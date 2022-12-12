@@ -81,12 +81,13 @@ function Project() {
   }, []);
 
   return (
-    <div className="page-content">
+    <div className="relative p-4 grow h-screen w-[calc(100%-64rem)]">
       <Header
         pageTitle="Projets"
         searchBar={false}
         tabs={false}
         createButton={false}
+        openModal={()=>alert('coucou')}
       />
       <section style={{ display: "flex" }}>
         <div>
