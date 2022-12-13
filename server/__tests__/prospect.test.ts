@@ -187,6 +187,8 @@ const userExpectectedResponse = {
   occupation: 'Développeur web',
   contrat_type: 'Apprenti',
   is_archived: false,
+  email: 'prenom.test@mail.com',
+  password: 'test1234'
 };
 const userExpectectedResponseupdated = {
   id,
@@ -198,6 +200,8 @@ const userExpectectedResponseupdated = {
   occupation: 'Développeur web',
   contrat_type: 'Apprenti',
   is_archived: false,
+  email: 'prenom.test@mail.com',
+  password: 'test1234'
 };
 const userExpectectedResponsearchived = {
   id,
@@ -209,6 +213,8 @@ const userExpectectedResponsearchived = {
   occupation: 'Développeur web',
   contrat_type: 'Apprenti',
   is_archived: true,
+  email: 'prenom.test@mail.com',
+  password: 'test1234'
 };
 
 test('doit créer une nouvelle activité', async () => {

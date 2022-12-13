@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 import activityRouter from './routes/activty.route';
 import catalogRouter from './routes/catalog.route';
@@ -19,10 +20,14 @@ import projectStatusRouter from './routes/project_status.route';
 import projectTypeRouter from './routes/project_type.route';
 // import tvaRouter from './routes/tva.route';
 import userRouter from './routes/user.route';
+import { isAuthenticated, resetPassword, verifyPassword, verifyUser } from './middlewares/auth.middleware';
+import * as argon2 from 'argon2';
+import { User } from '@prisma/client';
 
 const app = express();
 
-app.use(cors())
+app.use(cors());
+app.use(cookieParser());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -32,6 +37,69 @@ app.use(express.json());
  */
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'hello from express !' });
+});
+
+/**
+ * Route API pour le login
+ */
+app.post('/api/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    //Check emptyness of the incoming data
+    if (!email || !password) {
+      return res.json({ message: 'Please enter all the details' });
+    }
+    //Check if the user already exist or not
+    const user = await verifyUser(email);
+    if (!user) {
+      return res.json({ message: 'Wrong credentials' });
+    }
+    //Check password match
+    const token = await verifyPassword(password, user);
+    if (typeof token === 'object') {
+      return res.status(500).json({ message: 'Wrong credentials' });
+    } else {
+      return res.cookie('token', token).json({ success: true, message: 'LoggedIn Successfully' });
+    }
+  } catch (error) {
+    return res.json({ error: error });
+  }
+});
+
+/**
+ * Route API pour changer son mdp
+ */
+app.post('/api/reset-password', async (req, res) => {
+  try {
+    const { email, newPassword, oldPassword } = req.body;
+
+    //Check emptyness of the incoming data
+    if (!email || !oldPassword || !newPassword) {
+      return res.json({ message: 'Please enter all the details' });
+    }
+
+    //Check if the user already exist or not
+    const user = await verifyUser(email);
+    if (!user) {
+      return res.json({ message: 'Wrong credentials' });
+    }
+    //Check id oldPassword match
+    const verifiedPassword = await argon2.verify(user.password, oldPassword);
+    if (!verifiedPassword) {
+      return res.json({ message: 'Wrong credentials' });
+    }
+
+    const updatedUserWitNewPassword = await resetPassword(newPassword, user);
+
+    const token = await verifyPassword(newPassword, updatedUserWitNewPassword);
+    if (typeof token === 'object') {
+      return res.status(500).json({ message: 'Wrong credentials' });
+    } else {
+      return res.cookie('token', token).json({ success: true, message: 'LoggedIn Successfully' });
+    }
+  } catch (error) {
+    return res.json({ error: error });
+  }
 });
 
 /**
@@ -110,19 +178,19 @@ app.use('/api/prospect-status', prospectStatusRouter);
  * Route API pour l'entité Project
  * tested in project.test.ts
  */
- app.use('/api/projects', projectRouter);
+app.use('/api/projects', projectRouter);
 
 /**
  * Route API pour l'entité Project_status
  * tested in project.test.ts
  */
- app.use('/api/project-status', projectStatusRouter);
+app.use('/api/project-status', projectStatusRouter);
 
 /**
  * Route API pour l'entité Project_type
  * tested in project.test.ts
  */
- app.use('/api/project-types', projectTypeRouter);
+app.use('/api/project-types', projectTypeRouter);
 
 /**
  * Route API pour l'entité Tva

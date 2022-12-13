@@ -336,11 +336,11 @@ model Tva {
 //**
 model User {
   id                   Int              @id @default(autoincrement())
-  firstname            String?          @db.VarChar(155)
-  lastname             String?          @db.VarChar(155)
-  address              String?          @db.VarChar(255)
-  postal_code          String?          @db.VarChar(6)
-  city                 String?          @db.VarChar(255)
+  firstname            String           @db.VarChar(155)
+  lastname             String           @db.VarChar(155)
+  address              String           @db.VarChar(255)
+  postal_code          String           @db.VarChar(6)
+  city                 String           @db.VarChar(255)
   occupation           String           @db.VarChar(255)
   contrat_type         String           @db.VarChar(255)
   prospects            Prospect[]
@@ -349,4 +349,6 @@ model User {
   interaction_modified Interaction[]    @relation(name: "modifiedByUserId")
   project_user         Project_user[]
   Emergency_user       Emergency_user[]
+  email                String           @db.VarChar(255)
+  password             String           @db.VarChar(255)
 }
