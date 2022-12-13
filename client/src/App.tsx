@@ -13,6 +13,7 @@ import Project from "./pages/Project.page";
 import Invoice from "./pages/Invoice.page";
 import Parameters from "./pages/Parameters.page";
 import NoMatch from "./pages/404.page";
+import Employee from "./pages/Employee.page";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -27,7 +28,7 @@ function App() {
           <Route path="contacts" element={<Contact />} />
           <Route path="planning" element={<Planning />} />
           <Route path="projects" element={<Project />} />
-          <Route path="opportunites" element={<Project />} />
+          <Route path="employees" element={<Employee />} />
           <Route path="estimation-invoice" element={<Invoice />} />
           <Route path="parameters" element={<Parameters />} />
           <Route path="*" element={<NoMatch />} />

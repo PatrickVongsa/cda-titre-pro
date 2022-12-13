@@ -45,7 +45,7 @@ export const sourceSlice = createSlice({
       updateSource: (state, action) => {
         const { index, ...body } = action.payload;
         state.sources = [
-          ...state.sources.map((source: IActivity, i: number) => {
+          ...state.sources.map((source: ISource, i: number) => {
             if (i !== index) return source;
   
             return body;

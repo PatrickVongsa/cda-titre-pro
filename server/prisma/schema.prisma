@@ -351,4 +351,5 @@ model User {
   Emergency_user       Emergency_user[]
   email                String           @db.VarChar(255)
   password             String           @db.VarChar(255)
+  phone                String           @db.VarChar(10)
 }

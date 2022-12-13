@@ -46,7 +46,7 @@ const getOneUser = async (req: Request, res: Response) => {
 // @route POST /api/users
 // @access Private
 const createUser = async (req: Request, res: Response) => {
-  const { firstname, lastname, address, postal_code, city, occupation, contrat_type, email, password } = req.body;
+  const { firstname, lastname, address, postal_code, city, occupation, contrat_type, email, password, phone } = req.body;
 
   const hashedPassword = await hashPassword(password);
 
@@ -63,10 +63,12 @@ const createUser = async (req: Request, res: Response) => {
         is_archived: false,
         email,
         password: hashedPassword,
+        phone,
       },
     });
     res.status(200).json(result);
   } catch (err) {
+    console.log(err)
     res.status(500).json({ err });
   }
 };
@@ -76,7 +78,7 @@ const createUser = async (req: Request, res: Response) => {
 // @access Private
 const updateUser = async (req: Request, res: Response) => {
   const id = req.params.id;
-  const { firstname, lastname, address, postal_code, city, occupation, contrat_type } = req.body;
+  const { firstname, lastname, address, postal_code, city, occupation, contrat_type, phone } = req.body;
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -98,6 +100,7 @@ const updateUser = async (req: Request, res: Response) => {
         occupation,
         contrat_type,
         is_archived: false,
+        phone,
       },
     });
     res.status(200).json(updatedUser);

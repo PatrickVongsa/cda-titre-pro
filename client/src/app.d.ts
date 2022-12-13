@@ -77,3 +77,18 @@ interface ISource {
   name: string;
   is_archived?: boolean;
 }
+
+interface IUser {
+  id?: number;
+  firstname: string;
+  lastname: string;
+  address: string;
+  postal_code: string;
+  city: string;
+  phone: string
+  occupation: string;
+  contrat_type: string;
+  is_archived?: boolean;
+  email: string;
+  password?: string
+}
