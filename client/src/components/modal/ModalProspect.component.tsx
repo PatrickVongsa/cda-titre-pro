@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { Typography } from '@material-tailwind/react';
-import { useAppDispatch } from '../../hooks/redux.hook';
+import React, { useState, useEffect } from 'react';
+import { useAppSelector, useAppDispatch } from '../../hooks/redux.hook';
 import { updateProspect } from '../../redux/prospectSlice';
+
+import { Typography } from '@material-tailwind/react';
+
 import { GrClose } from 'react-icons/gr';
+import { getUsers } from '../../redux/userSlice';
 
 interface IProps {
   prospect: IProspect;
@@ -10,6 +13,8 @@ interface IProps {
 }
 
 function ModalProspect({ prospect, closeModal }: IProps) {
+  const { users } = useAppSelector((state) => state.users);
+
   const [update, setUpdate] = useState({
     companyNameUpdate: false,
     addressUpdate: false,
@@ -57,6 +62,11 @@ function ModalProspect({ prospect, closeModal }: IProps) {
   const [statusProspect, setStatusProspect] = useState(prospect.piste_status_id || '');
   const [source, setSource] = useState(prospect.source_id || '');
   const [activity, setActivity] = useState(prospect.activity_id || '');
+  const [assignedToId, setAssignedToId] = useState(prospect.assigned_to_id || '');
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, []);
 
   const handleSubmit = async (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -86,7 +96,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
             other_need: otherNeed,
             is_client: false,
             siret_number: siretNumber,
-            assigned_to_id: 2,
+            assigned_to_id: assignedToId !== '' ? Number(assignedToId) : 0,
             piste_status_id: Number(statusProspect),
             source_id: Number(source),
             activity_id: Number(activity),
@@ -113,6 +123,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
         setStatusProspect(updatedProspect.piste_status_id || '');
         setSource(updatedProspect.source_id || '');
         setActivity(updatedProspect.activity_id || '');
+        setAssignedToId(updatedProspect.assigned_to_id || '');
 
         setUpdate({
           companyNameUpdate: false,
@@ -646,6 +657,37 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                   ></textarea>
                 </div>
               )}
+            </div>
+          </div>
+
+          <hr className="my-4 border-b-1 border-blue-gray-300" />
+
+          <h6 className="text-blue-gray-400 text-sm mt-3 mb-6 font-bold uppercase">
+            Assigner le prospect
+          </h6>
+          <div className="flex flex-wrap">
+            <div className="w-full lg:w-12/12 px-2 mb-4">
+              <div className="relative w-full">
+                <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2">
+                  Assigné à:
+                </label>
+                <select
+                  className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                  value={assignedToId}
+                  onChange={(e) => setAssignedToId(e.target.value)}
+                  onKeyUp={(e) => handleSubmit(e)}
+                >
+                  <option value="">-- Choisir --</option>
+                  {users.length &&
+                    users.map((user: IUser, i: number) => {
+                      return (
+                        <option value={user.id} key={i + user.firstname}>
+                          {user.firstname} {user.lastname}
+                        </option>
+                      );
+                    })}
+                </select>
+              </div>
             </div>
           </div>
         </div>

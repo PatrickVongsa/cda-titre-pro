@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from '../../hooks/redux.hook';
 import { getProspectStatus } from '../../redux/prospectStatusSlice';
 import { getSources } from '../../redux/sourceSlice';
 import { getActivities } from '../../redux/activitySlice';
+import { getUsers } from '../../redux/userSlice';
 import { addProspect } from '../../redux/prospectSlice';
 
 import { Typography } from '@material-tailwind/react';
@@ -17,6 +18,7 @@ function ModalAddProspect({ closeModal }: IProps) {
   const { status } = useAppSelector((state) => state.prospectStatus);
   const { sources } = useAppSelector((state) => state.sources);
   const { activities } = useAppSelector((state) => state.activities);
+  const { users } = useAppSelector((state) => state.users);
   const dispatch = useAppDispatch();
 
   const [companyName, setCompanyName] = useState('');
@@ -40,11 +42,13 @@ function ModalAddProspect({ closeModal }: IProps) {
   const [statusProspect, setStatusProspect] = useState('');
   const [source, setSource] = useState('');
   const [activity, setActivity] = useState('');
+  const [assignedToId, setAssignedToId] = useState('');
 
   useEffect(() => {
     dispatch(getProspectStatus());
     dispatch(getSources());
     dispatch(getActivities());
+    dispatch(getUsers());
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -73,7 +77,7 @@ function ModalAddProspect({ closeModal }: IProps) {
           other_need: otherNeed,
           is_client: false,
           siret_number: siretNumber,
-          assigned_to_id: 2,
+          assigned_to_id: assignedToId !== "" ? Number(assignedToId) : 1,
           piste_status_id: Number(statusProspect),
           source_id: Number(source),
           activity_id: Number(activity),
@@ -99,6 +103,7 @@ function ModalAddProspect({ closeModal }: IProps) {
       setStatusProspect('');
       setSource('');
       setActivity('');
+      setAssignedToId('');
       closeModal();
     } catch (err) {
       console.error('Failed to save the post: ', err);
@@ -132,13 +137,18 @@ function ModalAddProspect({ closeModal }: IProps) {
         </div>
         <div className="grow px-4 lg:px-10 py-10 pt-0 overflow-auto">
           <form onSubmit={handleSubmit}>
-            <Typography variant="small" className="text-blue-gray-400 text-sm mt-3 mb-2 font-bold uppercase">
+            <Typography
+              variant="small"
+              className="text-blue-gray-400 text-sm mt-3 mb-2 font-bold uppercase"
+            >
               Prospect Information
             </Typography>
             <div className="flex flex-wrap">
               <div className="w-full lg:w-4/12 px-2">
                 <div className="relative w-full">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2">Statut:</label>
+                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2">
+                    Statut:
+                  </label>
                   <select
                     className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     value={statusProspect}
@@ -158,7 +168,9 @@ function ModalAddProspect({ closeModal }: IProps) {
               </div>
               <div className="w-full lg:w-4/12 px-2">
                 <div className="relative w-full">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2">Provenance:</label>
+                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2">
+                    Provenance:
+                  </label>
                   <select
                     className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                     value={source}
@@ -205,7 +217,10 @@ function ModalAddProspect({ closeModal }: IProps) {
             <div className="flex flex-wrap">
               <div className="w-full lg:w-12/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Nom de l'entreprise
                   </label>
                   <input
@@ -219,7 +234,10 @@ function ModalAddProspect({ closeModal }: IProps) {
               </div>
               <div className="w-full lg:w-12/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Address
                   </label>
                   <input
@@ -233,7 +251,10 @@ function ModalAddProspect({ closeModal }: IProps) {
               </div>
               <div className="w-full lg:w-4/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Code Postal
                   </label>
                   <input
@@ -247,7 +268,10 @@ function ModalAddProspect({ closeModal }: IProps) {
               </div>
               <div className="w-full lg:w-4/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Ville
                   </label>
                   <input
@@ -262,7 +286,10 @@ function ModalAddProspect({ closeModal }: IProps) {
 
               <div className="w-full lg:w-4/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Pays
                   </label>
                   <input
@@ -277,7 +304,10 @@ function ModalAddProspect({ closeModal }: IProps) {
 
               <div className="w-full lg:w-6/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Téléphone
                   </label>
                   <input
@@ -291,7 +321,10 @@ function ModalAddProspect({ closeModal }: IProps) {
               </div>
               <div className="w-full lg:w-6/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Email
                   </label>
                   <input
@@ -306,7 +339,10 @@ function ModalAddProspect({ closeModal }: IProps) {
 
               <div className="w-full lg:w-12/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Numéro SIRET
                   </label>
                   <input
@@ -321,7 +357,10 @@ function ModalAddProspect({ closeModal }: IProps) {
               </div>
               <div className="w-full lg:w-12/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Logo
                   </label>
                   <input
@@ -341,7 +380,10 @@ function ModalAddProspect({ closeModal }: IProps) {
             <div className="flex flex-wrap">
               <div className="w-full lg:w-12/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Description du besoin
                   </label>
                   <textarea
@@ -355,7 +397,10 @@ function ModalAddProspect({ closeModal }: IProps) {
               </div>
               <div className="w-full lg:w-4/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     A un site web?
                   </label>
                   <input
@@ -368,7 +413,10 @@ function ModalAddProspect({ closeModal }: IProps) {
               </div>
               <div className="w-full lg:w-4/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Année du site
                   </label>
                   <input
@@ -382,7 +430,10 @@ function ModalAddProspect({ closeModal }: IProps) {
               </div>
               <div className="w-full lg:w-4/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Budget estimé
                   </label>
                   <input
@@ -398,11 +449,16 @@ function ModalAddProspect({ closeModal }: IProps) {
 
             <hr className="my-4 border-b-1 border-blue-gray-300" />
 
-            <h6 className="text-blue-gray-400 text-sm mt-3 mb-6 font-bold uppercase">Liens utiles</h6>
+            <h6 className="text-blue-gray-400 text-sm mt-3 mb-6 font-bold uppercase">
+              Liens utiles
+            </h6>
             <div className="flex flex-wrap">
               <div className="w-full lg:w-12/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Lien du site web
                   </label>
                   <input
@@ -416,7 +472,10 @@ function ModalAddProspect({ closeModal }: IProps) {
               </div>
               <div className="w-full lg:w-12/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Facebook
                   </label>
                   <input
@@ -430,7 +489,10 @@ function ModalAddProspect({ closeModal }: IProps) {
               </div>
               <div className="w-full lg:w-12/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Instagram
                   </label>
                   <input
@@ -444,7 +506,10 @@ function ModalAddProspect({ closeModal }: IProps) {
               </div>
               <div className="w-full lg:w-12/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     LinkedIn
                   </label>
                   <input
@@ -460,11 +525,16 @@ function ModalAddProspect({ closeModal }: IProps) {
 
             <hr className="my-4 border-b-1 border-blue-gray-300" />
 
-            <h6 className="text-blue-gray-400 text-sm mt-3 mb-6 font-bold uppercase">Autre Besoin</h6>
+            <h6 className="text-blue-gray-400 text-sm mt-3 mb-6 font-bold uppercase">
+              Autre Besoin
+            </h6>
             <div className="flex flex-wrap">
               <div className="w-full lg:w-12/12 px-2">
                 <div className="relative w-full mb-3">
-                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2" htmlFor="grid-password">
+                  <label
+                    className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                    htmlFor="grid-password"
+                  >
                     Description
                   </label>
                   <textarea
@@ -477,8 +547,38 @@ function ModalAddProspect({ closeModal }: IProps) {
                 </div>
               </div>
             </div>
+            <hr className="my-4 border-b-1 border-blue-gray-300" />
+
+            <h6 className="text-blue-gray-400 text-sm mt-3 mb-6 font-bold uppercase">Assigner le prospect</h6>
+            <div className="flex flex-wrap">
+              <div className="w-full lg:w-12/12 px-2 mb-4">
+                <div className="relative w-full">
+                  <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2">
+                    Assigné à:
+                  </label>
+                  <select
+                    className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    value={assignedToId}
+                    onChange={(e) => setStatusProspect(e.target.value)}
+                  >
+                    <option value="">-- Choisir --</option>
+                    {users.length &&
+                      users.map((user: IUser, i: number) => {
+                        return (
+                          <option value={user.id} key={i + user.firstname}>
+                            {user.firstname} {user.lastname}
+                          </option>
+                        );
+                      })}
+                  </select>
+                </div>
+              </div>
+            </div>
             <div className="text-center">
-              <button type="submit" className="bg-green-500 text-white py-2 px-4 rounded-md text-sm font-semibold">
+              <button
+                type="submit"
+                className="bg-green-500 text-white py-2 px-4 rounded-md text-sm font-semibold"
+              >
                 Ajouter
               </button>
             </div>
