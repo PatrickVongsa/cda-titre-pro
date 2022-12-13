@@ -1,5 +1,4 @@
 import React from 'react';
-import prospectSlice from '../../redux/prospectSlice';
 import ProspectLine from './ProspectLine.component';
 
 interface IProps {

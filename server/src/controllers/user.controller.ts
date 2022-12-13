@@ -2,6 +2,9 @@ import { Request, Response } from 'express';
 
 import { PrismaClient } from '@prisma/client';
 
+import { hashPassword } from '../middlewares/auth.middleware';
+import { exclude } from '../utils/excludeFiled.utils';
+
 const prisma = new PrismaClient();
 
 // @desc Get all users
@@ -10,7 +13,10 @@ const prisma = new PrismaClient();
 const getUsers = async (req: Request, res: Response) => {
   try {
     const users = await prisma.user.findMany();
-    res.status(200).json(users);
+    const usersWithouPassword = users.map((user) => {
+      return exclude(user, ['password']);
+    });
+    res.status(200).json(usersWithouPassword);
   } catch (err) {
     res.status(500).json({ err });
   }
@@ -27,7 +33,10 @@ const getOneUser = async (req: Request, res: Response) => {
         id: Number(id),
       },
     });
-    res.status(200).json(user);
+    if (user) {
+      const userWithoutPassword = exclude(user, ['password']);
+      res.status(200).json(userWithoutPassword);
+    }
   } catch (err) {
     res.status(500).json({ err });
   }
@@ -37,27 +46,23 @@ const getOneUser = async (req: Request, res: Response) => {
 // @route POST /api/users
 // @access Private
 const createUser = async (req: Request, res: Response) => {
-  const {
-    firstname,
-lastname,
-address,
-postal_code,
-city,
-occupation,
-contrat_type,
-  } = req.body;
+  const { firstname, lastname, address, postal_code, city, occupation, contrat_type, email, password } = req.body;
+
+  const hashedPassword = await hashPassword(password);
 
   try {
     const result = await prisma.user.create({
       data: {
-    firstname,
-    lastname,
-    address,
-    postal_code,
-    city,
-    occupation,
-    contrat_type,
+        firstname,
+        lastname,
+        address,
+        postal_code,
+        city,
+        occupation,
+        contrat_type,
         is_archived: false,
+        email,
+        password: hashedPassword,
       },
     });
     res.status(200).json(result);
@@ -71,16 +76,7 @@ contrat_type,
 // @access Private
 const updateUser = async (req: Request, res: Response) => {
   const id = req.params.id;
-  const {
-
-    firstname,
-lastname,
-address,
-postal_code,
-city,
-occupation,
-contrat_type,
-  } = req.body;
+  const { firstname, lastname, address, postal_code, city, occupation, contrat_type } = req.body;
   try {
     const user = await prisma.user.findUnique({
       where: {
@@ -94,14 +90,13 @@ contrat_type,
       where: { id: Number(id) },
       data: {
         ...user,
-        
-    firstname,
-    lastname,
-    address,
-    postal_code,
-    city,
-    occupation,
-    contrat_type,
+        firstname,
+        lastname,
+        address,
+        postal_code,
+        city,
+        occupation,
+        contrat_type,
         is_archived: false,
       },
     });
@@ -131,7 +126,7 @@ const archiveUser = async (req: Request, res: Response) => {
       where: { id: Number(id) },
       data: {
         ...user,
-        is_archived: is_archived === "true",
+        is_archived: is_archived === 'true',
       },
     });
     res.status(200).json(archivedUser);
