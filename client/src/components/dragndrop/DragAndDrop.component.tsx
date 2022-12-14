@@ -11,7 +11,6 @@ export const DragAndDrop = () => {
   const { prospects, loading: loadingProspect } = useAppSelector((state) => state.prospects);
 
   const dispatch = useAppDispatch();
-
   
   useEffect(() => {
     dispatch(getProspects());

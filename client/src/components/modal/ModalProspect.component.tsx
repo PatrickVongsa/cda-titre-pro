@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux.hook';
-import { updateProspect } from '../../redux/prospectSlice';
+import { archiveProspect, updateProspect } from '../../redux/prospectSlice';
 
 import { Typography } from '@material-tailwind/react';
 
-import { GrClose } from 'react-icons/gr';
+import { GrClose, GrReactjs } from 'react-icons/gr';
 import { getUsers } from '../../redux/userSlice';
+import { FaCheck } from 'react-icons/fa';
+import { MdClose } from 'react-icons/md';
+import { IoMdClose } from 'react-icons/io';
+import { getProspectStatus } from '../../redux/prospectStatusSlice';
+import { getSources } from '../../redux/sourceSlice';
+import { getActivities } from '../../redux/activitySlice';
 
 interface IProps {
   prospect: IProspect;
@@ -13,6 +19,9 @@ interface IProps {
 }
 
 function ModalProspect({ prospect, closeModal }: IProps) {
+  const { status } = useAppSelector((state) => state.prospectStatus);
+  const { sources } = useAppSelector((state) => state.sources);
+  const { activities } = useAppSelector((state) => state.activities);
   const { users } = useAppSelector((state) => state.users);
 
   const [update, setUpdate] = useState({
@@ -37,6 +46,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
     statusProspectUpdate: false,
     sourceUpdate: false,
     activityUpdate: false,
+    assignedToId: false,
   });
 
   const dispatch = useAppDispatch();
@@ -66,117 +76,120 @@ function ModalProspect({ prospect, closeModal }: IProps) {
 
   useEffect(() => {
     dispatch(getUsers());
+    dispatch(getProspectStatus());
+    dispatch(getSources());
+    dispatch(getActivities());
   }, []);
 
-  const handleSubmit = async (e: React.KeyboardEvent) => {
+  const resetUpdate = () => {
+    setUpdate({
+      companyNameUpdate: false,
+      addressUpdate: false,
+      postalCodeUpdate: false,
+      cityUpdate: false,
+      countryUpdate: false,
+      phoneUpdate: false,
+      emailUpdate: false,
+      companyLogoUpdate: false,
+      websiteUrlUpdate: false,
+      facebookUrlUpdate: false,
+      instagramUrlUpdate: false,
+      linkedInUrlUpdate: false,
+      estimateBudgetUpdate: false,
+      needDescriptionUpdate: false,
+      hasWebsiteUpdate: false,
+      websiteYearUpdate: false,
+      otherNeedUpdate: false,
+      siretNumberUpdate: false,
+      statusProspectUpdate: false,
+      sourceUpdate: false,
+      activityUpdate: false,
+      assignedToId: false,
+    });
+  };
+
+  const updateProspectFunction = async () => {
+    let data: IProspect = {
+      id: prospect.id,
+      company_name: companyName,
+      address,
+      postal_code: postalCode,
+      city,
+      country,
+      phone,
+      email,
+      company_logo: companyLogo,
+      website_url: websiteUrl,
+      facebook_url: facebookUrl,
+      instagram_url: instagramUrl,
+      linkedin_url: linkedInUrl,
+      contacted_at: new Date(),
+      estimate_budget: Number(estimateBudget),
+      need_description: needDescription,
+      has_website: hasWebsite,
+      website_year: Number(websiteYear),
+      other_need: otherNeed,
+      is_client: false,
+      siret_number: siretNumber,
+      piste_status_id: Number(statusProspect),
+      source_id: Number(source),
+      activity_id: Number(activity),
+    };
+
+    if (assignedToId !== '') {
+      data.assigned_to_id = Number(assignedToId);
+    }
+
+    try {
+      const updatedProspect = await dispatch(updateProspect(data)).unwrap();
+      setCompanyName(updatedProspect.company_name || '');
+      setAddress(updatedProspect.address || '');
+      setPostalCode(updatedProspect.postal_code || '');
+      setCity(updatedProspect.city || '');
+      setCountry(updatedProspect.country || '');
+      setPhone(updatedProspect.phone || '');
+      setEmail(updatedProspect.email || '');
+      setCompanyLogo(updatedProspect.company_logo || '');
+      setWebsiteUrl(updatedProspect.website_url || '');
+      setFacebookUrl(updatedProspect.facebook_url || '');
+      setInstagramUrl(updatedProspect.instagram_url || '');
+      setLinkedInUrl(updatedProspect.linkedin_url || '');
+      setEstimateBudget(updatedProspect.estimate_budget || '');
+      setNeedDescription(updatedProspect.need_description || '');
+      setHasWebsite(updatedProspect.has_website || false);
+      setWebsiteYear(updatedProspect.website_year || '');
+      setOtherNeed(updatedProspect.other_need || '');
+      setSiretNumber(updatedProspect.siret_number || '');
+      setStatusProspect(updatedProspect.piste_status_id || '');
+      setSource(updatedProspect.source_id || '');
+      setActivity(updatedProspect.activity_id || '');
+      setAssignedToId(updatedProspect.assigned_to_id || '');
+
+      resetUpdate();
+    } catch (err) {
+      console.error('Failed to save the post: ', err);
+    }
+  };
+
+  const handleSubmitKeyDown = async (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.stopPropagation();
       e.preventDefault();
-      try {
-        const updatedProspect = await dispatch(
-          updateProspect({
-            id: prospect.id,
-            company_name: companyName,
-            address,
-            postal_code: postalCode,
-            city,
-            country,
-            phone,
-            email,
-            company_logo: companyLogo,
-            website_url: websiteUrl,
-            facebook_url: facebookUrl,
-            instagram_url: instagramUrl,
-            linkedin_url: linkedInUrl,
-            contacted_at: new Date(),
-            estimate_budget: Number(estimateBudget),
-            need_description: needDescription,
-            has_website: hasWebsite,
-            website_year: Number(websiteYear),
-            other_need: otherNeed,
-            is_client: false,
-            siret_number: siretNumber,
-            assigned_to_id: assignedToId !== '' ? Number(assignedToId) : 0,
-            piste_status_id: Number(statusProspect),
-            source_id: Number(source),
-            activity_id: Number(activity),
-          }),
-        ).unwrap();
-        setCompanyName(updatedProspect.company_name || '');
-        setAddress(updatedProspect.address || '');
-        setPostalCode(updatedProspect.postal_code || '');
-        setCity(updatedProspect.city || '');
-        setCountry(updatedProspect.country || '');
-        setPhone(updatedProspect.phone || '');
-        setEmail(updatedProspect.email || '');
-        setCompanyLogo(updatedProspect.company_logo || '');
-        setWebsiteUrl(updatedProspect.website_url || '');
-        setFacebookUrl(updatedProspect.facebook_url || '');
-        setInstagramUrl(updatedProspect.instagram_url || '');
-        setLinkedInUrl(updatedProspect.linkedin_url || '');
-        setEstimateBudget(updatedProspect.estimate_budget || '');
-        setNeedDescription(updatedProspect.need_description || '');
-        setHasWebsite(updatedProspect.has_website || false);
-        setWebsiteYear(updatedProspect.website_year || '');
-        setOtherNeed(updatedProspect.other_need || '');
-        setSiretNumber(updatedProspect.siret_number || '');
-        setStatusProspect(updatedProspect.piste_status_id || '');
-        setSource(updatedProspect.source_id || '');
-        setActivity(updatedProspect.activity_id || '');
-        setAssignedToId(updatedProspect.assigned_to_id || '');
-
-        setUpdate({
-          companyNameUpdate: false,
-          addressUpdate: false,
-          postalCodeUpdate: false,
-          cityUpdate: false,
-          countryUpdate: false,
-          phoneUpdate: false,
-          emailUpdate: false,
-          companyLogoUpdate: false,
-          websiteUrlUpdate: false,
-          facebookUrlUpdate: false,
-          instagramUrlUpdate: false,
-          linkedInUrlUpdate: false,
-          estimateBudgetUpdate: false,
-          needDescriptionUpdate: false,
-          hasWebsiteUpdate: false,
-          websiteYearUpdate: false,
-          otherNeedUpdate: false,
-          siretNumberUpdate: false,
-          statusProspectUpdate: false,
-          sourceUpdate: false,
-          activityUpdate: false,
-        });
-      } catch (err) {
-        console.error('Failed to save the post: ', err);
-      }
+      updateProspectFunction();
     }
     if (e.key === 'Escape') {
-      setUpdate({
-        companyNameUpdate: false,
-        addressUpdate: false,
-        postalCodeUpdate: false,
-        cityUpdate: false,
-        countryUpdate: false,
-        phoneUpdate: false,
-        emailUpdate: false,
-        companyLogoUpdate: false,
-        websiteUrlUpdate: false,
-        facebookUrlUpdate: false,
-        instagramUrlUpdate: false,
-        linkedInUrlUpdate: false,
-        estimateBudgetUpdate: false,
-        needDescriptionUpdate: false,
-        hasWebsiteUpdate: false,
-        websiteYearUpdate: false,
-        otherNeedUpdate: false,
-        siretNumberUpdate: false,
-        statusProspectUpdate: false,
-        sourceUpdate: false,
-        activityUpdate: false,
-      });
+      resetUpdate();
     }
+  };
+
+  const handleSubmit = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    updateProspectFunction();
+  };
+
+  const handleArchiveClick = async (prospect: IProspect) => {
+    await dispatch(archiveProspect(prospect));
   };
 
   return (
@@ -191,19 +204,178 @@ function ModalProspect({ prospect, closeModal }: IProps) {
         className="relative flex flex-col min-w-0 break-words w-[50%] h-[75%] mb-6 shadow-lg rounded-lg bg-gray-100 border-0 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="absolute top-6 right-6 cursor-pointer">
-          <GrClose
-            className="text-black font-bold uppercase text-lg rounded hover:text-gray-600 outline-none focus:outline-none mr-1 ease-linear transition-all duration-150"
-            onClick={() => closeModal()}
-          />
+        <div className="rounded-t bg-gray-300 mb-0 px-6 py-6">
+          <div className="flex justify-between">
+            <div className="w-full lg:w-8/12 px-2">
+              {!update.companyNameUpdate ? (
+                <div
+                  className="relative w-full rounded px-4"
+                  onClick={() => setUpdate({ ...update, companyNameUpdate: true })}
+                >
+                  <Typography variant="h4" className="capitalize">
+                    {prospect.company_name}
+                  </Typography>
+                </div>
+              ) : (
+                <div className="relative w-full mb-3 bg-white rounded">
+                  <input
+                    type="text"
+                    className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    placeholder="SAS entreprise"
+                    autoFocus
+                    value={companyName}
+                    onChange={(e) => setCompanyName(e.target.value)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
+                  />
+                </div>
+              )}
+            </div>
+
+            <div>
+              <GrClose
+                className="text-black font-bold uppercase text-lg rounded hover:text-gray-800 outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 cursor-pointer"
+                onClick={() => closeModal()}
+              />
+            </div>
+          </div>
         </div>
-        <div className="px-4 lg:px-10 py-10 overflow-auto">
+        <div className="grow px-4 lg:px-10 py-10 pt-0 overflow-auto">
           <Typography
             variant="small"
-            className="text-blue-gray-400 text-sm mt-3 mb-2 font-bold uppercase"
+            className="text-blue-gray-400 text-sm mt-3 mb-6 font-bold uppercase"
           >
-            Prospect Information
+            Informations
           </Typography>
+          <div className="flex flex-wrap">
+            <div className="w-full lg:w-4/12 px-2">
+              <div className="relative w-full">
+                <fieldset className="border border-gray-300 rounded-md p-2">
+                  <legend className="block uppercase text-blue-gray-600 text-xs font-bold mb-2 px-2">
+                    Statut:
+                  </legend>
+                  <select
+                    className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    value={statusProspect}
+                    onChange={(e) => setStatusProspect(e.target.value)}
+                    onClick={() => setUpdate({ ...update, statusProspectUpdate: true })}
+                  >
+                    <option value="">-- Choisir --</option>
+                    {status.length &&
+                      status.map((prsptstatus: IProspectStatus, i: number) => {
+                        return (
+                          <option value={prsptstatus.id} key={i + prsptstatus.name}>
+                            {prsptstatus.name}
+                          </option>
+                        );
+                      })}
+                  </select>
+                  {update.statusProspectUpdate && (
+                    <div className="text-end">
+                      <button
+                        className="bg-green-500 rounded-lg p-2 mt-2"
+                        onClick={(e) => handleSubmit(e)}
+                      >
+                        <FaCheck className="text-white" />
+                      </button>
+
+                      <button
+                        className="bg-red-500 rounded-lg p-2 mt-2 ml-4"
+                        onClick={() => resetUpdate()}
+                      >
+                        <IoMdClose className="text-white font-bold" />
+                      </button>
+                    </div>
+                  )}
+                </fieldset>
+              </div>
+            </div>
+            <div className="w-full lg:w-4/12 px-2">
+              <div className="relative w-full">
+                <fieldset className="border border-gray-300 rounded-md p-2">
+                  <legend className="block uppercase text-blue-gray-600 text-xs font-bold mb-2 px-2">
+                    Provenance:
+                  </legend>
+                  <select
+                    className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    value={source}
+                    onChange={(e) => setSource(e.target.value)}
+                    onClick={() => setUpdate({ ...update, sourceUpdate: true })}
+                  >
+                    <option value="">-- Choisir --</option>
+                    {sources.length &&
+                      sources.map((src: ISource, i: number) => {
+                        return (
+                          <option value={src.id} key={i + src.name}>
+                            {src.name}
+                          </option>
+                        );
+                      })}
+                  </select>
+                  {update.sourceUpdate && (
+                    <div className="text-end">
+                      <button
+                        className="bg-green-500 rounded-lg p-2 mt-2"
+                        onClick={(e) => handleSubmit(e)}
+                      >
+                        <FaCheck className="text-white" />
+                      </button>
+
+                      <button
+                        className="bg-red-500 rounded-lg p-2 mt-2 ml-4"
+                        onClick={() => resetUpdate()}
+                      >
+                        <IoMdClose className="text-white font-bold" />
+                      </button>
+                    </div>
+                  )}
+                </fieldset>
+              </div>
+            </div>
+            <div className="w-full lg:w-4/12 px-2">
+              <div className="relative w-full">
+                <fieldset className="border border-gray-300 rounded-md p-2">
+                  <legend className="block uppercase text-blue-gray-600 text-xs font-bold mb-2 px-2">
+                    Secteur d'activité:
+                  </legend>
+                  <select
+                    className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    value={activity}
+                    onChange={(e) => setActivity(e.target.value)}
+                    onClick={() => setUpdate({ ...update, activityUpdate: true })}
+                  >
+                    <option value="">-- Choisir --</option>
+                    {activities.length &&
+                      activities.map((activity: IActivity, i: number) => {
+                        return (
+                          <option value={activity.id} key={i + activity.name}>
+                            {activity.name}
+                          </option>
+                        );
+                      })}
+                  </select>
+                  {update.activityUpdate && (
+                    <div className="text-end">
+                      <button
+                        className="bg-green-500 rounded-lg p-2 mt-2"
+                        onClick={(e) => handleSubmit(e)}
+                      >
+                        <FaCheck className="text-white" />
+                      </button>
+
+                      <button
+                        className="bg-red-500 rounded-lg p-2 mt-2 ml-4"
+                        onClick={() => resetUpdate()}
+                      >
+                        <IoMdClose className="text-white font-bold" />
+                      </button>
+                    </div>
+                  )}
+                </fieldset>
+              </div>
+            </div>
+          </div>
+
+          <hr className="my-4 border-b-1 border-blue-gray-300" />
           <div className="flex flex-wrap">
             <div className="w-full lg:w-12/12 px-2">
               <Typography
@@ -229,7 +401,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     placeholder="SAS entreprise"
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   />
                 </div>
@@ -259,7 +431,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     placeholder="123, rue de la place"
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   />
                 </div>
@@ -283,7 +455,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     placeholder="31000"
                     value={postalCode}
                     onChange={(e) => setPostalCode(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   />
                 </div>
@@ -307,7 +479,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     placeholder="Paris"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   />
                 </div>
@@ -332,7 +504,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     placeholder="France"
                     value={country}
                     onChange={(e) => setCountry(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   />
                 </div>
@@ -363,7 +535,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     placeholder="05xxxxxxxx"
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   />
                 </div>
@@ -385,7 +557,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     placeholder="moneamil@fournisseur.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   />
                 </div>
@@ -415,7 +587,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     max={14}
                     value={siretNumber}
                     onChange={(e) => setSiretNumber(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   />
                 </div>
@@ -437,7 +609,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     placeholder="logo.[png, jpg, jpeg]"
                     value={companyLogo}
                     onChange={(e) => setCompanyLogo(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   />
                 </div>
@@ -465,7 +637,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     rows={5}
                     value={needDescription}
                     onChange={(e) => setNeedDescription(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   ></textarea>
                 </div>
@@ -508,7 +680,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     placeholder="2000"
                     value={websiteYear}
                     onChange={(e) => setWebsiteYear(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   />
                 </div>
@@ -530,7 +702,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     placeholder="1500"
                     value={estimateBudget}
                     onChange={(e) => setEstimateBudget(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   />
                 </div>
@@ -558,7 +730,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     placeholder="https://lien.com"
                     value={websiteUrl}
                     onChange={(e) => setWebsiteUrl(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   />
                 </div>
@@ -580,7 +752,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     placeholder="https://www.facebook.com/name"
                     value={facebookUrl}
                     onChange={(e) => setFacebookUrl(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   />
                 </div>
@@ -602,7 +774,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     placeholder="https://www.instagram.com/name"
                     value={instagramUrl}
                     onChange={(e) => setInstagramUrl(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   />
                 </div>
@@ -624,7 +796,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     placeholder="https://www.linkedin.com/name"
                     value={linkedInUrl}
                     onChange={(e) => setLinkedInUrl(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   />
                 </div>
@@ -652,7 +824,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                     rows={5}
                     value={otherNeed}
                     onChange={(e) => setOtherNeed(e.target.value)}
-                    onKeyUp={(e) => handleSubmit(e)}
+                    onKeyUp={(e) => handleSubmitKeyDown(e)}
                     autoFocus
                   ></textarea>
                 </div>
@@ -668,28 +840,65 @@ function ModalProspect({ prospect, closeModal }: IProps) {
           <div className="flex flex-wrap">
             <div className="w-full lg:w-12/12 px-2 mb-4">
               <div className="relative w-full">
-                <label className="block uppercase text-blue-gray-600 text-xs font-bold mb-2">
-                  Assigné à:
-                </label>
-                <select
-                  className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  value={assignedToId}
-                  onChange={(e) => setAssignedToId(e.target.value)}
-                  onKeyUp={(e) => handleSubmit(e)}
-                >
-                  <option value="">-- Choisir --</option>
-                  {users.length &&
-                    users.map((user: IUser, i: number) => {
-                      return (
-                        <option value={user.id} key={i + user.firstname}>
-                          {user.firstname} {user.lastname}
-                        </option>
-                      );
-                    })}
-                </select>
+                <fieldset className="border border-gray-300 rounded-md p-2">
+                  <legend className="block uppercase text-blue-gray-600 text-xs font-bold mb-2 px-2">
+                    Assigné à:
+                  </legend>
+                  <select
+                    className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                    value={assignedToId}
+                    onChange={(e) => setAssignedToId(e.target.value)}
+                    onClick={() => setUpdate({ ...update, assignedToId: true })}
+                  >
+                    <option value="">-- Choisir --</option>
+                    {users.length &&
+                      users.map((user: IUser, i: number) => {
+                        return (
+                          <option value={user.id} key={i + user.firstname}>
+                            {user.firstname} {user.lastname}
+                          </option>
+                        );
+                      })}
+                  </select>
+                  {update.assignedToId && (
+                    <div className="text-end">
+                      <button
+                        className="bg-green-500 rounded-lg p-2 mt-2"
+                        onClick={(e) => handleSubmit(e)}
+                      >
+                        <FaCheck className="text-white" />
+                      </button>
+
+                      <button
+                        className="bg-red-500 rounded-lg p-2 mt-2 ml-4"
+                        onClick={() => resetUpdate()}
+                      >
+                        <IoMdClose className="text-white font-bold" />
+                      </button>
+                    </div>
+                  )}
+                </fieldset>
               </div>
             </div>
           </div>
+          {prospect.is_archived && (
+            <>
+              <hr className="my-4 border-b-1 border-blue-gray-300" />
+
+              <h6 className="text-blue-gray-400 text-sm mt-3 mb-2 font-bold uppercase">
+                Restaurer le prospect
+              </h6>
+
+              <div className="flex justify-center">
+                <button
+                  className="bg-green-500 rounded-lg p-2 px-4 mt-2 text-white"
+                  onClick={(e) => handleArchiveClick(prospect)}
+                >
+                  Restaurer
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

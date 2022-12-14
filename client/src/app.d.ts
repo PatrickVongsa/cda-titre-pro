@@ -35,6 +35,7 @@ interface IProspect {
   is_client: boolean;
   siret_number: string;
   assigned_to_id?: number;
+  assigned_to?: IUser;
   piste_status_id: number;
   prospect_status?: IProjectStatus;
   source_id: number;

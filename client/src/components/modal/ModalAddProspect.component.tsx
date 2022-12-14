@@ -54,35 +54,39 @@ function ModalAddProspect({ closeModal }: IProps) {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.stopPropagation();
     e.preventDefault();
+
+    let data: IProspect = {
+      company_name: companyName,
+      address,
+      postal_code: postalCode,
+      city,
+      country,
+      phone,
+      email,
+      company_logo: companyLogo,
+      website_url: websiteUrl,
+      facebook_url: facebookUrl,
+      instagram_url: instagramUrl,
+      linkedin_url: linkedInUrl,
+      contacted_at: new Date(),
+      estimate_budget: Number(estimateBudget),
+      need_description: needDescription,
+      has_website: hasWebsite,
+      website_year: Number(websiteYear),
+      other_need: otherNeed,
+      is_client: false,
+      siret_number: siretNumber,
+      piste_status_id: Number(statusProspect),
+      source_id: Number(source),
+      activity_id: Number(activity),
+    };
+
+    if (assignedToId !== '') {
+      data.assigned_to_id = Number(assignedToId);
+    }
+
     try {
-      await dispatch(
-        addProspect({
-          company_name: companyName,
-          address,
-          postal_code: postalCode,
-          city,
-          country,
-          phone,
-          email,
-          company_logo: companyLogo,
-          website_url: websiteUrl,
-          facebook_url: facebookUrl,
-          instagram_url: instagramUrl,
-          linkedin_url: linkedInUrl,
-          contacted_at: new Date(),
-          estimate_budget: Number(estimateBudget),
-          need_description: needDescription,
-          has_website: hasWebsite,
-          website_year: Number(websiteYear),
-          other_need: otherNeed,
-          is_client: false,
-          siret_number: siretNumber,
-          assigned_to_id: assignedToId !== "" ? Number(assignedToId) : 1,
-          piste_status_id: Number(statusProspect),
-          source_id: Number(source),
-          activity_id: Number(activity),
-        }),
-      ).unwrap();
+      await dispatch(addProspect(data)).unwrap();
       setCompanyName('');
       setAddress('');
       setPostalCode('');
@@ -549,7 +553,9 @@ function ModalAddProspect({ closeModal }: IProps) {
             </div>
             <hr className="my-4 border-b-1 border-blue-gray-300" />
 
-            <h6 className="text-blue-gray-400 text-sm mt-3 mb-6 font-bold uppercase">Assigner le prospect</h6>
+            <h6 className="text-blue-gray-400 text-sm mt-3 mb-6 font-bold uppercase">
+              Assigner le prospect
+            </h6>
             <div className="flex flex-wrap">
               <div className="w-full lg:w-12/12 px-2 mb-4">
                 <div className="relative w-full">

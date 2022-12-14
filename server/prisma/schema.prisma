@@ -281,7 +281,7 @@ model Prospect {
   siret_number     String?           @db.VarChar(20)
   contacts         Contact[]
   assigned_to      User?             @relation(fields: [assigned_to_id], references: [id])
-  assigned_to_id   Int
+  assigned_to_id   Int?
   prospect_status  Prospect_status   @relation(fields: [piste_status_id], references: [id])
   piste_status_id  Int
   source           Source            @relation(fields: [source_id], references: [id])
