@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
-import { allUsers, addOneUser } from '../api/user.api';
+import { allUsers, addOneUser, updateOneUser, archiveOneUser, deleteOneUser } from '../api/user.api';
 
 interface IUserState {
   users: IUser[];
@@ -20,6 +20,27 @@ export const addUser = createAsyncThunk('users/addUser', async (newUser: IUser) 
   return response;
 });
 
+export const updateUser = createAsyncThunk('users/updateUser', async (updateUser: IUser) => {
+  const response = await updateOneUser(updateUser);
+  return response;
+});
+
+export const archiveUser = createAsyncThunk(
+  'users/archiveUser',
+  async (archiveUser: IUser) => {
+    const response = await archiveOneUser(archiveUser);
+    return response;
+  },
+);
+
+export const deleteUser = createAsyncThunk(
+  'users/deleteUser',
+  async (deleteUser: IUser) => {
+    const response = await deleteOneUser(deleteUser);
+    return response;
+  },
+);
+
 export const userSlice = createSlice({
   name: 'users',
   initialState,
@@ -37,40 +58,40 @@ export const userSlice = createSlice({
       })
       .addCase(addUser.fulfilled, (state, action) => {
         state.users.push(action.payload);
-      });
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.users = [
+          ...state.users.map((users: IUser, i: number) => {
+            if (users.id !== action.payload.id) {
+              return users;
+            } else {
+              return action.payload;
+            }
+          }),
+        ];
+      })
+      .addCase(archiveUser.fulfilled, (state, action) => {
+        state.users = [
+          ...state.users.map((user: IUser, i: number) => {
+            if (user.id !== action.payload.id) {
+              return user;
+            } else {
+              return action.payload;
+            }
+          }),
+        ];
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.users = [
+          ...state.users.filter((user: IUser, i: number) => {
+            if (user.id !== action.payload.id) {
+              return user;
+            }
+          }),
+        ];
+      })
   },
-  reducers: {
-    updateUser: (state, action) => {
-      const { index, ...body } = action.payload;
-      state.users = [
-        ...state.users.map((user: IUser, i: number) => {
-          if (i !== index) return user;
-
-          return body;
-        }),
-      ];
-    },
-    deleteUser: (state, action) => {
-      const { index } = action.payload;
-      state.users = [
-        ...state.users.map((user: IUser, i: number) => {
-          if (i !== index) return user;
-          let userDeleted = {
-            ...user,
-            is_archived: true,
-          };
-
-          return {
-            ...userDeleted,
-            is_archived: true,
-          };
-        }),
-      ];
-    },
-  },
+  reducers: {},
 });
-
-// Action creators are generated for each case reducer function
-export const { updateUser, deleteUser } = userSlice.actions;
 
 export default userSlice.reducer;

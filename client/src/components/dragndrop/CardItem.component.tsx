@@ -30,7 +30,7 @@ export const CardItem = ({ data, handleDragging }: Props) => {
     e.stopPropagation();
     await dispatch(archiveProspect(data));
   };
-  console.log(showModal);
+
   return (
     <>
       {!showModal && <ModalProspect prospect={data} closeModal={openModal} />}
