@@ -198,7 +198,7 @@ function ModalProspect({ prospect, closeModal = ()=>console.log("first") }: IPro
       setActivity(updatedProspect.activity_id || '');
       setAssignedToId(updatedProspect.assigned_to_id || '');
 
-      // resetUpdate();
+      resetUpdate();
     } catch (err) {
       console.error('Failed to save the post: ', err);
     }
