@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 
 import activitySlice from "./redux/activitySlice";
-import interactionSlice from "./redux/interectionSlice";
+import interactionSlice from "./redux/interactionSlice";
 import prospectStatusSlice from "./redux/prospectStatusSlice";
 import projectStatusSlice from "./redux/projectStatusSlice";
 import projectTypeSlice from "./redux/projectTypeSlice";

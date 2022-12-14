@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux.hook';
 import { archiveProspect, updateProspect } from '../../redux/prospectSlice';
+import { addInteraction } from '../../redux/interactionSlice';
 
 import { Typography } from '@material-tailwind/react';
 
-import { GrClose, GrReactjs } from 'react-icons/gr';
+import { GrClose } from 'react-icons/gr';
 import { getUsers } from '../../redux/userSlice';
 import { FaCheck } from 'react-icons/fa';
 import { IoMdClose, IoMdSend } from 'react-icons/io';
@@ -13,20 +14,49 @@ import { BiMessageDetail } from 'react-icons/bi';
 import { getProspectStatus } from '../../redux/prospectStatusSlice';
 import { getSources } from '../../redux/sourceSlice';
 import { getActivities } from '../../redux/activitySlice';
+import { getInteractions } from '../../redux/interactionSlice';
+import ChatInteraction from '../chat/ChatInteraction.component';
 
 interface IProps {
   prospect: IProspect;
-  closeModal: () => void;
+  closeModal?: () => void;
 }
 
-function ModalProspect({ prospect, closeModal }: IProps) {
-  const { status } = useAppSelector((state) => state.prospectStatus);
+function ModalProspect({ prospect, closeModal = ()=>console.log("first") }: IProps) {
+  const { status, loading: loadingStatus } = useAppSelector((state) => state.prospectStatus);
   const { sources } = useAppSelector((state) => state.sources);
   const { activities } = useAppSelector((state) => state.activities);
   const { users } = useAppSelector((state) => state.users);
+  const { interactions } = useAppSelector((state) => state.interactions);
 
   const [showInteractions, setShowInteractions] = useState(false);
 
+  /**
+   * Create interactions
+   */
+  const [report, setReport] = useState('');
+
+  const handleClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const data = {
+      report: report,
+      reported_by_id: 1, //+++ get user id from token
+      reported_at: new Date(),
+      piste_id: Number(prospect.id),
+    };
+    try {
+      await dispatch(addInteraction(data)).unwrap();
+      setReport('');
+    } catch (err) {
+      console.error('Failed to save the interaction: ', err);
+    }
+  };
+
+  /**
+   * Update prospect
+   */
   const [update, setUpdate] = useState({
     companyNameUpdate: false,
     addressUpdate: false,
@@ -79,9 +109,9 @@ function ModalProspect({ prospect, closeModal }: IProps) {
 
   useEffect(() => {
     dispatch(getUsers());
-    dispatch(getProspectStatus());
     dispatch(getSources());
     dispatch(getActivities());
+    dispatch(getInteractions());
   }, []);
 
   const resetUpdate = () => {
@@ -168,7 +198,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
       setActivity(updatedProspect.activity_id || '');
       setAssignedToId(updatedProspect.assigned_to_id || '');
 
-      resetUpdate();
+      // resetUpdate();
     } catch (err) {
       console.error('Failed to save the post: ', err);
     }
@@ -195,11 +225,14 @@ function ModalProspect({ prospect, closeModal }: IProps) {
     await dispatch(archiveProspect(prospect));
   };
 
+  console.log('here')
+
   return (
     <div
       className="absolute flex justify-center items-center inset-0 bg-black bg-opacity-50 z-50"
       onClick={(e) => {
         e.preventDefault();
+        e.stopPropagation();
         closeModal();
       }}
     >
@@ -235,8 +268,8 @@ function ModalProspect({ prospect, closeModal }: IProps) {
             </div>
 
             <button
-              className="block text-gray-700 border border-current rounded-lg p-2"
-              title={!showInteractions ? "Voir les intéractions" : "Masquer les intéractions"}
+              className="block text-gray-700 border border-current rounded-lg p-2 hover:bg-gray-700 hover:text-white hover:border-gray-700"
+              title={!showInteractions ? 'Voir les intéractions' : 'Masquer les intéractions'}
             >
               <BiMessageDetail
                 className=" text-2xl font-bold uppercase rounded outline-none focus:outline-none  ease-linear transition-all duration-150 cursor-pointer"
@@ -247,7 +280,11 @@ function ModalProspect({ prospect, closeModal }: IProps) {
             <div>
               <GrClose
                 className="text-black font-bold uppercase text-xl rounded outline-none focus:outline-none mr-1 ease-linear transition-all duration-150 cursor-pointer"
-                onClick={() => closeModal()}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  closeModal();
+                }}
               />
             </div>
           </div>
@@ -274,7 +311,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                       onClick={() => setUpdate({ ...update, statusProspectUpdate: true })}
                     >
                       <option value="">-- Choisir --</option>
-                      {status.length &&
+                      {!loadingStatus &&
                         status.map((prsptstatus: IProspectStatus, i: number) => {
                           return (
                             <option value={prsptstatus.id} key={i + prsptstatus.name}>
@@ -393,7 +430,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
             <div className="flex flex-wrap">
               <div className="w-full lg:w-12/12 px-2">
                 <Typography
-                  variant="legend"
+                  variant="small"
                   className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
                 >
                   Adresse
@@ -496,7 +533,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
               </div>
 
               <Typography
-                variant="legend"
+                variant="small"
                 className="w-full block uppercase text-blue-gray-600 text-xs font-bold mb-2 px-2"
               >
                 Contact
@@ -550,7 +587,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
 
               <div className="w-full lg:w-12/12 px-2">
                 <Typography
-                  variant="legend"
+                  variant="small"
                   className="w-full block uppercase text-blue-gray-600 text-xs font-bold mb-2 px-2"
                 >
                   Numéro de SIRET
@@ -890,27 +927,19 @@ function ModalProspect({ prospect, closeModal }: IProps) {
           </div>
         ) : (
           <div className="grow px-4 lg:p-4 overflow-auto flex flex-col gap-2">
-            <div className="h-4/6 border border-gray-400 rounded-lg p-2 overflow-auto bg-white">
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
-              <p>coucoucoucou</p>
+            <div className="h-4/6 border border-gray-400 rounded-lg p-2 overflow-auto bg-white flex flex-col">
+              {interactions.length > 0 &&
+                interactions.map((interaction: IInteraction, i: number) => {
+                  if (interaction.piste_id === prospect.id && !interaction.is_archived) {
+                    return (
+                      <ChatInteraction
+                        key={i + interaction.report}
+                        report={interaction}
+                        prospectId={prospect.id}
+                      />
+                    );
+                  }
+                })}
             </div>
             <div className="h-2/6 border border-gray-400 rounded-lg overflow-hidden relative">
               <textarea
@@ -918,8 +947,15 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                 id="interaction"
                 className="h-full w-full p-2 resize-none pb-9"
                 placeholder="Décrire votre intéraction..."
+                value={report}
+                onChange={(e) => setReport(e.target.value)}
               ></textarea>
-              <button className="block absolute bottom-2 right-2 bg-green-400 rounded-lg h-fit px-4 py-1">
+              <button
+                className="block absolute bottom-2 right-2 bg-green-400 rounded-lg h-fit px-4 py-1"
+                onClick={(e) => {
+                  handleClick(e);
+                }}
+              >
                 <IoMdSend className="text-xl text-white" />
               </button>
             </div>

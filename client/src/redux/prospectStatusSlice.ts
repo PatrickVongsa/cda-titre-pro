@@ -24,7 +24,9 @@ export const getProspectStatus = createAsyncThunk(
 export const addProspectStatus = createAsyncThunk(
   "prospectStatus/addProspectStatus",
   async (newProspectStatus: IProspectStatus) => {
+    console.log(newProspectStatus)
     const response = await addOneProspectStatus(newProspectStatus);
+    console.log(response)
     return response;
   }
 );
@@ -45,7 +47,9 @@ export const prospectStatusSlice = createSlice({
         state.loading = false;
       })
       .addCase(addProspectStatus.fulfilled, (state, action) => {
+        console.log(action.payload)
         state.status.push(action.payload);
+        console.log(current(state))
       });
   },
   reducers: {

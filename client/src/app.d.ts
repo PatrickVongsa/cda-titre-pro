@@ -7,7 +7,7 @@ interface IActivity {
 interface IInteraction {
   id?: number;
   report: string;
-  reported_by: IUser;
+  reported_by?: IUser;
   reported_by_id: number;
   reported_at: Date;
   prospect?: IProspect;
@@ -57,6 +57,7 @@ interface IProspect {
   activity_id: number;
   activity?: IActivity;
   is_archived?: boolean;
+  interactions?: IInteraction[];
 }
 
 interface IProjectStatus {

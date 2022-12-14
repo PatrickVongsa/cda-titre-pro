@@ -43,6 +43,7 @@ const getProspects = async (req: Request, res: Response) => {
         source: true,
         activity: true,
         prospect_status: true,
+        interactions: true,
       },
     });
     res.status(200).json(prospects);
@@ -60,6 +61,13 @@ const getOneProspect = async (req: Request, res: Response) => {
     const prospect = await prisma.prospect.findUnique({
       where: {
         id: Number(id),
+      },
+      include: {
+        assigned_to: true,
+        source: true,
+        activity: true,
+        prospect_status: true,
+        interactions: true,
       },
     });
     res.status(200).json(prospect);
@@ -138,6 +146,7 @@ const createProspect = async (req: Request, res: Response) => {
         source: true,
         activity: true,
         prospect_status: true,
+        interactions: true,
       },
     });
     res.status(200).json(result);
@@ -229,6 +238,7 @@ const updateProspect = async (req: Request, res: Response) => {
         source: true,
         activity: true,
         prospect_status: true,
+        interactions: true,
       },
     });
     res.status(200).json(updatedProspect);
