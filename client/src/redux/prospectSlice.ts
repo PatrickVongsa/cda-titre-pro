@@ -38,7 +38,6 @@ export const archiveProspect = createAsyncThunk(
   'prospects/archiveProspect',
   async (archiveProspect: IProspect) => {
     const response = await archiveOneProspect(archiveProspect);
-    console.log(response);
     return response;
   },
 );
@@ -67,7 +66,6 @@ export const prospectSlice = createSlice({
       })
       .addCase(addProspect.fulfilled, (state, action) => {
         state.prospects.push(action.payload);
-        console.log(current(state));
       })
       .addCase(updateProspect.fulfilled, (state, action) => {
         state.prospects = [

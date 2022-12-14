@@ -44,9 +44,7 @@ export const projectSlice = createSlice({
         state.loading = false;
       })
       .addCase(addProject.fulfilled, (state, action) => {
-        console.log(action.payload)
         state.projects.push(action.payload);
-        console.log(current(state))
       });
   },
   reducers: {

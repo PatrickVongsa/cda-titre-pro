@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAppDispatch } from './redux.hook';
 import { updateProspect } from '../redux/prospectSlice';
 
-export const useDragAndDrop = (initialList: IProspect[], statusList: IProjectStatus[]) => {
+export const useDragAndDrop = (initialList: IProspect[], statusList: IProspectStatus[]) => {
   const [isDragging, setIsDragging] = useState(false);
   const [listItems, setListItems] = useState<IProspect[]>(initialList);
   const [listStatus, setListStatus] = useState<IProjectStatus[]>(statusList);

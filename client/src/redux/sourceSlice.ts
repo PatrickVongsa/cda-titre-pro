@@ -36,9 +36,7 @@ export const sourceSlice = createSlice({
           state.loading = false;
         })
         .addCase(addSource.fulfilled, (state, action) => {
-          console.log(action.payload)
           state.sources.push(action.payload);
-          console.log(current(state))
         });
     },
     reducers: {

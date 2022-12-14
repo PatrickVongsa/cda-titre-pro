@@ -199,7 +199,6 @@ function Project() {
                 <select
                   value={type}
                   onChange={(e) => {
-                    console.log(e.target.value);
                     setType(e.target.value);
                   }}
                 >

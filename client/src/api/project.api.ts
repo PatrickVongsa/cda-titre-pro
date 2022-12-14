@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const PROSPECT_STATUS_URL = import.meta.env.VITE_API_URL + "/projects";
+const API_URL = import.meta.env.VITE_API_URL + "/projects";
 
 const instance = axios.create({
-  baseURL: PROSPECT_STATUS_URL,
+  baseURL: API_URL,
 });
 
 export const allProjects = async () => {
@@ -11,6 +11,5 @@ export const allProjects = async () => {
 };
 
 export const addOneProject = async (newProject: IProject) => {
-  console.log(newProject)
   return (await instance.post("/", newProject))?.data;
 };

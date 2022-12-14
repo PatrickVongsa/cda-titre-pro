@@ -44,9 +44,7 @@ export const projectTypeSlice = createSlice({
         state.loading = false;
       })
       .addCase(addProjectType.fulfilled, (state, action) => {
-        console.log(action.payload)
         state.type.push(action.payload);
-        console.log(current(state))
       });
   },
   reducers: {

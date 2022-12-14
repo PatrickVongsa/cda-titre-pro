@@ -9,7 +9,12 @@ const prisma = new PrismaClient();
 // @access Private
 const getInteractions = async (req: Request, res: Response) => {
   try {
-    const interactions = await prisma.interaction.findMany();
+    const interactions = await prisma.interaction.findMany({
+      include: {
+        reported_by: true,
+        modified_by: true,
+      },
+    });
     res.status(200).json(interactions);
   } catch (err) {
     res.status(500).json({ err });
@@ -26,6 +31,10 @@ const getOneInteraction = async (req: Request, res: Response) => {
       where: {
         id: Number(id),
       },
+      include: {
+        reported_by: true,
+        modified_by: true,
+      },
     });
     res.status(200).json(interaction);
   } catch (err) {
@@ -37,17 +46,22 @@ const getOneInteraction = async (req: Request, res: Response) => {
 // @route POST /api/interactions
 // @access Private
 const createInteraction = async (req: Request, res: Response) => {
-  const { report, reported_by_id, reported_at, piste_id, modified_by_id, modified_at } = req.body;
+  const { report, reported_by_id, reported_at, piste_id } = req.body;
+
+  let data = {
+    report,
+    reported_by_id: Number(reported_by_id),
+    reported_at: new Date(reported_at),
+    piste_id: Number(piste_id),
+    is_archived: false,
+  };
+
   try {
     const result = await prisma.interaction.create({
-      data: {
-        report,
-        reported_by_id: Number(reported_by_id),
-        reported_at: new Date(reported_at),
-        piste_id: Number(piste_id),
-        modified_by_id: Number(modified_by_id),
-        modified_at: new Date(modified_at),
-        is_archived: false,
+      data,
+      include: {
+        reported_by: true,
+        modified_by: true,
       },
     });
     res.status(200).json(result);
@@ -83,6 +97,10 @@ const updateInteraction = async (req: Request, res: Response) => {
         modified_at: new Date(modified_at),
         is_archived: false,
       },
+      include: {
+        reported_by: true,
+        modified_by: true,
+      },
     });
     res.status(200).json(updatedInteraction);
   } catch (error) {
@@ -110,6 +128,10 @@ const archiveInteraction = async (req: Request, res: Response) => {
       data: {
         ...interaction,
         is_archived: is_archived === 'true',
+      },
+      include: {
+        reported_by: true,
+        modified_by: true,
       },
     });
     res.status(200).json(updatedInteraction);
