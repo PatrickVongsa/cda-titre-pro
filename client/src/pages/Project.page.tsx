@@ -81,12 +81,13 @@ function Project() {
   }, []);
 
   return (
-    <div className="page-content">
+    <div className="relative p-4 grow h-screen w-[calc(100%-64rem)]">
       <Header
         pageTitle="Projets"
         searchBar={false}
         tabs={false}
         createButton={false}
+        openModal={()=>alert('coucou')}
       />
       <section style={{ display: "flex" }}>
         <div>
@@ -198,7 +199,6 @@ function Project() {
                 <select
                   value={type}
                   onChange={(e) => {
-                    console.log(e.target.value);
                     setType(e.target.value);
                   }}
                 >
@@ -268,6 +268,7 @@ function Project() {
               return <p key={i}>{project.name}</p>;
             })}
         </div>
+        
       </section>
     </div>
   );

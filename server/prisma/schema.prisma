@@ -158,9 +158,9 @@ model Interaction {
   reported_at    DateTime @db.DateTime(0)
   prospect       Prospect @relation(fields: [piste_id], references: [id])
   piste_id       Int
-  modified_by    User     @relation(fields: [modified_by_id], references: [id], name: "modifiedByUserId")
-  modified_by_id Int
-  modified_at    DateTime @db.DateTime(0)
+  modified_by    User?     @relation(fields: [modified_by_id], references: [id], name: "modifiedByUserId")
+  modified_by_id Int?
+  modified_at    DateTime? @db.DateTime(0)
   is_archived    Boolean
 }
 
@@ -281,7 +281,7 @@ model Prospect {
   siret_number     String?           @db.VarChar(20)
   contacts         Contact[]
   assigned_to      User?             @relation(fields: [assigned_to_id], references: [id])
-  assigned_to_id   Int
+  assigned_to_id   Int?
   prospect_status  Prospect_status   @relation(fields: [piste_status_id], references: [id])
   piste_status_id  Int
   source           Source            @relation(fields: [source_id], references: [id])
@@ -336,11 +336,11 @@ model Tva {
 //**
 model User {
   id                   Int              @id @default(autoincrement())
-  firstname            String?          @db.VarChar(155)
-  lastname             String?          @db.VarChar(155)
-  address              String?          @db.VarChar(255)
-  postal_code          String?          @db.VarChar(6)
-  city                 String?          @db.VarChar(255)
+  firstname            String           @db.VarChar(155)
+  lastname             String           @db.VarChar(155)
+  address              String           @db.VarChar(255)
+  postal_code          String           @db.VarChar(6)
+  city                 String           @db.VarChar(255)
   occupation           String           @db.VarChar(255)
   contrat_type         String           @db.VarChar(255)
   prospects            Prospect[]
@@ -349,4 +349,7 @@ model User {
   interaction_modified Interaction[]    @relation(name: "modifiedByUserId")
   project_user         Project_user[]
   Emergency_user       Emergency_user[]
+  email                String           @db.VarChar(255)
+  password             String           @db.VarChar(255)
+  phone                String           @db.VarChar(10)
 }

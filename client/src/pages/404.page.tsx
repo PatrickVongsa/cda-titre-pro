@@ -2,7 +2,7 @@ import React from 'react'
 
 function NoMatch() {
   return (
-    <div>404</div>
+    <div className="relative p-4 grow h-screen w-[calc(100%-64rem)]">404</div>
   )
 }
 

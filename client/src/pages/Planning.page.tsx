@@ -2,7 +2,7 @@ import React from 'react'
 
 function Planning() {
   return (
-    <div>Planning</div>
+    <div className="relative p-4 grow h-screen w-[calc(100%-64rem)]">Planning</div>
   )
 }
 
