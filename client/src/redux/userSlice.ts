@@ -36,9 +36,7 @@ export const userSlice = createSlice({
         state.loading = false;
       })
       .addCase(addUser.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.users.push(action.payload);
-        console.log(current(state));
       });
   },
   reducers: {

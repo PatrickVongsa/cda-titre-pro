@@ -19,11 +19,9 @@ function ListView({ color = 'light', seeArchive = false }) {
   if (seeArchive) {
     prospectsNotArchive = prospects.filter((prospect: IProspect, i: number) => {
       if (prospect.is_archived) {
-        console.log(prospect);
         return prospect;
       }
     });
-    console.log(prospectsNotArchive);
   }
 
   const dispatch = useAppDispatch();

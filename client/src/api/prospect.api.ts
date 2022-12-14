@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const PROSPECT_STATUS_URL = import.meta.env.VITE_API_URL + '/prospects';
+const API_URL = import.meta.env.VITE_API_URL + '/prospects';
 
 const instance = axios.create({
-  baseURL: PROSPECT_STATUS_URL,
+  baseURL: API_URL,
 });
 
 export const allProspects = async () => {

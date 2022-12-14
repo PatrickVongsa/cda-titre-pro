@@ -36,9 +36,7 @@ export const activitySlice = createSlice({
           state.loading = false;
         })
         .addCase(addActivity.fulfilled, (state, action) => {
-          console.log(action.payload)
           state.activities.push(action.payload);
-          console.log(current(state))
         });
     },
     reducers: {

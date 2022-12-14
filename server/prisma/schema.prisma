@@ -158,9 +158,9 @@ model Interaction {
   reported_at    DateTime @db.DateTime(0)
   prospect       Prospect @relation(fields: [piste_id], references: [id])
   piste_id       Int
-  modified_by    User     @relation(fields: [modified_by_id], references: [id], name: "modifiedByUserId")
-  modified_by_id Int
-  modified_at    DateTime @db.DateTime(0)
+  modified_by    User?     @relation(fields: [modified_by_id], references: [id], name: "modifiedByUserId")
+  modified_by_id Int?
+  modified_at    DateTime? @db.DateTime(0)
   is_archived    Boolean
 }
 

@@ -4,6 +4,20 @@ interface IActivity {
   is_archived?: boolean;
 }
 
+interface IInteraction {
+  id?: number;
+  report: string;
+  reported_by: IUser;
+  reported_by_id: number;
+  reported_at: Date;
+  prospect?: IProspect;
+  piste_id: number;
+  modified_by?: IUser;
+  modified_by_id?: number;
+  modified_at?: Date;
+  is_archived?: boolean;
+}
+
 interface IProspectStatus {
   id?: number;
   name: string;
@@ -86,10 +100,10 @@ interface IUser {
   address: string;
   postal_code: string;
   city: string;
-  phone: string
+  phone: string;
   occupation: string;
   contrat_type: string;
   is_archived?: boolean;
   email: string;
-  password?: string
+  password?: string;
 }

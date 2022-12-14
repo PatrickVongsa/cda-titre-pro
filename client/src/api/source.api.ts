@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const PROSPECT_STATUS_URL = import.meta.env.VITE_API_URL + '/sources';
+const API_URL = import.meta.env.VITE_API_URL + '/sources';
 
 const instance = axios.create({
-  baseURL: PROSPECT_STATUS_URL,
+  baseURL: API_URL,
 });
 
 export const allSources = async () => {
@@ -11,6 +11,5 @@ export const allSources = async () => {
 };
 
 export const addOneSource = async (newSource: ISource) => {
-  console.log(newSource);
   return (await instance.post('/', newSource))?.data;
 };

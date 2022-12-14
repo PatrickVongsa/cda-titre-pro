@@ -44,10 +44,6 @@ export const verifyPassword = async (passwordInput: string, user: User) => {
     return;
   }
   const verifiedPassword = await argon2.verify(user.password, passwordInput);
-
-  console.log({ password: user['password'], passwordInput });
-
-  console.log(verifiedPassword);
   if (verifiedPassword) {
     // password match generate token
     const token = await jwt.sign(
