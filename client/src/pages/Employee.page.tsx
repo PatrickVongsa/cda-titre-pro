@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from '../hooks/redux.hook';
 
 import useModal from '../hooks/useModal';
@@ -7,18 +7,24 @@ import Header from '../components/header/Header.component';
 import ModalAddUser from '../components/modal/ModalAddUser.component';
 
 import { getUsers } from '../redux/userSlice';
+import CardUser from '../components/cards/CardUser.component';
+import DetaiUser from '../components/details/DetaiUser.component';
 
 function Employee() {
   const { isShowing, toggle } = useModal();
-  
+
   const { users, loading } = useAppSelector((state) => state.users);
 
   const dispatch = useAppDispatch();
 
+  const [displayUser, setDisplayUser] = useState<IUser | null>(null);
+
+  const handleSetDisplayUser = (user: IUser) => setDisplayUser(user);
+
   useEffect(() => {
     dispatch(getUsers());
   }, []);
-
+console.log(displayUser)
   return (
     <div className="relative p-4 grow h-screen w-[calc(100%-64rem)]">
       <Header
@@ -29,11 +35,30 @@ function Employee() {
         openModal={toggle}
       />
       {isShowing && <ModalAddUser closeModal={toggle} />}
-      <div>
-        {!loading &&
-          users.map((user: IUser, i: number) => {
-            return <p key={i + user.firstname}>{user.firstname}</p>;
-          })}
+      <div className="flex h-[90%]">
+        <div className="w-3/12 pr-2 mr-2 border-r border-gray--700 h-full overflow-auto">
+          {!loading &&
+            users.map((user: IUser, i: number) => {
+              if (!user.is_archived) {
+                return (
+                  <CardUser
+                    user={user}
+                    key={i + user.firstname}
+                    displayUserID={displayUser?.id}
+                    setDisplayUser={handleSetDisplayUser}
+                  />
+                );
+              }
+            })}
+        </div>
+        <div className="w-9/12 flex flex-col">
+          {displayUser && 
+            <>
+              <DetaiUser user={displayUser} />
+              <div className="grow"></div>
+            </>
+          }
+        </div>
       </div>
     </div>
   );
