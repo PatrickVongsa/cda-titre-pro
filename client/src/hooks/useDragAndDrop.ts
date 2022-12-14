@@ -10,7 +10,13 @@ export const useDragAndDrop = (initialList: IProspect[], statusList: IProjectSta
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setListItems(initialList);
+    const prospectsNotArchive = initialList.filter((prospect: IProspect, i: number) => {
+      if (!prospect.is_archived) {
+        return prospect;
+      }
+    })
+
+    setListItems(prospectsNotArchive);
     setListStatus(statusList);
   }, [initialList, listStatus]);
 

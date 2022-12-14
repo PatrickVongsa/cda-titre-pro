@@ -17,3 +17,11 @@ export const addOneProspect = async (newProspect: IProspect) => {
 export const updateOneProspect = async (updateProspect: IProspect) => {
   return (await instance.put(`/${updateProspect.id}`, updateProspect))?.data;
 };
+
+export const archiveOneProspect = async (updateProspect: IProspect) => {
+  return (await instance.put(`/archive/${updateProspect.id}`, { is_archived: String(!updateProspect.is_archived) }))?.data;
+};
+
+export const deleteOneProspect = async (deleteProspect: IProspect) => {
+  return (await instance.delete(`/${deleteProspect.id}`))?.data;
+};

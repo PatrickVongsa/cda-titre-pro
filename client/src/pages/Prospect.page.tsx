@@ -25,7 +25,7 @@ function Prospect() {
       {isShowing && <ModalAddProspect closeModal={toggle} />}
       {activeTabs === 'column' && <DragAndDrop />}
       {activeTabs === 'list' && <ListView />}
-      {activeTabs === 'archive' && <DragAndDrop />}
+      {activeTabs === 'archive' && <ListView seeArchive={true} />}
     </div>
   );
 }

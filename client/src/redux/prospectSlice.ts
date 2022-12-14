@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
-import { allProspects, addOneProspect, updateOneProspect } from '../api/prospect.api';
+import {
+  allProspects,
+  addOneProspect,
+  updateOneProspect,
+  archiveOneProspect,
+  deleteOneProspect,
+} from '../api/prospect.api';
 
 interface IProspectState {
   prospects: IProspect[];
@@ -14,14 +20,35 @@ const initialState: IProspectState = {
 export const getProspects = createAsyncThunk('prospects/getProspects', () => {
   return allProspects();
 });
-export const addProspect = createAsyncThunk('prospects/addProspect', async (newProspect: IProspect) => {
-  const response = await addOneProspect(newProspect);
-  return response;
-});
-export const updateProspect = createAsyncThunk('prospects/updateProspect', async (updateProspect: IProspect) => {
-  const response = await updateOneProspect(updateProspect);
-  return response;
-});
+export const addProspect = createAsyncThunk(
+  'prospects/addProspect',
+  async (newProspect: IProspect) => {
+    const response = await addOneProspect(newProspect);
+    return response;
+  },
+);
+export const updateProspect = createAsyncThunk(
+  'prospects/updateProspect',
+  async (updateProspect: IProspect) => {
+    const response = await updateOneProspect(updateProspect);
+    return response;
+  },
+);
+export const archiveProspect = createAsyncThunk(
+  'prospects/archiveProspect',
+  async (archiveProspect: IProspect) => {
+    const response = await archiveOneProspect(archiveProspect);
+    console.log(response);
+    return response;
+  },
+);
+export const deleteProspect = createAsyncThunk(
+  'prospects/deleteProspect',
+  async (deleteProspect: IProspect) => {
+    const response = await deleteOneProspect(deleteProspect);
+    return response;
+  },
+);
 
 export const prospectSlice = createSlice({
   name: 'prospects',
@@ -52,30 +79,29 @@ export const prospectSlice = createSlice({
             }
           }),
         ];
-      });
+      })
+      .addCase(archiveProspect.fulfilled, (state, action) => {
+        state.prospects = [
+          ...state.prospects.map((prospect: IProspect, i: number) => {
+            if (prospect.id !== action.payload.id) {
+              return prospect;
+            } else {
+              return action.payload;
+            }
+          }),
+        ];
+      })
+      .addCase(deleteProspect.fulfilled, (state, action) => {
+        state.prospects = [
+          ...state.prospects.filter((prospect: IProspect, i: number) => {
+            if (prospect.id !== action.payload.id) {
+              return prospect;
+            }
+          }),
+        ];
+      })
   },
-  reducers: {
-    deleteProspect: (state, action) => {
-      const { index } = action.payload;
-      state.prospects = [
-        ...state.prospects.map((prospect: IProspect, i: number) => {
-          if (i !== index) return prospect;
-          let prospectDeleted = {
-            ...prospect,
-            is_archived: true,
-          };
-
-          return {
-            ...prospectDeleted,
-            is_archived: true,
-          };
-        }),
-      ];
-    },
-  },
+  reducers: {},
 });
-
-// Action creators are generated for each case reducer function
-export const { deleteProspect } = prospectSlice.actions;
 
 export default prospectSlice.reducer;
