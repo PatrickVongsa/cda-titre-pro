@@ -6,18 +6,21 @@ interface IAuthState {
   user: IUser | null;
   token: string | null;
 }
-const localStorageUser = JSON.parse(localStorage.getItem("user") || '{}');
-const localStorageToken = JSON.parse(localStorage.getItem("currentUser") || '{}');
+const localStorageUser = JSON.parse(localStorage.getItem('user') || 'null');
+const localStorageToken = JSON.parse(localStorage.getItem('currentUser') || 'null');
 
-const initialState: IAuthState = localStorageUser && localStorageToken ? {
-  user: localStorageUser,
-  isLoggedIn: true,
-  token: localStorageToken,
-} : {
-  user: null,
-  isLoggedIn: false,
-  token: null,
-};
+const initialState: IAuthState =
+  localStorageUser?.firstname && localStorageToken?.token
+    ? {
+        user: localStorageUser,
+        isLoggedIn: true,
+        token: localStorageToken.token,
+      }
+    : {
+        user: null,
+        isLoggedIn: false,
+        token: null,
+      };
 
 export const login = createAsyncThunk('auth/login', (data: IData) => {
   return userLogin(data);
