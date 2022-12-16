@@ -9,6 +9,7 @@ import projectSlice from "./redux/projectSlice";
 import prospectSlice from "./redux/prospectSlice";
 import sourceSlice from "./redux/sourceSlice";
 import userSlice from "./redux/userSlice";
+import authSlice from "./redux/authSlice";
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     prospects: prospectSlice,
     sources: sourceSlice,
     users: userSlice,
+    auth: authSlice
   },
 });
 

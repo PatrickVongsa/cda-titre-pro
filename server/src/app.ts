@@ -59,7 +59,7 @@ app.post('/api/login', async (req, res) => {
     if (typeof token === 'object') {
       return res.status(500).json({ message: 'Wrong credentials' });
     } else {
-      return res.cookie('token', token).json({ success: true, message: 'LoggedIn Successfully' });
+      return res.status(200).json({user, token});
     }
   } catch (error) {
     return res.json({ error: error });
