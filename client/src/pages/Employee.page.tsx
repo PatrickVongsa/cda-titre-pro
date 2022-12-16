@@ -9,6 +9,7 @@ import ModalAddUser from '../components/modal/ModalAddUser.component';
 import { getUsers } from '../redux/userSlice';
 import CardUser from '../components/cards/CardUser.component';
 import DetaiUser from '../components/details/DetaiUser.component';
+import TabContainer from '../components/tabsUser/TabContainer.component';
 
 function Employee() {
   const { isShowing, toggle } = useModal();
@@ -55,7 +56,9 @@ console.log(displayUser)
           {displayUser && 
             <>
               <DetaiUser user={displayUser} />
-              <div className="grow"></div>
+              <div className="grow">
+                <TabContainer />
+              </div>
             </>
           }
         </div>
