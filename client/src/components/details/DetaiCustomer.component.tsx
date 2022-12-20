@@ -89,7 +89,6 @@ function DetailCustomer({ customer, setDisplayCustomer }: IProps) {
   const handleclick = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log('first');
     await dispatch(archiveProspect(customer));
     setDisplayCustomer(null)
   };
