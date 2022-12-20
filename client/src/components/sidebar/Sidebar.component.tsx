@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/redux.hook';
+import { logout } from '../../redux/authSlice';
 
 import Logo from '../../assets/logo.webp';
 import User from '../../assets/user.jpeg';
@@ -20,6 +22,15 @@ import { MdOutlineLogout } from 'react-icons/md';
 function Sidebar() {
   const [open, setOpen] = useState(false);
 
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await dispatch(logout());
+    navigate('/login');
+  };
+
   return (
     <div className="md:left-0 md:flex-col md:min-w-64 md:w-64 md:top-0 md:bottom-0 md:overflow-y-auto md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between py-2 px-6">
       <div className="w-full">
@@ -39,10 +50,14 @@ function Sidebar() {
               <li
                 className={
                   'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
-                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                  (isActive
+                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                    : 'text-blue-gray-800 hover:bg-blue-gray-100')
                 }
               >
-                <FaHome className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
+                <FaHome
+                  className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')}
+                />
                 <span>Tableau de bord</span>
               </li>
             )}
@@ -52,10 +67,14 @@ function Sidebar() {
               <li
                 className={
                   'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
-                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                  (isActive
+                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                    : 'text-blue-gray-800 hover:bg-blue-gray-100')
                 }
               >
-                <FaUserTag className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
+                <FaUserTag
+                  className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')}
+                />
                 <span>Prospects</span>
               </li>
             )}
@@ -65,10 +84,14 @@ function Sidebar() {
               <li
                 className={
                   'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
-                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                  (isActive
+                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                    : 'text-blue-gray-800 hover:bg-blue-gray-100')
                 }
               >
-                <FaUserTie className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
+                <FaUserTie
+                  className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')}
+                />
                 <span>Clients</span>
               </li>
             )}
@@ -78,10 +101,14 @@ function Sidebar() {
               <li
                 className={
                   'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
-                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                  (isActive
+                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                    : 'text-blue-gray-800 hover:bg-blue-gray-100')
                 }
               >
-                <FaBusinessTime className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
+                <FaBusinessTime
+                  className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')}
+                />
                 <span>Planning</span>
               </li>
             )}
@@ -91,10 +118,14 @@ function Sidebar() {
               <li
                 className={
                   'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
-                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                  (isActive
+                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                    : 'text-blue-gray-800 hover:bg-blue-gray-100')
                 }
               >
-                <FaCode className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
+                <FaCode
+                  className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')}
+                />
                 <span>Projets</span>
               </li>
             )}
@@ -104,10 +135,14 @@ function Sidebar() {
               <li
                 className={
                   'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
-                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                  (isActive
+                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                    : 'text-blue-gray-800 hover:bg-blue-gray-100')
                 }
               >
-                <FaFileInvoiceDollar className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
+                <FaFileInvoiceDollar
+                  className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')}
+                />
                 <span>Devis / Factures</span>
               </li>
             )}
@@ -117,10 +152,14 @@ function Sidebar() {
               <li
                 className={
                   'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
-                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                  (isActive
+                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                    : 'text-blue-gray-800 hover:bg-blue-gray-100')
                 }
               >
-                <FaUser className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
+                <FaUser
+                  className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')}
+                />
                 <span>Employés</span>
               </li>
             )}
@@ -143,10 +182,14 @@ function Sidebar() {
               <li
                 className={
                   'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
-                  (isActive ? 'bg-blue-500 hover:bg-blue-600 text-white' : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                  (isActive
+                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                    : 'text-blue-gray-800 hover:bg-blue-gray-100')
                 }
               >
-                <FaCog className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')} />
+                <FaCog
+                  className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')}
+                />
                 <span>Paramètres</span>
               </li>
             )}
@@ -155,6 +198,7 @@ function Sidebar() {
             className={
               'flex items-center text-xs uppercase py-3 font-bold px-4 cursor-pointer text-blue-gray-800 hover:bg-blue-gray-100 rounded-md'
             }
+            onClick={handleLogout}
           >
             <MdOutlineLogout className={'mr-2 text-xl ' + 'opacity-75'} />
             <span>Se déconnecter</span>

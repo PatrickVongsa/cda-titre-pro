@@ -9,6 +9,7 @@ import ModalAddUser from '../components/modal/ModalAddUser.component';
 import { getUsers } from '../redux/userSlice';
 import CardUser from '../components/cards/CardUser.component';
 import DetaiUser from '../components/details/DetaiUser.component';
+import TabContainer from '../components/tabsUser/TabContainer.component';
 
 function Employee() {
   const { isShowing, toggle } = useModal();
@@ -19,12 +20,12 @@ function Employee() {
 
   const [displayUser, setDisplayUser] = useState<IUser | null>(null);
 
-  const handleSetDisplayUser = (user: IUser) => setDisplayUser(user);
+  const handleSetDisplayUser = (user: IUser | null) => setDisplayUser(user);
 
   useEffect(() => {
     dispatch(getUsers());
   }, []);
-console.log(displayUser)
+
   return (
     <div className="relative p-4 grow h-screen w-[calc(100%-64rem)]">
       <Header
@@ -54,8 +55,10 @@ console.log(displayUser)
         <div className="w-9/12 flex flex-col">
           {displayUser && 
             <>
-              <DetaiUser user={displayUser} />
-              <div className="grow"></div>
+              <DetaiUser user={displayUser} setDisplayUser={handleSetDisplayUser} />
+              <div className="grow">
+                <TabContainer />
+              </div>
             </>
           }
         </div>

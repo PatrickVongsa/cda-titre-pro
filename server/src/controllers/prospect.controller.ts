@@ -188,6 +188,7 @@ const updateProspect = async (req: Request, res: Response) => {
   } = req.body;
 
   try {
+
     const prospect = await prisma.prospect.findUnique({
       where: {
         id: Number(id),
@@ -215,16 +216,17 @@ const updateProspect = async (req: Request, res: Response) => {
       contacted_at: new Date(contacted_at),
       estimate_budget: Number(estimate_budget),
       need_description,
-      has_website: has_website === 'true',
+      has_website: has_website == true,
       website_year: Number(website_year),
       other_need,
-      is_client: is_client === 'true',
+      is_client: is_client == true,
       siret_number,
       piste_status_id: Number(piste_status_id),
       source_id: Number(source_id),
       activity_id: Number(activity_id),
       is_archived: false,
     };
+
 
     if (assigned_to_id) {
       data.assigned_to_id = Number(assigned_to_id);
