@@ -19,10 +19,10 @@ import ChatInteraction from '../chat/ChatInteraction.component';
 
 interface IProps {
   prospect: IProspect;
-  closeModal?: () => void;
+  closeModal: () => void;
 }
 
-function ModalProspect({ prospect, closeModal = ()=>console.log("first") }: IProps) {
+function ModalProspect({ prospect, closeModal }: IProps) {
   const { status, loading: loadingStatus } = useAppSelector((state) => state.prospectStatus);
   const { sources } = useAppSelector((state) => state.sources);
   const { activities } = useAppSelector((state) => state.activities);
@@ -224,8 +224,6 @@ function ModalProspect({ prospect, closeModal = ()=>console.log("first") }: IPro
   const handleArchiveClick = async (prospect: IProspect) => {
     await dispatch(archiveProspect(prospect));
   };
-
-  console.log('here')
 
   return (
     <div
