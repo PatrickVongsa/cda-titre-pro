@@ -12,7 +12,6 @@ function Login() {
 
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log('here')
     await dispatch(login({ email, password }));
     navigate('/');
   };

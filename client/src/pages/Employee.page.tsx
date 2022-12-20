@@ -20,12 +20,12 @@ function Employee() {
 
   const [displayUser, setDisplayUser] = useState<IUser | null>(null);
 
-  const handleSetDisplayUser = (user: IUser) => setDisplayUser(user);
+  const handleSetDisplayUser = (user: IUser | null) => setDisplayUser(user);
 
   useEffect(() => {
     dispatch(getUsers());
   }, []);
-console.log(displayUser)
+
   return (
     <div className="relative p-4 grow h-screen w-[calc(100%-64rem)]">
       <Header
@@ -55,7 +55,7 @@ console.log(displayUser)
         <div className="w-9/12 flex flex-col">
           {displayUser && 
             <>
-              <DetaiUser user={displayUser} />
+              <DetaiUser user={displayUser} setDisplayUser={handleSetDisplayUser} />
               <div className="grow">
                 <TabContainer />
               </div>
