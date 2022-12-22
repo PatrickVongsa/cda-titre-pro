@@ -10,10 +10,12 @@ import prospectSlice from "./redux/prospectSlice";
 import sourceSlice from "./redux/sourceSlice";
 import userSlice from "./redux/userSlice";
 import authSlice from "./redux/authSlice";
+import contactSlice from "./redux/contactSlice";
 
 export const store = configureStore({
   reducer: {
     activities: activitySlice,
+    contacts: contactSlice,
     interactions: interactionSlice,
     prospectStatus: prospectStatusSlice,
     projectStatus: projectStatusSlice,
@@ -22,7 +24,7 @@ export const store = configureStore({
     prospects: prospectSlice,
     sources: sourceSlice,
     users: userSlice,
-    auth: authSlice
+    auth: authSlice,
   },
 });
 

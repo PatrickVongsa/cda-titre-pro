@@ -44,6 +44,7 @@ const getProspects = async (req: Request, res: Response) => {
         activity: true,
         prospect_status: true,
         interactions: true,
+        contacts: true,
       },
     });
     res.status(200).json(prospects);
@@ -68,6 +69,7 @@ const getOneProspect = async (req: Request, res: Response) => {
         activity: true,
         prospect_status: true,
         interactions: true,
+        contacts: true,
       },
     });
     res.status(200).json(prospect);
@@ -147,6 +149,7 @@ const createProspect = async (req: Request, res: Response) => {
         activity: true,
         prospect_status: true,
         interactions: true,
+        contacts: true,
       },
     });
     res.status(200).json(result);
@@ -241,6 +244,7 @@ const updateProspect = async (req: Request, res: Response) => {
         activity: true,
         prospect_status: true,
         interactions: true,
+        contacts: true,
       },
     });
     res.status(200).json(updatedProspect);

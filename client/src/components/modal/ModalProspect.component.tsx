@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux.hook';
 import { archiveProspect, updateProspect } from '../../redux/prospectSlice';
+import { addContact, updateContact } from '../../redux/contactSlice';
 import { addInteraction } from '../../redux/interactionSlice';
+import { getSources } from '../../redux/sourceSlice';
+import { getActivities } from '../../redux/activitySlice';
+import { getInteractions } from '../../redux/interactionSlice';
+import { getContacts } from '../../redux/contactSlice';
 
 import { Typography } from '@material-tailwind/react';
 
@@ -10,11 +15,7 @@ import { getUsers } from '../../redux/userSlice';
 import { FaCheck } from 'react-icons/fa';
 import { IoMdClose, IoMdSend } from 'react-icons/io';
 import { BiMessageDetail } from 'react-icons/bi';
-
-import { getProspectStatus } from '../../redux/prospectStatusSlice';
-import { getSources } from '../../redux/sourceSlice';
-import { getActivities } from '../../redux/activitySlice';
-import { getInteractions } from '../../redux/interactionSlice';
+import { RiContactsBookLine, RiContactsLine } from 'react-icons/ri';
 import ChatInteraction from '../chat/ChatInteraction.component';
 
 interface IProps {
@@ -28,8 +29,46 @@ function ModalProspect({ prospect, closeModal }: IProps) {
   const { activities } = useAppSelector((state) => state.activities);
   const { users } = useAppSelector((state) => state.users);
   const { interactions } = useAppSelector((state) => state.interactions);
+  const { contacts } = useAppSelector((state) => state.contacts);
 
   const [showInteractions, setShowInteractions] = useState(false);
+  const [showContacts, setShowContacts] = useState(false);
+
+  /**
+   * create / update Contact
+   */
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [occupation, setOccupation] = useState('');
+  const [contactPhone, setContactPhone] = useState('');
+  const [contactEmail, setContactEmail] = useState('');
+  const [isPreferedContact, setIsPreferedContact] = useState(false);
+
+  const handleContactClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const data = {
+      firstname,
+      lastname,
+      occupation,
+      phone: contactPhone,
+      email: contactEmail,
+      is_prefered_contact: isPreferedContact,
+      piste_id: Number(prospect.id),
+    };
+    try {
+      await dispatch(addContact(data)).unwrap();
+      setFirstname('');
+      setLastname('');
+      setOccupation('');
+      setContactPhone('');
+      setContactEmail('');
+      setIsPreferedContact(false);
+    } catch (err) {
+      console.error('Failed to save the contact: ', err);
+    }
+  };
 
   /**
    * Create interactions
@@ -112,6 +151,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
     dispatch(getSources());
     dispatch(getActivities());
     dispatch(getInteractions());
+    dispatch(getContacts());
   }, []);
 
   const resetUpdate = () => {
@@ -225,6 +265,9 @@ function ModalProspect({ prospect, closeModal }: IProps) {
     await dispatch(archiveProspect(prospect));
   };
 
+console.log(contacts)
+
+
   return (
     <div
       className="absolute flex justify-center items-center inset-0 bg-black bg-opacity-50 z-50"
@@ -265,15 +308,44 @@ function ModalProspect({ prospect, closeModal }: IProps) {
               )}
             </div>
 
-            <button
-              className="block text-gray-700 border border-current rounded-lg p-2 hover:bg-gray-700 hover:text-white hover:border-gray-700"
-              title={!showInteractions ? 'Voir les intéractions' : 'Masquer les intéractions'}
-            >
-              <BiMessageDetail
-                className=" text-2xl font-bold uppercase rounded outline-none focus:outline-none  ease-linear transition-all duration-150 cursor-pointer"
-                onClick={() => setShowInteractions(!showInteractions)}
-              />
-            </button>
+            <div className="flex gap-4">
+              <button
+                className="block text-gray-700 border border-current rounded-lg p-2 hover:bg-gray-700 hover:text-white hover:border-gray-700"
+                title="Voir les détails"
+              >
+                <RiContactsLine
+                  className=" text-2xl font-bold uppercase rounded outline-none focus:outline-none  ease-linear transition-all duration-150 cursor-pointer"
+                  onClick={() => {
+                    setShowInteractions(false);
+                    setShowContacts(false);
+                  }}
+                />
+              </button>
+              <button
+                className="block text-gray-700 border border-current rounded-lg p-2 hover:bg-gray-700 hover:text-white hover:border-gray-700"
+                title="Voir les contacts"
+              >
+                <RiContactsBookLine
+                  className=" text-2xl font-bold uppercase rounded outline-none focus:outline-none  ease-linear transition-all duration-150 cursor-pointer"
+                  onClick={() => {
+                    setShowInteractions(false);
+                    setShowContacts(!showContacts);
+                  }}
+                />
+              </button>
+              <button
+                className="block text-gray-700 border border-current rounded-lg p-2 hover:bg-gray-700 hover:text-white hover:border-gray-700"
+                title="Voir les intéractions"
+              >
+                <BiMessageDetail
+                  className=" text-2xl font-bold uppercase rounded outline-none focus:outline-none  ease-linear transition-all duration-150 cursor-pointer"
+                  onClick={() => {
+                    setShowInteractions(!showInteractions);
+                    setShowContacts(false);
+                  }}
+                />
+              </button>
+            </div>
 
             <div>
               <GrClose
@@ -287,7 +359,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
             </div>
           </div>
         </div>
-        {!showInteractions ? (
+        {!showInteractions && !showContacts && (
           <div className="grow px-4 lg:px-10 py-10 pt-0 overflow-auto">
             <Typography
               variant="small"
@@ -923,7 +995,8 @@ function ModalProspect({ prospect, closeModal }: IProps) {
               </>
             )}
           </div>
-        ) : (
+        )}
+        {showInteractions && (
           <div className="grow px-4 lg:p-4 overflow-auto flex flex-col gap-2">
             <div className="h-4/6 border border-gray-400 rounded-lg p-2 overflow-auto bg-white flex flex-col">
               {interactions.length > 0 &&
@@ -956,6 +1029,159 @@ function ModalProspect({ prospect, closeModal }: IProps) {
               >
                 <IoMdSend className="text-xl text-white" />
               </button>
+            </div>
+          </div>
+        )}
+        {showContacts && (
+          <div className="grow px-4 lg:p-4 overflow-auto flex flex-col gap-2">
+            <div className="h-4/6 overflow-auto">
+              <h6 className="text-blue-gray-400 text-sm mb-2 font-bold uppercase">Contacts</h6>
+              <div className="flex flex-wrap">
+                <div className="w-full lg:w-12/12">
+                  {contacts &&
+                    contacts.map((contact, i: number) => {
+                      if (contact.piste_id === prospect.id && !contact.is_archived) {
+                        return (
+                          <div
+                            className={`relative w-full mb-2 bg-white rounded px-4 py-2 flex flex-wrap shadow-sm border-2 ${contact.is_prefered_contact && "border-blue-500"}`}
+                            key={i + contact.firstname}
+                          >
+                            <p className="w-3/6">
+                              {contact.firstname} {contact.lastname}
+                            </p>
+                            <p className="w-3/6">{contact.occupation}</p>
+                            <p className="w-3/6">{contact.phone}</p>
+                            <p className="w-3/6">{contact.email}</p>
+                          </div>
+                        );
+                      }
+                    })}
+                </div>
+              </div>
+            </div>
+            <div className="border border-gray-400 rounded-lg p-2">
+              <form>
+                <div className="flex flex-wrap">
+                  <div className="w-full lg:w-4/12 px-2">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Prénom
+                      </label>
+                      <input
+                        type="text"
+                        className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="Jean"
+                        value={firstname}
+                        onChange={(e) => setFirstname(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-4/12 px-2">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        NOM
+                      </label>
+                      <input
+                        type="text"
+                        className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="Valjean"
+                        value={lastname}
+                        onChange={(e) => setLastname(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-4/12 px-2">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Poste occupé
+                      </label>
+                      <input
+                        type="text"
+                        className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="Directeur communication"
+                        value={occupation}
+                        onChange={(e) => setOccupation(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="w-full lg:w-4/12 px-2">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Téléphone
+                      </label>
+                      <input
+                        type="tel"
+                        className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="06xxxxxxxx"
+                        value={contactPhone}
+                        onChange={(e) => setContactPhone(e.target.value)}
+                      />
+                    </div>
+                  </div>
+                  <div className="w-full lg:w-5/12 px-2">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Email
+                      </label>
+                      <input
+                        type="email"
+                        className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="moneamil@fournisseur.com"
+                        value={contactEmail}
+                        onChange={(e) => setContactEmail(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="w-full lg:w-3/12 px-2">
+                    <div className="relative w-full mb-3">
+                      <label
+                        className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                        htmlFor="grid-password"
+                      >
+                        Contact prioritaire
+                      </label>
+                      <input
+                        type="checkbox"
+                        className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                        placeholder="France"
+                        max={14}
+                        value={siretNumber}
+                        onChange={(e) => setSiretNumber(e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="w-full lg:w-12/12 px-2">
+                    <div className="relative w-full mb-3 text-center">
+                      <button
+                        className="bg-green-400 rounded-lg h-fit px-4 py-2 text-white"
+                        onClick={(e) => {
+                          handleContactClick(e);
+                        }}
+                      >
+                        Ajouter
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         )}
