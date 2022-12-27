@@ -6,11 +6,6 @@ import EvenementUser from './tabContent/EvenementUser.component';
 import ClockInUser from './tabContent/ClockInUser.component';
 import EmergencyContact from './tabContent/EmergencyContact.component';
 
-export interface ITabMenu {
-  id: number;
-  name: string;
-}
-
 const menu: ITabMenu[] = [
   {
     id: 123,

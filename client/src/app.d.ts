@@ -121,3 +121,8 @@ interface IUser {
   email: string;
   password?: string;
 }
+
+interface ITabMenu {
+  id: number;
+  name: string;
+}
