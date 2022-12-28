@@ -52,6 +52,7 @@ const createProject = async (req: Request, res: Response) => {
     github_link,
     host,
     ora_name,
+    prospect_id
   } = req.body;
   try {
     const result = await prisma.project.create({
@@ -70,6 +71,7 @@ const createProject = async (req: Request, res: Response) => {
         github_link,
         host,
         ora_name,
+    prospect_id,
       },
     });
     res.status(200).json(result);
@@ -98,6 +100,7 @@ const updateProject = async (req: Request, res: Response) => {
     github_link,
     host,
     ora_name,
+    prospect_id,
   } = req.body;
   try {
     const project = await prisma.project.findUnique({
@@ -126,6 +129,7 @@ const updateProject = async (req: Request, res: Response) => {
         github_link,
         host,
         ora_name,
+        prospect_id,
       },
     });
     res.status(200).json(updatedProject);

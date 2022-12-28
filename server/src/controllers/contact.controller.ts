@@ -37,7 +37,7 @@ const getOneContact = async (req: Request, res: Response) => {
 // @route POST /api/contacts
 // @access Private
 const createContact = async (req: Request, res: Response) => {
-  const { firstname, lastname, occupation, phone, email, is_prefered_contact, piste_id } = req.body;
+  const { firstname, lastname, occupation, phone, email, is_prefered_contact, prospect_id } = req.body;
   try {
     const result = await prisma.contact.create({
       data: {
@@ -47,7 +47,7 @@ const createContact = async (req: Request, res: Response) => {
         phone,
         email,
         is_prefered_contact,
-        piste_id: Number(piste_id),
+        prospect_id: Number(prospect_id),
         is_archived: false,
       },
     });
@@ -62,7 +62,7 @@ const createContact = async (req: Request, res: Response) => {
 // @access Private
 const updateContact = async (req: Request, res: Response) => {
   const id = req.params.id;
-  const { firstname, lastname, occupation, phone, email, is_prefered_contact, piste_id } = req.body;
+  const { firstname, lastname, occupation, phone, email, is_prefered_contact, prospect_id } = req.body;
   try {
     const contact = await prisma.contact.findUnique({
       where: {
@@ -82,7 +82,7 @@ const updateContact = async (req: Request, res: Response) => {
         phone,
         email,
         is_prefered_contact: is_prefered_contact === 'true',
-        piste_id: Number(piste_id),
+        prospect_id: Number(prospect_id),
         is_archived: false,
       },
     });

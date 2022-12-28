@@ -46,13 +46,13 @@ const getOneInteraction = async (req: Request, res: Response) => {
 // @route POST /api/interactions
 // @access Private
 const createInteraction = async (req: Request, res: Response) => {
-  const { report, reported_by_id, reported_at, piste_id } = req.body;
+  const { report, reported_by_id, reported_at, prospect_id } = req.body;
 
   let data = {
     report,
     reported_by_id: Number(reported_by_id),
     reported_at: new Date(reported_at),
-    piste_id: Number(piste_id),
+    prospect_id: Number(prospect_id),
     is_archived: false,
   };
 
@@ -75,7 +75,7 @@ const createInteraction = async (req: Request, res: Response) => {
 // @access Private
 const updateInteraction = async (req: Request, res: Response) => {
   const id = req.params.id;
-  const { report, reported_by_id, reported_at, piste_id, modified_by_id, modified_at } = req.body;
+  const { report, reported_by_id, reported_at, prospect_id, modified_by_id, modified_at } = req.body;
   try {
     const interaction = await prisma.interaction.findUnique({
       where: {
@@ -92,7 +92,7 @@ const updateInteraction = async (req: Request, res: Response) => {
         report,
         reported_by_id: Number(reported_by_id),
         reported_at: new Date(reported_at),
-        piste_id: Number(piste_id),
+        prospect_id: Number(prospect_id),
         modified_by_id: Number(modified_by_id),
         modified_at: new Date(modified_at),
         is_archived: false,
