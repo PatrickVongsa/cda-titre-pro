@@ -1,6 +1,3 @@
-import React from 'react';
-import { ITabMenu } from './TabContainer.component';
-
 interface IProps {
   menuTab: ITabMenu[];
   activeTab: number;
@@ -9,7 +6,7 @@ interface IProps {
 
 function TabMenu({ menuTab, activeTab, setActiveTab }: IProps) {
   return (
-    <div className="w-full mb-2">
+    <div className="w-full mb-4">
       <ul className="flex gap-4">
         {menuTab.map((tab: ITabMenu, i: number) => {
           return (

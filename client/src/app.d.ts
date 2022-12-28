@@ -4,6 +4,18 @@ interface IActivity {
   is_archived?: boolean;
 }
 
+interface IContact {
+  id?: nummber;
+  firstname: string;
+  lastname: string;
+  occupation: string;
+  phone: string;
+  email: string;
+  is_prefered_contact: boolean;
+  piste_id: number;
+  is_archived?: boolean;
+}
+
 interface IInteraction {
   id?: number;
   report: string;
@@ -58,6 +70,7 @@ interface IProspect {
   activity?: IActivity;
   is_archived?: boolean;
   interactions?: IInteraction[];
+  contacts?: IContacts[];
 }
 
 interface IProjectStatus {
@@ -107,4 +120,9 @@ interface IUser {
   is_archived?: boolean;
   email: string;
   password?: string;
+}
+
+interface ITabMenu {
+  id: number;
+  name: string;
 }

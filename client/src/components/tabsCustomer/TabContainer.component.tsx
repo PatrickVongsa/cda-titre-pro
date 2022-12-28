@@ -45,7 +45,7 @@ function TabContainer({ customer }: IProps) {
       <TabMenu menuTab={menu} activeTab={activeTab} setActiveTab={handlesetActiveTab} />
       {activeTab === 541 && <EvenementCustomer />}
       {activeTab === 542 && <InteractionCustomer />}
-      {activeTab === 543 && <ContactCustomer />}
+      {activeTab === 543 && <ContactCustomer customer={customer} />}
       {activeTab === 544 && <ProjectCustomer />}
       {activeTab === 545 && <InvoiceCustomer />}
     </div>
