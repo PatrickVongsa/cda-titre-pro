@@ -24,7 +24,7 @@ function ChatInteraction({ report, prospectId }: IProps) {
         report: reportValue,
         reported_by_id: 1, //+++ get user id from token
         reported_at: report.reported_at,
-        piste_id: Number(prospectId),
+        prospect_id: Number(prospectId),
         modified_by_id: 1,
         modified_at: new Date(),
       };

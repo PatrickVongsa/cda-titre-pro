@@ -12,7 +12,7 @@ interface IContact {
   phone: string;
   email: string;
   is_prefered_contact: boolean;
-  piste_id: number;
+  prospect_id: number;
   is_archived?: boolean;
 }
 
@@ -23,7 +23,7 @@ interface IInteraction {
   reported_by_id: number;
   reported_at: Date;
   prospect?: IProspect;
-  piste_id: number;
+  prospect_id: number;
   modified_by?: IUser;
   modified_by_id?: number;
   modified_at?: Date;
@@ -62,7 +62,7 @@ interface IProspect {
   siret_number: string;
   assigned_to_id?: number;
   assigned_to?: IUser;
-  piste_status_id: number;
+  prospect_status_id: number;
   prospect_status?: IProjectStatus;
   source_id: number;
   source?: ISource;
@@ -99,6 +99,7 @@ interface IProject {
   github_link?: string;
   host?: string;
   ora_name?: string;
+  prospect_id: number;
 }
 
 interface ISource {
