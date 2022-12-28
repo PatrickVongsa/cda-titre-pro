@@ -2,8 +2,8 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  //piste_status
-  const piste_status = await prisma.prospect_status.createMany({
+  //prospect_status
+  const prospect_status = await prisma.prospect_status.createMany({
     data: [
       {
         name: 'Nouveau',
