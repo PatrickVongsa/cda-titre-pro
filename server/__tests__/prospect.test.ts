@@ -65,7 +65,7 @@ const prospectExpectectedResponse = {
   is_client: false,
   siret_number: '12345678901234',
   assigned_to_id: id,
-  piste_status_id: id,
+  prospect_status_id: id,
   source_id: id,
   activity_id: id,
   is_archived: false,
@@ -93,7 +93,7 @@ const prospectExpectectedResponseupdated = {
   is_client: false,
   siret_number: '12345678901234',
   assigned_to_id: id,
-  piste_status_id: id,
+  prospect_status_id: id,
   source_id: id,
   activity_id: id,
   is_archived: false,
@@ -121,7 +121,7 @@ const prospectExpectectedResponsearchived = {
   is_client: false,
   siret_number: '12345678901234',
   assigned_to_id: id,
-  piste_status_id: id,
+  prospect_status_id: id,
   source_id: id,
   activity_id: id,
   is_archived: true,
@@ -135,7 +135,7 @@ const contactExpectectedResponse = {
   phone: '0601010101',
   email: 'testn@email.com',
   is_prefered_contact: true,
-  piste_id: id,
+  prospect_id: id,
   is_archived: false,
 };
 const contactExpectectedResponseupdated = {
@@ -146,7 +146,7 @@ const contactExpectectedResponseupdated = {
   phone: '0601010101',
   email: 'testn@email.com',
   is_prefered_contact: true,
-  piste_id: id,
+  prospect_id: id,
   is_archived: false,
 };
 const contactExpectectedResponsearchived = {
@@ -157,7 +157,7 @@ const contactExpectectedResponsearchived = {
   phone: '0601010101',
   email: 'testn@email.com',
   is_prefered_contact: true,
-  piste_id: id,
+  prospect_id: id,
   is_archived: true,
 };
 
@@ -188,7 +188,7 @@ const userExpectectedResponse = {
   contrat_type: 'Apprenti',
   is_archived: false,
   email: 'prenom.test@mail.com',
-  password: 'test1234'
+  phone: '0611111111',
 };
 const userExpectectedResponseupdated = {
   id,
@@ -201,7 +201,7 @@ const userExpectectedResponseupdated = {
   contrat_type: 'Apprenti',
   is_archived: false,
   email: 'prenom.test@mail.com',
-  password: 'test1234'
+  phone: '0611111111',
 };
 const userExpectectedResponsearchived = {
   id,
@@ -214,7 +214,7 @@ const userExpectectedResponsearchived = {
   contrat_type: 'Apprenti',
   is_archived: true,
   email: 'prenom.test@mail.com',
-  password: 'test1234'
+  phone: '0611111111',
 };
 
 test('doit créer une nouvelle activité', async () => {
@@ -362,8 +362,6 @@ test('doit archiver une source', async () => {
 });
 
 test('doit créer un nouveau user', async () => {
-  prismaMock.user.create.mockResolvedValue(userExpectectedResponse);
-
   const res = await request(app).post('/api/users').send({
     firstname: userExpectectedResponse.firstname,
     lastname: userExpectectedResponse.lastname,
@@ -372,6 +370,8 @@ test('doit créer un nouveau user', async () => {
     city: userExpectectedResponse.city,
     occupation: userExpectectedResponse.occupation,
     contrat_type: userExpectectedResponse.contrat_type,
+    phone: userExpectectedResponse.phone,
+    password: 'test1234',
   });
 
   await expect(res.body).toEqual(userExpectectedResponse);
@@ -390,8 +390,6 @@ test('doit retourner un user', async () => {
 });
 
 test('doit modifier un user', async () => {
-  prismaMock.user.update.mockResolvedValue(userExpectectedResponseupdated);
-
   const updateUser = {
     firstname: 'Prénom test',
     lastname: 'NOM TEST modified',
@@ -400,6 +398,7 @@ test('doit modifier un user', async () => {
     city: 'Toulouse',
     occupation: 'Développeur web',
     contrat_type: 'Apprenti',
+    phone: '0611111111',
   };
 
   const res = await request(app).put(`/api/users/${userExpectectedResponse.id}`).send(updateUser);
@@ -408,8 +407,6 @@ test('doit modifier un user', async () => {
 });
 
 test('doit archiver un user', async () => {
-  prismaMock.user.update.mockResolvedValue(userExpectectedResponsearchived);
-
   const archiveUser = {
     is_archived: 'true',
   };
@@ -446,7 +443,7 @@ test('doit créer un nouveau prospect', async () => {
       is_client: String(prospectExpectectedResponse.is_client),
       siret_number: prospectExpectectedResponse.siret_number,
       assigned_to_id: prospectExpectectedResponse.assigned_to_id,
-      piste_status_id: prospectExpectectedResponse.piste_status_id,
+      prospect_status_id: prospectExpectectedResponse.prospect_status_id,
       source_id: prospectExpectectedResponse.source_id,
       activity_id: prospectExpectectedResponse.activity_id,
     });
@@ -499,7 +496,7 @@ test('doit modifier une prospect', async () => {
     is_client: 'false',
     siret_number: '12345678901234',
     assigned_to_id: id,
-    piste_status_id: id,
+    prospect_status_id: id,
     source_id: id,
     activity_id: id,
   };
@@ -537,9 +534,9 @@ test('doit créer un nouveau contact', async () => {
     phone: contactExpectectedResponse.phone,
     email: contactExpectectedResponse.email,
     is_prefered_contact: contactExpectectedResponse.is_prefered_contact,
-    piste_id: contactExpectectedResponse.piste_id,
+    prospect_id: contactExpectectedResponse.prospect_id,
   });
-  
+
   await expect(res.body).toEqual(contactExpectectedResponse);
 });
 
@@ -565,7 +562,7 @@ test('doit modifier un contact', async () => {
     phone: '0601010101',
     email: 'testn@email.com',
     is_prefered_contact: 'true',
-    piste_id: id,
+    prospect_id: id,
   };
 
   const res = await request(app).put(`/api/contacts/${contactExpectectedResponse.id}`).send(updateSource);

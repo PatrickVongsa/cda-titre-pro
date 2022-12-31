@@ -45,7 +45,7 @@ function ContactCustomer({ customer }: IProps) {
       phone: contactPhone,
       email: contactEmail,
       is_prefered_contact: isPreferedContact,
-      piste_id: Number(customer.id),
+      prospect_id: Number(customer.id),
     };
     try {
       await dispatch(addContact(data)).unwrap();
@@ -72,7 +72,7 @@ function ContactCustomer({ customer }: IProps) {
       phone: contactPhone,
       email: contactEmail,
       is_prefered_contact: isPreferedContact,
-      piste_id: Number(customer.id),
+      prospect_id: Number(customer.id),
     };
     try {
       await dispatch(updateContact(data)).unwrap();
@@ -114,7 +114,7 @@ function ContactCustomer({ customer }: IProps) {
         <div className="w-full lg:w-12/12">
           {contacts &&
             contacts.map((contact, i: number) => {
-              if (contact.piste_id === customer.id && !contact.is_archived) {
+              if (contact.prospect_id === customer.id && !contact.is_archived) {
                 return (
                   <div
                     className={`group/contact relative w-full mb-2 bg-white rounded px-4 py-2 flex flex-wrap shadow-sm border-2 ${

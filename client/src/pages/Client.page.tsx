@@ -58,7 +58,7 @@ function Client() {
           {displayClient && (
             <>
               <DetailCustomer customer={displayClient} setDisplayCustomer={handleSetDisplayUser} />
-              <div className="grow">
+              <div className="grow flex flex-col">
                 <TabContainer customer={displayClient}  />
               </div>
             </>

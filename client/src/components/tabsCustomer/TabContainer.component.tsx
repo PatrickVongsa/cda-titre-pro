@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import TabMenu from './TabMenu.component';
-import { ITabMenu } from '../tabsUser/TabContainer.component';
 import EvenementCustomer from './tabContent/EvenementCustomer.component';
 import ContactCustomer from './tabContent/ContactCustomer.component';
 import InvoiceCustomer from './tabContent/InvoiceCustomer.component';
@@ -41,10 +40,10 @@ function TabContainer({ customer }: IProps) {
   const handlesetActiveTab = (id: number) => setActiveTab(id);
 
   return (
-    <div className="px-4">
+    <div className="grow flex flex-col px-4">
       <TabMenu menuTab={menu} activeTab={activeTab} setActiveTab={handlesetActiveTab} />
       {activeTab === 541 && <EvenementCustomer />}
-      {activeTab === 542 && <InteractionCustomer />}
+      {activeTab === 542 && <InteractionCustomer customer={customer} />}
       {activeTab === 543 && <ContactCustomer customer={customer} />}
       {activeTab === 544 && <ProjectCustomer />}
       {activeTab === 545 && <InvoiceCustomer />}

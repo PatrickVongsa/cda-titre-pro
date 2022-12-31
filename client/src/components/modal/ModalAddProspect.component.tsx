@@ -76,7 +76,7 @@ function ModalAddProspect({ closeModal }: IProps) {
       other_need: otherNeed,
       is_client: false,
       siret_number: siretNumber,
-      piste_status_id: Number(statusProspect),
+      prospect_status_id: Number(statusProspect),
       source_id: Number(source),
       activity_id: Number(activity),
     };

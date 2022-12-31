@@ -38,6 +38,7 @@ const projectExpectectedResponse = {
   github_link: 'https://github.com/project1',
   host: 'ovh',
   ora_name: 'project 1',
+  prospect_id: null,
 };
 const projectExpectectedResponseupdated = {
   id,
@@ -55,6 +56,7 @@ const projectExpectectedResponseupdated = {
   github_link: 'https://github.com/project1',
   host: 'ovh',
   ora_name: 'project 1',
+  prospect_id: null,
 };
 
 test('doit créer un nouveau project status', async () => {
@@ -147,6 +149,7 @@ test('doit créer un nouveau project', async () => {
       github_link: projectExpectectedResponse.github_link,
       host: projectExpectectedResponse.host,
       ora_name: projectExpectectedResponse.ora_name,
+      prospect_id: null,
     });
 
   await expect({
@@ -210,6 +213,7 @@ test('doit modifier une project', async () => {
     github_link: projectExpectectedResponseupdated.github_link,
     host: projectExpectectedResponseupdated.host,
     ora_name: projectExpectectedResponseupdated.ora_name,
+    prospect_id: null,
   };
 
   const res = await request(app).put(`/api/projects/${projectExpectectedResponse.id}`).send(updateProject);

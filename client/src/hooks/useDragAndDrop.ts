@@ -26,7 +26,7 @@ export const useDragAndDrop = (initialList: IProspect[], statusList: IProspectSt
       let statusInfo = listStatus.filter((sts) => sts.name === status)[0];
       let updateCard = {
         ...card,
-        piste_status_id: Number(statusInfo.id),
+        prospect_status_id: Number(statusInfo.id),
         prospect_status: statusInfo,
       };
 

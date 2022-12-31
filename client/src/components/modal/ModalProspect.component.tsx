@@ -58,7 +58,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
       phone: contactPhone,
       email: contactEmail,
       is_prefered_contact: isPreferedContact,
-      piste_id: Number(prospect.id),
+      prospect_id: Number(prospect.id),
     };
     try {
       await dispatch(addContact(data)).unwrap();
@@ -85,7 +85,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
       phone: contactPhone,
       email: contactEmail,
       is_prefered_contact: isPreferedContact,
-      piste_id: Number(prospect.id),
+      prospect_id: Number(prospect.id),
     };
     try {
       await dispatch(updateContact(data)).unwrap();
@@ -134,7 +134,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
       report: report,
       reported_by_id: 1, //+++ get user id from token
       reported_at: new Date(),
-      piste_id: Number(prospect.id),
+      prospect_id: Number(prospect.id),
     };
     try {
       await dispatch(addInteraction(data)).unwrap();
@@ -192,7 +192,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
   const [websiteYear, setWebsiteYear] = useState(prospect.website_year || '');
   const [otherNeed, setOtherNeed] = useState(prospect.other_need || '');
   const [siretNumber, setSiretNumber] = useState(prospect.siret_number || '');
-  const [statusProspect, setStatusProspect] = useState(prospect.piste_status_id || '');
+  const [statusProspect, setStatusProspect] = useState(prospect.prospect_status_id || '');
   const [source, setSource] = useState(prospect.source_id || '');
   const [activity, setActivity] = useState(prospect.activity_id || '');
   const [assignedToId, setAssignedToId] = useState(prospect.assigned_to_id || '');
@@ -255,7 +255,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
       other_need: otherNeed,
       is_client: false,
       siret_number: siretNumber,
-      piste_status_id: Number(statusProspect),
+      prospect_status_id: Number(statusProspect),
       source_id: Number(source),
       activity_id: Number(activity),
     };
@@ -284,7 +284,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
       setWebsiteYear(updatedProspect.website_year || '');
       setOtherNeed(updatedProspect.other_need || '');
       setSiretNumber(updatedProspect.siret_number || '');
-      setStatusProspect(updatedProspect.piste_status_id || '');
+      setStatusProspect(updatedProspect.prospect_status_id || '');
       setSource(updatedProspect.source_id || '');
       setActivity(updatedProspect.activity_id || '');
       setAssignedToId(updatedProspect.assigned_to_id || '');
@@ -1051,7 +1051,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
             <div className="h-4/6 border border-gray-400 rounded-lg p-2 overflow-auto bg-white flex flex-col">
               {interactions.length > 0 &&
                 interactions.map((interaction: IInteraction, i: number) => {
-                  if (interaction.piste_id === prospect.id && !interaction.is_archived) {
+                  if (interaction.prospect_id === prospect.id && !interaction.is_archived) {
                     return (
                       <ChatInteraction
                         key={i + interaction.report}
@@ -1090,7 +1090,7 @@ function ModalProspect({ prospect, closeModal }: IProps) {
                 <div className="w-full lg:w-12/12">
                   {contacts &&
                     contacts.map((contact, i: number) => {
-                      if (contact.piste_id === prospect.id && !contact.is_archived) {
+                      if (contact.prospect_id === prospect.id && !contact.is_archived) {
                         return (
                           <div
                             className={`group/contact relative w-full mb-2 bg-white rounded px-4 py-2 flex flex-wrap shadow-sm border-2 ${
