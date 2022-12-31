@@ -16,6 +16,10 @@ function InteractionCustomer({customer}: IProps) {
 
   const { interactions } = useAppSelector((state) => state.interactions);
 
+  useEffect(()=>{
+    dispatch(getInteractions());
+  }, [])
+
   /**
    * Create interactions
    */
@@ -40,9 +44,9 @@ function InteractionCustomer({customer}: IProps) {
   };
 
   return (
-    <div className="flex flex-col gap-4 h-[95%]">
-      <div className="grow px-4 lg:p-4 overflow-auto flex flex-col gap-2">
-        <div className="h-4/6 border border-gray-400 rounded-lg p-2 overflow-auto bg-white flex flex-col">
+    <div className="grow flex flex-col gap-4">
+      <div className="grow px-4 lg:p-4 flex flex-col gap-2">
+        <div className="max-h-[35vh] border border-gray-400 rounded-lg p-2 overflow-auto bg-white flex flex-col">
           {interactions.length > 0 &&
             interactions.map((interaction: IInteraction, i: number) => {
               if (interaction.prospect_id === customer.id && !interaction.is_archived) {

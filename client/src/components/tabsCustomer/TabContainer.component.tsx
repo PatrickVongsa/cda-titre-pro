@@ -40,7 +40,7 @@ function TabContainer({ customer }: IProps) {
   const handlesetActiveTab = (id: number) => setActiveTab(id);
 
   return (
-    <div className="px-4 h-full">
+    <div className="grow flex flex-col px-4">
       <TabMenu menuTab={menu} activeTab={activeTab} setActiveTab={handlesetActiveTab} />
       {activeTab === 541 && <EvenementCustomer />}
       {activeTab === 542 && <InteractionCustomer customer={customer} />}
