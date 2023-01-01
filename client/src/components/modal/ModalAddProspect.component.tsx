@@ -528,7 +528,6 @@ function ModalAddProspect({ closeModal }: IProps) {
             </div>
 
             <hr className="my-4 border-b-1 border-blue-gray-300" />
-
             <h6 className="text-blue-gray-400 text-sm mt-3 mb-6 font-bold uppercase">
               Autre Besoin
             </h6>
@@ -551,6 +550,7 @@ function ModalAddProspect({ closeModal }: IProps) {
                 </div>
               </div>
             </div>
+
             <hr className="my-4 border-b-1 border-blue-gray-300" />
 
             <h6 className="text-blue-gray-400 text-sm mt-3 mb-6 font-bold uppercase">

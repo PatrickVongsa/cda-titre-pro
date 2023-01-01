@@ -45,7 +45,7 @@ function TabContainer({ customer }: IProps) {
       {activeTab === 541 && <EvenementCustomer />}
       {activeTab === 542 && <InteractionCustomer customer={customer} />}
       {activeTab === 543 && <ContactCustomer customer={customer} />}
-      {activeTab === 544 && <ProjectCustomer />}
+      {activeTab === 544 && <ProjectCustomer prospectId={customer.id} />}
       {activeTab === 545 && <InvoiceCustomer />}
     </div>
   );
