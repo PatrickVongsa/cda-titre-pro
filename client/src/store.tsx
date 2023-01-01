@@ -1,16 +1,17 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
 
-import activitySlice from "./redux/activitySlice";
-import interactionSlice from "./redux/interactionSlice";
-import prospectStatusSlice from "./redux/prospectStatusSlice";
-import projectStatusSlice from "./redux/projectStatusSlice";
-import projectTypeSlice from "./redux/projectTypeSlice";
-import projectSlice from "./redux/projectSlice";
-import prospectSlice from "./redux/prospectSlice";
-import sourceSlice from "./redux/sourceSlice";
-import userSlice from "./redux/userSlice";
-import authSlice from "./redux/authSlice";
-import contactSlice from "./redux/contactSlice";
+import activitySlice from './redux/activitySlice';
+import interactionSlice from './redux/interactionSlice';
+import prospectStatusSlice from './redux/prospectStatusSlice';
+import projectStatusSlice from './redux/projectStatusSlice';
+import projectTypeSlice from './redux/projectTypeSlice';
+import projectSlice from './redux/projectSlice';
+import projectUserSlice from './redux/projectUserSlice';
+import prospectSlice from './redux/prospectSlice';
+import sourceSlice from './redux/sourceSlice';
+import userSlice from './redux/userSlice';
+import authSlice from './redux/authSlice';
+import contactSlice from './redux/contactSlice';
 
 export const store = configureStore({
   reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
     projectStatus: projectStatusSlice,
     projectType: projectTypeSlice,
     projects: projectSlice,
+    projectUsers: projectUserSlice,
     prospects: prospectSlice,
     sources: sourceSlice,
     users: userSlice,

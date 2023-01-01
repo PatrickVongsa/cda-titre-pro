@@ -13,3 +13,11 @@ export const allProjects = async () => {
 export const addOneProject = async (newProject: IProject) => {
   return (await instance.post("/", newProject))?.data;
 };
+
+export const updateOneProject = async (updateProject: IProject) => {
+  return (await instance.put(`/${updateProject.id}`, updateProject))?.data;
+};
+
+export const deleteOneProject = async (deleteProject: IProject) => {
+  return (await instance.delete(`/${deleteProject.id}`))?.data;
+};

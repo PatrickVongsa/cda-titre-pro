@@ -18,6 +18,7 @@ import prospectRouter from './routes/prospect.route';
 import projectRouter from './routes/project.route';
 import projectStatusRouter from './routes/project_status.route';
 import projectTypeRouter from './routes/project_type.route';
+import projectUserRouter from './routes/project_user.route';
 // import tvaRouter from './routes/tva.route';
 import userRouter from './routes/user.route';
 import { isAuthenticated, resetPassword, verifyPassword, verifyUser } from './middlewares/auth.middleware';
@@ -59,7 +60,7 @@ app.post('/api/login', async (req, res) => {
     if (typeof token === 'object') {
       return res.status(500).json({ message: 'Wrong credentials' });
     } else {
-      return res.status(200).json({user, token});
+      return res.status(200).json({ user, token });
     }
   } catch (error) {
     return res.json({ error: error });
@@ -191,6 +192,11 @@ app.use('/api/project-status', projectStatusRouter);
  * tested in project.test.ts
  */
 app.use('/api/project-types', projectTypeRouter);
+
+/**
+ * Route API pour l'entité Project_type
+ */
+app.use('/api/project-users', projectUserRouter);
 
 /**
  * Route API pour l'entité Tva

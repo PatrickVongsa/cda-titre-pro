@@ -99,7 +99,14 @@ interface IProject {
   github_link?: string;
   host?: string;
   ora_name?: string;
-  prospect_id: number;
+  prospect_id: number | null;
+  project_status?: IProjectStatus;
+  project_type?: IProjectType;
+}
+
+interface IProjectUser {
+  project_id: number;
+  user_id: number;
 }
 
 interface ISource {
@@ -109,7 +116,7 @@ interface ISource {
 }
 
 interface IUser {
-  id?: number;
+  id: number;
   firstname: string;
   lastname: string;
   address: string;
