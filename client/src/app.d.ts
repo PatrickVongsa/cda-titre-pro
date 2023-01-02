@@ -16,6 +16,19 @@ interface IContact {
   is_archived?: boolean;
 }
 
+interface IEmergencyContact {
+  id?: number;
+  firstname: string;
+  lastname: string;
+  who_is: string;
+  phone: string;
+}
+
+interface IEmergencyUser {
+  user_id: number;
+  emergency_contact_id: number;
+}
+
 interface IInteraction {
   id?: number;
   report: string;
