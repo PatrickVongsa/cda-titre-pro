@@ -57,7 +57,7 @@ function Employee() {
             <>
               <DetaiUser user={displayUser} setDisplayUser={handleSetDisplayUser} />
               <div className="grow">
-                <TabContainer />
+                <TabContainer user={displayUser} />
               </div>
             </>
           }

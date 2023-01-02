@@ -6,6 +6,10 @@ import EvenementUser from './tabContent/EvenementUser.component';
 import ClockInUser from './tabContent/ClockInUser.component';
 import EmergencyContact from './tabContent/EmergencyContact.component';
 
+interface IProps {
+  user: IUser;
+}
+
 const menu: ITabMenu[] = [
   {
     id: 123,
@@ -25,10 +29,10 @@ const menu: ITabMenu[] = [
   },
 ];
 
-function TabContainer() {
+function TabContainer({ user }: IProps) {
   const [activeTab, setActiveTab] = useState(123);
 
-    const handlesetActiveTab = (id: number) => setActiveTab(id);
+  const handlesetActiveTab = (id: number) => setActiveTab(id);
 
   return (
     <div className="px-4">
@@ -36,7 +40,7 @@ function TabContainer() {
       {activeTab === 123 && <EvenementUser />}
       {activeTab === 124 && <DayOffUser />}
       {activeTab === 125 && <ClockInUser />}
-      {activeTab === 126 && <EmergencyContact />}
+      {activeTab === 126 && <EmergencyContact user={user} />}
     </div>
   );
 }

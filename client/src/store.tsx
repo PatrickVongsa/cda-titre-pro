@@ -2,6 +2,8 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import activitySlice from './redux/activitySlice';
 import interactionSlice from './redux/interactionSlice';
+import emergencyContactSlice from './redux/emergencyContactSlice';
+import emergencyUserSlice from './redux/emergencyUserSlice';
 import prospectStatusSlice from './redux/prospectStatusSlice';
 import projectStatusSlice from './redux/projectStatusSlice';
 import projectTypeSlice from './redux/projectTypeSlice';
@@ -17,6 +19,8 @@ export const store = configureStore({
   reducer: {
     activities: activitySlice,
     contacts: contactSlice,
+    emergencyContacts: emergencyContactSlice,
+    emergencyUsers: emergencyUserSlice,
     interactions: interactionSlice,
     prospectStatus: prospectStatusSlice,
     projectStatus: projectStatusSlice,
