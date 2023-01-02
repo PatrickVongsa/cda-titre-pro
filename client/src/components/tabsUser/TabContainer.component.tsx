@@ -38,7 +38,7 @@ function TabContainer({ user }: IProps) {
     <div className="px-4">
       <TabMenu menuTab={menu} activeTab={activeTab} setActiveTab={handlesetActiveTab} />
       {activeTab === 123 && <EvenementUser />}
-      {activeTab === 124 && <DayOffUser />}
+      {activeTab === 124 && <DayOffUser user={user} />}
       {activeTab === 125 && <ClockInUser />}
       {activeTab === 126 && <EmergencyContact user={user} />}
     </div>

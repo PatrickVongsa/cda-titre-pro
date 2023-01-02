@@ -28,7 +28,7 @@ function EmergencyContact({ user }: IProps) {
   const handlesetEmergencyContact = (contact: IEmergencyContact | null) => {
     setEmergencyContactUpdate(contact);
   };
-  console.log(emergencyUsers);
+
   return (
     <div className="flex gap-4 pr-4">
       <div className="w-4/6 max-h-[62vh] pb-4 overflow-y-scroll">

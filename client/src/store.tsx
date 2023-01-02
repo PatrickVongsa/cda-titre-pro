@@ -2,6 +2,8 @@ import { configureStore } from '@reduxjs/toolkit';
 
 import activitySlice from './redux/activitySlice';
 import interactionSlice from './redux/interactionSlice';
+import daysOffSlice from './redux/daysOffSlice';
+import daysOffStatusSlice from './redux/daysOffStatusSlice';
 import emergencyContactSlice from './redux/emergencyContactSlice';
 import emergencyUserSlice from './redux/emergencyUserSlice';
 import prospectStatusSlice from './redux/prospectStatusSlice';
@@ -19,6 +21,8 @@ export const store = configureStore({
   reducer: {
     activities: activitySlice,
     contacts: contactSlice,
+    daysOffStatus: daysOffStatusSlice,
+    daysOff: daysOffSlice,
     emergencyContacts: emergencyContactSlice,
     emergencyUsers: emergencyUserSlice,
     interactions: interactionSlice,

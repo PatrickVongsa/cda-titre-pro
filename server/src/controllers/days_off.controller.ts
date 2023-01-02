@@ -9,7 +9,11 @@ const prisma = new PrismaClient();
 // @access Private
 const getDaysOffs = async (req: Request, res: Response) => {
   try {
-    const DaysOffs = await prisma.days_off.findMany();
+    const DaysOffs = await prisma.days_off.findMany({
+      include: {
+        days_off_status: true,
+      },
+    });
     res.status(200).json(DaysOffs);
   } catch (err) {
     res.status(500).json({ err });
@@ -26,6 +30,9 @@ const getOneDaysOff = async (req: Request, res: Response) => {
       where: {
         id: Number(id),
       },
+      include: {
+        days_off_status: true,
+      },
     });
     res.status(200).json(daysOff);
   } catch (err) {
@@ -37,13 +44,17 @@ const getOneDaysOff = async (req: Request, res: Response) => {
 // @route POST /api/days-off
 // @access Private
 const createDaysOff = async (req: Request, res: Response) => {
-  const { start_date, end_date, days_off_status_id } = req.body;
+  const { start_date, end_date, days_off_status_id, user_id } = req.body;
   try {
     const result = await prisma.days_off.create({
       data: {
         start_date: new Date(start_date),
         end_date: new Date(end_date),
         days_off_status_id: Number(days_off_status_id),
+        user_id: Number(user_id),
+      },
+      include: {
+        days_off_status: true,
       },
     });
     res.status(200).json(result);
@@ -57,7 +68,7 @@ const createDaysOff = async (req: Request, res: Response) => {
 // @access Private
 const updateDaysOff = async (req: Request, res: Response) => {
   const id = req.params.id;
-  const { start_date, end_date, days_off_status_id } = req.body;
+  const { start_date, end_date, days_off_status_id, user_id } = req.body;
   try {
     const daysOff = await prisma.days_off.findUnique({
       where: {
@@ -74,6 +85,10 @@ const updateDaysOff = async (req: Request, res: Response) => {
         start_date: new Date(start_date),
         end_date: new Date(end_date),
         days_off_status_id: Number(days_off_status_id),
+        user_id: Number(user_id),
+      },
+      include: {
+        days_off_status: true,
       },
     });
     res.status(200).json(updatedDaysOff);

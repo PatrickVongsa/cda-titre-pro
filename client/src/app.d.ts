@@ -16,6 +16,20 @@ interface IContact {
   is_archived?: boolean;
 }
 
+interface IDaysOff {
+  id?: number;
+  start_date: Date;
+  end_date: Date;
+  days_off_status_id: nuumber;
+  user_id: number;
+  days_off_status?: IDaysOffStatus
+}
+
+interface IDaysOffStatus {
+  id?: number;
+  name: string;
+}
+
 interface IEmergencyContact {
   id?: number;
   firstname: string;

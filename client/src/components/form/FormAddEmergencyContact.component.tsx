@@ -10,9 +10,9 @@ interface IProps {
 
 function FormAddEmergencyContact({ user, contact, setEmergencyContact }: IProps) {
   const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState(contact?.lastname || '');
-  const [whoIs, setWhoIs] = useState(contact?.who_is || '');
-  const [phone, setPhone] = useState(contact?.phone || '');
+  const [lastname, setLastname] = useState('');
+  const [whoIs, setWhoIs] = useState('');
+  const [phone, setPhone] = useState('');
 
   const dispatch = useAppDispatch();
 
