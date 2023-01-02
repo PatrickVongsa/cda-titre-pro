@@ -7,6 +7,7 @@ import { addProjectType } from '../redux/projectTypeSlice';
 import { addActivity } from '../redux/activitySlice';
 import { addSource } from '../redux/sourceSlice';
 import { Typography } from '@material-tailwind/react';
+import { addDaysOffStatus } from '../redux/daysOffStatusSlice';
 
 function Parameters() {
   const [name, setName] = useState('');
@@ -17,6 +18,8 @@ function Parameters() {
   const [color, setColor] = useState('');
   const [order, setOrder] = useState('');
   const [addRequestStatus, setAddRequestStatus] = useState('idle');
+
+  const [daysOffStatusName, setDaysOffStatusName] = useState('');
 
   const dispatch = useAppDispatch();
 
@@ -77,6 +80,18 @@ function Parameters() {
     try {
       await dispatch(addProjectType({ name: projectTypeName })).unwrap();
       setProjectTypeName('');
+    } catch (err) {
+      console.error('Failed to save the post: ', err);
+    }
+  };
+
+  //DAYS OFF
+  //Add new days off status
+  const onSaveDaysOffStatusClicked = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      await dispatch(addDaysOffStatus({ name: daysOffStatusName })).unwrap();
+      setDaysOffStatusName('');
     } catch (err) {
       console.error('Failed to save the post: ', err);
     }
@@ -220,9 +235,9 @@ function Parameters() {
       </section>
 
       <section className="border border-gray-500 p-8 mb-4 rounded-3xl">
-      <Typography variant="h2" className="mb-4">
-            Paramètres Projet
-          </Typography>
+        <Typography variant="h2" className="mb-4">
+          Paramètres Projet
+        </Typography>
         <div className="p-2">
           <Typography variant="h5" className="mb-4">
             Ajouter un status project
@@ -275,6 +290,43 @@ function Parameters() {
                 id="name"
                 value={projectTypeName}
                 onChange={(e) => setProjectTypeName(e.target.value)}
+              />
+            </div>
+            <div className="relative w-full mb-3">
+              <button
+                type="submit"
+                className="bg-green-500 text-white py-2 px-4 rounded-md text-sm font-semibold"
+              >
+                Ajouter
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section className="border border-gray-500 p-8 mb-4 rounded-3xl">
+        <Typography variant="h2" className="mb-4">
+          Paramètres Congés
+        </Typography>
+        <div className="p-2">
+          <Typography variant="h5" className="mb-4">
+            Ajouter un status demande de congés
+          </Typography>
+          <form onSubmit={(e) => onSaveDaysOffStatusClicked(e)}>
+            <div className="relative w-full mb-3">
+              <label
+                htmlFor="name"
+                className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+              >
+                Nom
+              </label>
+              <input
+                className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                type="text"
+                name="name"
+                id="name"
+                value={daysOffStatusName}
+                onChange={(e) => setDaysOffStatusName(e.target.value)}
               />
             </div>
             <div className="relative w-full mb-3">

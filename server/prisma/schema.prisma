@@ -64,7 +64,7 @@ model Contact {
   email               String?  @db.VarChar(255)
   is_prefered_contact Boolean? @default(false)
   prospect            Prospect @relation(fields: [prospect_id], references: [id])
-  prospect_id            Int
+  prospect_id         Int
   is_archived         Boolean
 }
 
@@ -78,6 +78,8 @@ model Days_off {
   end_date           DateTime        @db.DateTime(0)
   days_off_status    Days_off_status @relation(fields: [days_off_status_id], references: [id])
   days_off_status_id Int
+  asked_by           User            @relation(fields: [user_id], references: [id])
+  user_id            Int
 }
 
 //**
@@ -157,7 +159,7 @@ model Interaction {
   reported_by_id Int
   reported_at    DateTime  @db.DateTime(0)
   prospect       Prospect  @relation(fields: [prospect_id], references: [id])
-  prospect_id       Int
+  prospect_id    Int
   modified_by    User?     @relation(fields: [modified_by_id], references: [id], name: "modifiedByUserId")
   modified_by_id Int?
   modified_at    DateTime? @db.DateTime(0)
@@ -260,41 +262,41 @@ model Project_user {
 //* peut devenir client suivant un booléen
 //**
 model Prospect {
-  id               Int               @id @default(autoincrement())
-  company_name     String            @db.VarChar(255)
-  address          String            @db.VarChar(255)
-  postal_code      String            @db.VarChar(6)
-  city             String            @db.VarChar(255)
-  country          String            @db.VarChar(255)
-  phone            String?           @db.VarChar(10)
-  email            String?           @db.VarChar(255)
-  company_logo     String?           @db.VarChar(255)
-  website_url      String?           @db.VarChar(255)
-  facebook_url     String?           @db.VarChar(255)
-  instagram_url    String?           @db.VarChar(255)
-  linkedin_url     String?           @db.VarChar(255)
-  contacted_at     DateTime          @db.DateTime(0)
-  estimate_budget  Int
-  need_description String            @db.Text
-  has_website      Boolean
-  website_year     Int
-  other_need       String?           @db.Text
-  is_client        Boolean           @default(false)
-  siret_number     String?           @db.VarChar(20)
-  contacts         Contact[]
-  assigned_to      User?             @relation(fields: [assigned_to_id], references: [id])
-  assigned_to_id   Int?
-  prospect_status  Prospect_status   @relation(fields: [prospect_status_id], references: [id])
-  prospect_status_id  Int
-  source           Source            @relation(fields: [source_id], references: [id])
-  source_id        Int
-  activity         Activity          @relation(fields: [activity_id], references: [id])
-  activity_id      Int
-  interactions     Interaction[]
-  is_archived      Boolean
-  Estimation_cost  Estimation_cost[]
-  Invoice          Invoice[]
-  Project          Project[]
+  id                 Int               @id @default(autoincrement())
+  company_name       String            @db.VarChar(255)
+  address            String            @db.VarChar(255)
+  postal_code        String            @db.VarChar(6)
+  city               String            @db.VarChar(255)
+  country            String            @db.VarChar(255)
+  phone              String?           @db.VarChar(10)
+  email              String?           @db.VarChar(255)
+  company_logo       String?           @db.VarChar(255)
+  website_url        String?           @db.VarChar(255)
+  facebook_url       String?           @db.VarChar(255)
+  instagram_url      String?           @db.VarChar(255)
+  linkedin_url       String?           @db.VarChar(255)
+  contacted_at       DateTime          @db.DateTime(0)
+  estimate_budget    Int
+  need_description   String            @db.Text
+  has_website        Boolean
+  website_year       Int
+  other_need         String?           @db.Text
+  is_client          Boolean           @default(false)
+  siret_number       String?           @db.VarChar(20)
+  contacts           Contact[]
+  assigned_to        User?             @relation(fields: [assigned_to_id], references: [id])
+  assigned_to_id     Int?
+  prospect_status    Prospect_status   @relation(fields: [prospect_status_id], references: [id])
+  prospect_status_id Int
+  source             Source            @relation(fields: [source_id], references: [id])
+  source_id          Int
+  activity           Activity          @relation(fields: [activity_id], references: [id])
+  activity_id        Int
+  interactions       Interaction[]
+  is_archived        Boolean
+  Estimation_cost    Estimation_cost[]
+  Invoice            Invoice[]
+  Project            Project[]
 }
 
 //**
@@ -355,4 +357,5 @@ model User {
   email                String           @unique @db.VarChar(255)
   password             String           @db.VarChar(255)
   phone                String           @db.VarChar(10)
+  Days_off             Days_off[]
 }
