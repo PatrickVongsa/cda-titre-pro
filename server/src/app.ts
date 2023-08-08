@@ -8,16 +8,23 @@ import companyRouter from './routes/company.route';
 import contactRouter from './routes/contact.route';
 import daysOffRouter from './routes/days_off.route';
 import daysOffStatusRouter from './routes/days_off_status.route';
+import domainRouter from './routes/domain.route';
 import emergencyContactRouter from './routes/emergency_contact.route';
+import emergencyUserRouter from './routes/emergency_user.route';
 // import estimationCostRouter from './routes/estimation_cost.route';
+import hostRouter from './routes/host.route';
 import interactionRouter from './routes/interaction.route';
 // import invoiceRouter from './routes/invoice.route';
-import souceRouter from './routes/source.route';
 import prospectStatusRouter from './routes/prospect_status.route';
 import prospectRouter from './routes/prospect.route';
 import projectRouter from './routes/project.route';
 import projectStatusRouter from './routes/project_status.route';
 import projectTypeRouter from './routes/project_type.route';
+import projectUserRouter from './routes/project_user.route';
+import souceRouter from './routes/source.route';
+import serverRouter from './routes/server.route';
+import serverTypeRouter from './routes/server_type.route';
+import subdomainRouter from './routes/subdomain.route';
 // import tvaRouter from './routes/tva.route';
 import userRouter from './routes/user.route';
 import { isAuthenticated, resetPassword, verifyPassword, verifyUser } from './middlewares/auth.middleware';
@@ -51,17 +58,27 @@ app.post('/api/login', async (req, res) => {
     }
     //Check if the user already exist or not
     const user = await verifyUser(email);
+    console.log('1', user)
     if (!user) {
       return res.json({ message: 'Wrong credentials' });
     }
+    console.log('1.5', "coucou")
+
     //Check password match
     const token = await verifyPassword(password, user);
+
+    console.log('2', token)
+
+
+    console.log('3', typeof token === 'object')
     if (typeof token === 'object') {
       return res.status(500).json({ message: 'Wrong credentials' });
     } else {
-      return res.status(200).json({user, token});
+      console.log({ user, token })
+      return res.status(200).json({ user, token });
     }
   } catch (error) {
+    console.log("errorlogin", error)
     return res.json({ error: error });
   }
 });
@@ -136,14 +153,29 @@ app.use('/api/days-off', daysOffRouter);
 app.use('/api/days-off-status', daysOffStatusRouter);
 
 /**
+ * Route API pour l'entité Domain
+ */
+app.use('/api/domains', domainRouter);
+
+/**
  * Route API pour l'entité Emergency_contact
  */
 app.use('/api/emergency-contacts', emergencyContactRouter);
 
 /**
+ * Route API pour l'entité Emergency_user
+ */
+app.use('/api/emergency-users', emergencyUserRouter);
+
+/**
  * Route API pour l'entité estimation_cost
  */
 // app.use('/api/estimation-cost', estimationCostRouter);
+
+/**
+ * Route API pour l'entité host
+ */
+app.use('/api/hosts', hostRouter);
 
 /**
  * Route API pour l'entité Interaction
@@ -161,6 +193,21 @@ app.use('/api/interactions', interactionRouter);
  * tested in prospect.test.ts
  */
 app.use('/api/sources', souceRouter);
+
+/**
+ * Route API pour l'entité Server
+ */
+app.use('/api/servers', serverRouter);
+
+/**
+ * Route API pour l'entité Server_type
+ */
+app.use('/api/server-types', serverTypeRouter);
+
+/**
+ * Route API pour l'entité Subdomain
+ */
+app.use('/api/subdomains', subdomainRouter);
 
 /**
  * Route API pour l'entité Prospect
@@ -191,6 +238,11 @@ app.use('/api/project-status', projectStatusRouter);
  * tested in project.test.ts
  */
 app.use('/api/project-types', projectTypeRouter);
+
+/**
+ * Route API pour l'entité Project_type
+ */
+app.use('/api/project-users', projectUserRouter);
 
 /**
  * Route API pour l'entité Tva

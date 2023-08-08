@@ -12,11 +12,15 @@ export interface IData {
 }
 
 export const userLogin = async (data: IData) => {
-  const res = (await instance.post('/login', data))?.data;
-  localStorage.setItem('currentUser', JSON.stringify({token: res.token}));
-  localStorage.setItem('user', JSON.stringify(res.user));
+  try{
+    const res = (await instance.post('/login', data))?.data;
+    localStorage.setItem('currentUser', JSON.stringify({token: res.token}));
+    localStorage.setItem('user', JSON.stringify(res.user));
+    return res;
+  } catch(e) {
+    console.log(e)
+  }
 
-  return res;
 };
 
 export const userLogout = async () => {

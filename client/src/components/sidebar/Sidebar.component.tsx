@@ -96,7 +96,7 @@ function Sidebar() {
               </li>
             )}
           </NavLink>
-          <NavLink to="/planning">
+          {/* <NavLink to="/planning">
             {({ isActive }) => (
               <li
                 className={
@@ -112,7 +112,7 @@ function Sidebar() {
                 <span>Planning</span>
               </li>
             )}
-          </NavLink>
+          </NavLink> */}
           <NavLink to="/projects">
             {({ isActive }) => (
               <li
@@ -130,7 +130,7 @@ function Sidebar() {
               </li>
             )}
           </NavLink>
-          <NavLink to="/estimation-invoice">
+          {/* <NavLink to="/estimation-invoice">
             {({ isActive }) => (
               <li
                 className={
@@ -146,7 +146,59 @@ function Sidebar() {
                 <span>Devis / Factures</span>
               </li>
             )}
+          </NavLink> */}
+          <NavLink to="/domains">
+            {({ isActive }) => (
+              <li
+                className={
+                  'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
+                  (isActive
+                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                    : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                }
+              >
+                <FaCode
+                  className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')}
+                />
+                <span>Nom de domaine</span>
+              </li>
+            )}
           </NavLink>
+          <NavLink to="/subdomains">
+            {({ isActive }) => (
+              <li
+                className={
+                  'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
+                  (isActive
+                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                    : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                }
+              >
+                <FaCode
+                  className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')}
+                />
+                <span>Sous domaines</span>
+              </li>
+            )}
+          </NavLink>
+          <NavLink to="/servers">
+            {({ isActive }) => (
+              <li
+                className={
+                  'flex items-center text-xs uppercase py-3 font-bold px-4 rounded-md ' +
+                  (isActive
+                    ? 'bg-blue-500 hover:bg-blue-600 text-white'
+                    : 'text-blue-gray-800 hover:bg-blue-gray-100')
+                }
+              >
+                <FaCode
+                  className={'mr-2 text-xl ' + (!isActive ? 'opacity-75' : 'text-blueGray-300')}
+                />
+                <span>Serveurs</span>
+              </li>
+            )}
+          </NavLink>
+
           <NavLink to="/employees">
             {({ isActive }) => (
               <li

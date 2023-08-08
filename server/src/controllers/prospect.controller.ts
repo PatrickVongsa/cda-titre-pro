@@ -23,7 +23,7 @@ interface IData {
   other_need: string;
   is_client: boolean;
   siret_number: string;
-  piste_status_id: number;
+  prospect_status_id: number;
   source_id: number;
   activity_id: number;
   assigned_to_id?: number;
@@ -44,6 +44,7 @@ const getProspects = async (req: Request, res: Response) => {
         activity: true,
         prospect_status: true,
         interactions: true,
+        contacts: true,
       },
     });
     res.status(200).json(prospects);
@@ -68,6 +69,7 @@ const getOneProspect = async (req: Request, res: Response) => {
         activity: true,
         prospect_status: true,
         interactions: true,
+        contacts: true,
       },
     });
     res.status(200).json(prospect);
@@ -101,7 +103,7 @@ const createProspect = async (req: Request, res: Response) => {
     other_need,
     is_client,
     siret_number,
-    piste_status_id,
+    prospect_status_id,
     source_id,
     activity_id,
     assigned_to_id,
@@ -128,7 +130,7 @@ const createProspect = async (req: Request, res: Response) => {
     other_need,
     is_client: is_client === 'true',
     siret_number,
-    piste_status_id: Number(piste_status_id),
+    prospect_status_id: Number(prospect_status_id),
     source_id: Number(source_id),
     activity_id: Number(activity_id),
     is_archived: false,
@@ -147,6 +149,7 @@ const createProspect = async (req: Request, res: Response) => {
         activity: true,
         prospect_status: true,
         interactions: true,
+        contacts: true,
       },
     });
     res.status(200).json(result);
@@ -182,7 +185,7 @@ const updateProspect = async (req: Request, res: Response) => {
     is_client,
     siret_number,
     assigned_to_id,
-    piste_status_id,
+    prospect_status_id,
     source_id,
     activity_id,
   } = req.body;
@@ -221,7 +224,7 @@ const updateProspect = async (req: Request, res: Response) => {
       other_need,
       is_client: is_client == true,
       siret_number,
-      piste_status_id: Number(piste_status_id),
+      prospect_status_id: Number(prospect_status_id),
       source_id: Number(source_id),
       activity_id: Number(activity_id),
       is_archived: false,
@@ -241,6 +244,7 @@ const updateProspect = async (req: Request, res: Response) => {
         activity: true,
         prospect_status: true,
         interactions: true,
+        contacts: true,
       },
     });
     res.status(200).json(updatedProspect);

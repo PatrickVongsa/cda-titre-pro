@@ -24,7 +24,7 @@ function ChatInteraction({ report, prospectId }: IProps) {
         report: reportValue,
         reported_by_id: 1, //+++ get user id from token
         reported_at: report.reported_at,
-        piste_id: Number(prospectId),
+        prospect_id: Number(prospectId),
         modified_by_id: 1,
         modified_at: new Date(),
       };
@@ -60,7 +60,7 @@ function ChatInteraction({ report, prospectId }: IProps) {
             <Typography variant="paragraph">{reportValue}</Typography>
           </div>
           <p className="text-sm text-end">
-            {report.reported_by?.firstname} {report.reported_by?.firstname}
+            {report.reported_by?.firstname} {report.reported_by?.lastname}
           </p>
           <button
             className="absolute top-4 -translate-y-2/4 right-0 text-sm z-10 p-2 rounded-lg border border-gray-400 invisible hover:bg-gray-400 hover:text-white group-hover/message:visible"

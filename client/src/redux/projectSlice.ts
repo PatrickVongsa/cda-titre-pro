@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
 import {
   allProjects,
   addOneProject,
+  deleteOneProject,
+  updateOneProject,
 } from "../api/project.api";
 
 interface IProjectState {
@@ -27,6 +29,20 @@ export const addProject = createAsyncThunk(
     return response;
   }
 );
+export const updateProject = createAsyncThunk(
+  'projects/updateProject',
+  async (updateProject: IProject) => {
+    const response = await updateOneProject(updateProject);
+    return response;
+  },
+);
+export const deleteProject = createAsyncThunk(
+  'projects/deleteProject',
+  async (deleteProject: IProject) => {
+    const response = await deleteOneProject(deleteProject);
+    return response;
+  },
+);
 
 export const projectSlice = createSlice({
   name: "projects",
@@ -45,40 +61,29 @@ export const projectSlice = createSlice({
       })
       .addCase(addProject.fulfilled, (state, action) => {
         state.projects.push(action.payload);
+      })
+      .addCase(updateProject.fulfilled, (state, action) => {
+        state.projects = [
+          ...state.projects.map((project: IProject, i: number) => {
+            if (project.id !== action.payload.id) {
+              return project;
+            } else {
+              return action.payload;
+            }
+          }),
+        ];
+      })
+      .addCase(deleteProject.fulfilled, (state, action) => {
+        state.projects = [
+          ...state.projects.filter((project: IProject, i: number) => {
+            if (project.id !== action.payload.id) {
+              return project;
+            }
+          }),
+        ];
       });
   },
-  reducers: {
-    updateProject: (state, action) => {
-      const { index, ...body } = action.payload;
-      state.projects = [
-        ...state.projects.map((project: IProject, i: number) => {
-          if (i !== index) return project;
-
-          return body;
-        }),
-      ];
-    },
-    deleteProject: (state, action) => {
-      const { index } = action.payload;
-      state.projects = [
-        ...state.projects.map((project: IProject, i: number) => {
-          if (i !== index) return project;
-          let projectDeleted = {
-            ...project,
-            is_archived: true,
-          };
-
-          return {
-            ...projectDeleted,
-            is_archived: true,
-          };
-        }),
-      ];
-    },
-  },
+  reducers: {},
 });
-
-// Action creators are generated for each case reducer function
-export const { updateProject, deleteProject } = projectSlice.actions;
 
 export default projectSlice.reducer;

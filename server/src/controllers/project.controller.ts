@@ -9,7 +9,19 @@ const prisma = new PrismaClient();
 // @access Private
 const getProjects = async (req: Request, res: Response) => {
   try {
-    const projects = await prisma.project.findMany();
+    const projects = await prisma.project.findMany({
+      include: {
+        project_status: true,
+        project_type: true,
+        Domain: {
+          include: {
+            Subdomain:true,
+            host: true,
+          }
+        },
+        Server: true,
+      },
+    });
     res.status(200).json(projects);
   } catch (err) {
     res.status(500).json({ err });
@@ -25,6 +37,17 @@ const getOneProject = async (req: Request, res: Response) => {
     const project = await prisma.project.findUnique({
       where: {
         id: Number(id),
+      },
+      include: {
+        project_status: true,
+        project_type: true,
+        Domain: {
+          include: {
+            Subdomain:true,
+            host: true,
+          }
+        },
+        Server: true,
       },
     });
     res.status(200).json(project);
@@ -52,6 +75,7 @@ const createProject = async (req: Request, res: Response) => {
     github_link,
     host,
     ora_name,
+    prospect_id,
   } = req.body;
   try {
     const result = await prisma.project.create({
@@ -62,14 +86,26 @@ const createProject = async (req: Request, res: Response) => {
         due_date: new Date(due_date),
         project_type_id: Number(project_type_id),
         project_amount: Number(project_amount),
-        did_deposit: did_deposit === 'true',
-        has_financement: has_financement === 'true',
-        has_fully_paid: has_fully_paid === 'true',
+        did_deposit: did_deposit == true,
+        has_financement: has_financement == true,
+        has_fully_paid: has_fully_paid == true,
         project_status_id: Number(project_status_id),
         link,
         github_link,
         host,
         ora_name,
+        prospect_id,
+      },
+      include: {
+        project_status: true,
+        project_type: true,
+        Domain: {
+          include: {
+            Subdomain:true,
+            host: true,
+          }
+        },
+        Server: true,
       },
     });
     res.status(200).json(result);
@@ -98,6 +134,7 @@ const updateProject = async (req: Request, res: Response) => {
     github_link,
     host,
     ora_name,
+    prospect_id,
   } = req.body;
   try {
     const project = await prisma.project.findUnique({
@@ -118,14 +155,26 @@ const updateProject = async (req: Request, res: Response) => {
         due_date: new Date(due_date),
         project_type_id: Number(project_type_id),
         project_amount: Number(project_amount),
-        did_deposit: did_deposit === 'true',
-        has_financement: has_financement === 'true',
-        has_fully_paid: has_fully_paid === 'true',
+        did_deposit: did_deposit == true,
+        has_financement: has_financement == true,
+        has_fully_paid: has_fully_paid == true,
         project_status_id: Number(project_status_id),
         link,
         github_link,
         host,
         ora_name,
+        prospect_id,
+      },
+      include: {
+        project_status: true,
+        project_type: true,
+        Domain: {
+          include: {
+            Subdomain:true,
+            host: true,
+          }
+        },
+        Server: true,
       },
     });
     res.status(200).json(updatedProject);

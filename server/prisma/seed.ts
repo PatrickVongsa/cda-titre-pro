@@ -2,8 +2,8 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
-  //piste_status
-  const piste_status = await prisma.prospect_status.createMany({
+  //prospect_status
+  const prospect_status = await prisma.prospect_status.createMany({
     data: [
       {
         name: 'Nouveau',
@@ -147,7 +147,7 @@ async function main() {
         other_need: 'ceci est une description qui décrit un autre besoin de la dfdfdfdfdf en question',
         is_client: false,
         siret_number: '12345678901234',
-        piste_status_id: 2,
+        prospect_status_id: 2,
         source_id: 2,
         activity_id: 2,
         is_archived: false,
@@ -173,7 +173,7 @@ async function main() {
         other_need: 'ceci est une description qui décrit un autre besoin de la dfdfdfdfdf en question',
         is_client: true,
         siret_number: '12345678901234',
-        piste_status_id: 4,
+        prospect_status_id: 4,
         source_id: 2,
         activity_id: 2,
         is_archived: false,
@@ -199,7 +199,7 @@ async function main() {
         other_need: 'ceci est une description qui décrit un autre besoin de la dfdfdfdfdf en question',
         is_client: true,
         siret_number: '12345678901234',
-        piste_status_id: 4,
+        prospect_status_id: 4,
         source_id: 2,
         activity_id: 2,
         is_archived: false,
@@ -225,7 +225,7 @@ async function main() {
         other_need: 'ceci est une description qui décrit un autre besoin de la dfdfdfdfdf en question',
         is_client: true,
         siret_number: '12345678901234',
-        piste_status_id: 4,
+        prospect_status_id: 4,
         source_id: 2,
         activity_id: 2,
         is_archived: false,
@@ -243,7 +243,7 @@ async function main() {
         phone: '0601010101',
         email: 'terjean@email.com',
         is_prefered_contact: true,
-        piste_id: 1,
+        prospect_id: 1,
         is_archived: false,
       },
       {
@@ -253,7 +253,7 @@ async function main() {
         phone: '0602020202',
         email: 'jeanne.darque@email.com',
         is_prefered_contact: true,
-        piste_id: 2,
+        prospect_id: 2,
         is_archived: false,
       },
       {
@@ -263,7 +263,7 @@ async function main() {
         phone: '0603030303',
         email: 'pierre.alaidifice@email.com',
         is_prefered_contact: true,
-        piste_id: 3,
+        prospect_id: 3,
         is_archived: false,
       },
       {
@@ -273,7 +273,7 @@ async function main() {
         phone: '0601010101',
         email: 'melissa.nonepleurepa@email.com',
         is_prefered_contact: true,
-        piste_id: 4,
+        prospect_id: 4,
         is_archived: false,
       },
     ],
