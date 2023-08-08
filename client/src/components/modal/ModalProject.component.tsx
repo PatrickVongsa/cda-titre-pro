@@ -641,7 +641,6 @@ function ModalProject({ closeModal, project, setProject }: IProps) {
                               </label>
                             </div>
                           </div>
-                          {i < (project?.Domain?.length - 1) && <hr className="mx-auto block w-1/2 my-4 border-b-1 border-blue-gray-300" />}
                         </React.Fragment>
                       );
                     })}
@@ -852,7 +851,6 @@ function ModalProject({ closeModal, project, setProject }: IProps) {
                               </label>
                             </div>
                           </div>
-                          {i < (project?.Server?.length - 1) && <hr className="mx-auto block w-1/2 my-4 border-b-1 border-blue-gray-300" />}
                         </React.Fragment>
                       );
                     })}
