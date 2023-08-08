@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import * as dayjs from 'dayjs';
 import { Typography } from '@material-tailwind/react';
 
@@ -488,14 +488,15 @@ function ModalProject({ closeModal, project, setProject }: IProps) {
                       <div className="grid grid-cols-2 gap-4 p-4">
                         {users.length > 0 &&
                           users.map((user: IUser, i: number) => {
-
                             return (
                               <div key={i + user.lastname} className="flex items-center gap-2">
                                 <input
                                   type="checkbox"
                                   className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-fit ease-linear transition-all duration-150"
                                   placeholder="Renseigner le nom du tableau créé sur Ora"
-                                  checked={projectUser.some(userAssign => userAssign.user_id === user.id)}
+                                  checked={projectUser.some(
+                                    (userAssign) => userAssign.user_id === user.id,
+                                  )}
                                   onChange={(e) => handleUserCheckbox(e, project, user)}
                                 />
                                 <label className="block uppercase text-blue-gray-600 text-xs font-bold">
@@ -510,7 +511,353 @@ function ModalProject({ closeModal, project, setProject }: IProps) {
                 </div>
               </>
             )}
-            <div className="text-center">
+            {project?.Domain && (
+              <>
+                <hr className="my-4 border-b-1 border-blue-gray-300" />
+
+                <h6 className="text-blue-gray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                  Nom de domaine
+                </h6>
+                <div className="flex flex-wrap">
+                  {project?.Domain.length > 0 &&
+                    project?.Domain.map((domain: IDomain, i: number) => {
+                      return (
+                        <React.Fragment key={i}>
+                          <div className="w-full lg:w-12/12 px-2">
+                            <div className="relative w-full mb-3">
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                                htmlFor="grid-password"
+                              >
+                                Nom de domaine
+                              </label>
+                              <input
+                                type="text"
+                                className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="Renseigner le nom de l'url du site client"
+                                value={domain.domain_name}
+                                disabled
+                              />
+                            </div>
+                          </div>
+
+                          <div className="w-full lg:w-6/12 px-2">
+                            <div className="relative w-full mb-3">
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                                htmlFor="grid-password"
+                              >
+                                Créé le :
+                              </label>
+                              <input
+                                type="date"
+                                className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="Renseigner le nom de l'url du site client"
+                                value={dayjs(domain.created_at).format('YYYY-MM-DD')}
+                                disabled
+                              />
+                            </div>
+                          </div>
+                          <div className="w-full lg:w-6/12 px-2">
+                            <div className="relative w-full mb-3">
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                                htmlFor="grid-password"
+                              >
+                                Expire le :
+                              </label>
+                              <input
+                                type="date"
+                                className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="Renseigner le nom de l'url du site client"
+                                value={dayjs(domain.renew_at).format('YYYY-MM-DD')}
+                                disabled
+                              />
+                            </div>
+                          </div>
+
+                          <div className="w-full lg:w-9/12 px-2">
+                            <div className="relative w-full mb-3">
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                                htmlFor="grid-password"
+                              >
+                                Hébergeur :
+                              </label>
+                              <input
+                                type="text"
+                                className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="Renseigner le nom de l'url du site client"
+                                value={domain?.host?.name}
+                                disabled
+                              />
+                            </div>
+                          </div>
+                          <div className="w-full lg:w-3/12 px-2">
+                            <div className="relative w-full mt-7 mb-4">
+                              <a
+                                href={domain?.host?.link}
+                                className="bg-blue-500 block text-center text-white py-2 px-4 rounded-md text-sm font-semibold"
+                              >
+                                Y aller
+                              </a>
+                            </div>
+                          </div>
+
+                          <div className="w-full lg:w-12/12 px-2">
+                            <div className="relative w-full mb-3">
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                                htmlFor="grid-password"
+                              >
+                                Sous domaines :
+                              </label>
+                              {domain?.Subdomain && domain?.Subdomain?.length ? (
+                                <ul className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150 list-disc pl-8">
+                                  {domain?.Subdomain?.map((el) => (
+                                    <li key={el.id}>{el.name}</li>
+                                  ))}
+                                </ul>
+                              ) : (
+                                <p>pas de sous domaine</p>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="w-full lg:w-12/12 px-2">
+                            <div className="relative w-full flex justify-start items-center gap-8 mt-7 mb-4">
+                              <input
+                                type="checkbox"
+                                className="border-0 w-4 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                value={`${domain?.is_owner}`}
+                                checked={domain?.is_owner}
+                                disabled
+                              />
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold"
+                                htmlFor="grid-password"
+                              >
+                                Webgo propriétaire?
+                              </label>
+                            </div>
+                          </div>
+                        </React.Fragment>
+                      );
+                    })}
+                </div>
+              </>
+            )}
+            {project?.Server && (
+              <>
+                <hr className="my-4 border-b-1 border-blue-gray-300" />
+
+                <h6 className="text-blue-gray-400 text-sm mt-3 mb-6 font-bold uppercase">
+                  Serveur
+                </h6>
+                <div className="flex flex-wrap">
+                  {project?.Server.length > 0 &&
+                    project?.Server.map((server: IServer, i: number) => {
+                      return (
+                        <React.Fragment key={i}>
+                          <div className="w-full lg:w-12/12 px-2">
+                            <div className="relative w-full mb-3">
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                                htmlFor="grid-password"
+                              >
+                                Nom du server
+                              </label>
+                              <input
+                                type="text"
+                                className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="Renseigner le nom de l'url du site client"
+                                value={server.name}
+                                disabled
+                              />
+                            </div>
+                          </div>
+
+                          <div className="w-full lg:w-12/12 px-2">
+                            <div className="relative w-full mb-3">
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                                htmlFor="grid-password"
+                              >
+                                Nom du compte
+                              </label>
+                              <input
+                                type="text"
+                                className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="Renseigner le nom de l'url du site client"
+                                value={server.account_name}
+                                disabled
+                              />
+                            </div>
+                          </div>
+
+                          <div className="w-full lg:w-6/12 px-2">
+                            <div className="relative w-full mb-3">
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                                htmlFor="grid-password"
+                              >
+                                Créé le :
+                              </label>
+                              <input
+                                type="date"
+                                className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="Renseigner le nom de l'url du site client"
+                                value={dayjs(server.created_at).format('YYYY-MM-DD')}
+                                disabled
+                              />
+                            </div>
+                          </div>
+                          <div className="w-full lg:w-6/12 px-2">
+                            <div className="relative w-full mb-3">
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                                htmlFor="grid-password"
+                              >
+                                Expire le :
+                              </label>
+                              <input
+                                type="date"
+                                className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="Renseigner le nom de l'url du site client"
+                                value={dayjs(server.renew_at).format('YYYY-MM-DD')}
+                                disabled
+                              />
+                            </div>
+                          </div>
+
+                          <div className="w-full lg:w-12/12 px-2">
+                            <div className="relative w-full mb-3">
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                                htmlFor="grid-password"
+                              >
+                                IPV4
+                              </label>
+                              <input
+                                type="text"
+                                className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="IPV4"
+                                value={server.ipv4}
+                                disabled
+                              />
+                            </div>
+                          </div>
+                          <div className="w-full lg:w-12/12 px-2">
+                            <div className="relative w-full mb-3">
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                                htmlFor="grid-password"
+                              >
+                                IPV6
+                              </label>
+                              <input
+                                type="text"
+                                className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="IPV6"
+                                value={server.ipv6}
+                                disabled
+                              />
+                            </div>
+                          </div>
+                          <div className="w-full lg:w-12/12 px-2">
+                            <div className="relative w-full mb-3">
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                                htmlFor="grid-password"
+                              >
+                                SFTP
+                              </label>
+                              <input
+                                type="text"
+                                className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="SFTP"
+                                value={server.sftp}
+                                disabled
+                              />
+                            </div>
+                          </div>
+                          <div className="w-full lg:w-12/12 px-2">
+                            <div className="relative w-full mb-3">
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold mb-2"
+                                htmlFor="grid-password"
+                              >
+                                ssh
+                              </label>
+                              <input
+                                type="text"
+                                className="border-0 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                placeholder="SSH"
+                                value={server.ssh}
+                                disabled
+                              />
+                            </div>
+                          </div>
+
+                          <div className="w-full lg:w-6/12 px-2">
+                            <div className="relative w-full flex justify-start items-center gap-8 mt-7 mb-4">
+                              <input
+                                type="checkbox"
+                                className="border-0 w-4 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                value={`${server?.is_dev}`}
+                                checked={server?.is_dev}
+                                disabled
+                              />
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold"
+                                htmlFor="grid-password"
+                              >
+                                Serveur de dév ?
+                              </label>
+                            </div>
+                          </div>
+                          <div className="w-full lg:w-6/12 px-2">
+                            <div className="relative w-full flex justify-start items-center gap-8 mt-7 mb-4">
+                              <input
+                                type="checkbox"
+                                className="border-0 w-4 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                value={`${server?.is_prod}`}
+                                checked={server?.is_prod}
+                                disabled
+                              />
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold"
+                                htmlFor="grid-password"
+                              >
+                                Serveur de prod ?
+                              </label>
+                            </div>
+                          </div>
+
+                          <div className="w-full lg:w-12/12 px-2">
+                            <div className="relative w-full flex justify-start items-center gap-8 mt-7 mb-4">
+                              <input
+                                type="checkbox"
+                                className="border-0 w-4 px-3 py-3 placeholder-blue-gray-300 text-blue-gray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                                value={`${server?.is_owner}`}
+                                checked={server?.is_owner}
+                                disabled
+                              />
+                              <label
+                                className="block uppercase text-blue-gray-600 text-xs font-bold"
+                                htmlFor="grid-password"
+                              >
+                                Webgo propriétaire?
+                              </label>
+                            </div>
+                          </div>
+                        </React.Fragment>
+                      );
+                    })}
+                </div>
+              </>
+            )}
+            <div className="text-center mt-2">
               <button
                 type="submit"
                 className="bg-green-500 text-white py-2 px-4 rounded-md text-sm font-semibold"

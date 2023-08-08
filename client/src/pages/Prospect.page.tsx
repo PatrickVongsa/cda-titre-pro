@@ -5,11 +5,15 @@ import Header from '../components/header/Header.component';
 import ListView from '../components/listview/ListView.component';
 import ModalAddProspect from '../components/modal/ModalAddProspect.component';
 import useModal from '../hooks/useModal';
+import useAuthFromLocalStorage from '../hooks/useAuthFromLocalStorage';
 
 function Prospect() {
   const { isShowing, toggle } = useModal();
 
   const [activeTabs, setActiveTabs] = useState('list');
+
+
+  useAuthFromLocalStorage();
 
   return (
     <div className="relative p-4 grow h-screen w-[calc(100%-64rem)]">

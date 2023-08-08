@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
+import { Draft, PayloadAction, createAsyncThunk, createSlice, current } from '@reduxjs/toolkit';
 import { IData, userLogin, userLogout } from '../api/auth.api';
 
 interface IAuthState {
@@ -6,21 +6,48 @@ interface IAuthState {
   user: IUser | null;
   token: string | null;
 }
-const localStorageUser = JSON.parse(localStorage.getItem('user') || 'null');
-const localStorageToken = JSON.parse(localStorage.getItem('currentUser') || 'null');
 
-const initialState: IAuthState =
-  localStorageUser?.firstname && localStorageToken?.token
-    ? {
-        user: localStorageUser,
-        isLoggedIn: true,
-        token: localStorageToken.token,
-      }
-    : {
-        user: null,
-        isLoggedIn: false,
-        token: null,
-      };
+const localStorageUser = localStorage.getItem('user');
+const localStorageToken = localStorage.getItem('currentUser');
+
+let isLoggedIn = false;
+let user: IUser | null = null;
+let token: string | null = null;
+
+if (localStorageUser && localStorageToken) {
+  try {
+    const parsedUser = JSON.parse(localStorageUser);
+    if (typeof parsedUser === 'object') {
+      user = parsedUser;
+      isLoggedIn = Boolean(user && localStorageToken);
+    }
+    token = localStorageToken;
+  } catch (error) {
+    // Gérer le cas où la chaîne JSON est incorrecte, par exemple, attribuer des valeurs par défaut
+    user = null;
+    isLoggedIn = false;
+    token = null;
+  }
+} else if (localStorageUser && !localStorageToken) {
+  try {
+    const parsedUser = JSON.parse(localStorageUser);
+    if (typeof parsedUser === 'object') {
+      user = parsedUser;
+      isLoggedIn = Boolean(localStorageUser);
+    }
+  } catch (error) {
+    // Gérer le cas où la chaîne JSON est incorrecte, par exemple, attribuer des valeurs par défaut
+    user = null;
+    isLoggedIn = false;
+    token = null;
+  }
+}
+
+const initialState: IAuthState = {
+  user,
+  isLoggedIn,
+  token,
+};
 
 export const login = createAsyncThunk('auth/login', (data: IData) => {
   return userLogin(data);
@@ -34,6 +61,17 @@ export const logout = createAsyncThunk('auth/logout', () => {
 export const authSlice = createSlice({
   name: 'auth',
   initialState,
+  reducers: {
+    setUser: (state: Draft<IAuthState>, action: PayloadAction<IUser | null>) => {
+      state.user = action.payload;
+    },
+    setIsLoggedIn: (state: Draft<IAuthState>, action: PayloadAction<boolean>) => {
+      state.isLoggedIn = action.payload;
+    },
+    setToken: (state: Draft<IAuthState>, action: PayloadAction<string | null>) => {
+      state.token = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(login.pending, (state, action) => {
@@ -52,7 +90,8 @@ export const authSlice = createSlice({
         state.user = action.payload;
       });
   },
-  reducers: {},
 });
+
+export const { setUser, setIsLoggedIn, setToken } = authSlice.actions;
 
 export default authSlice.reducer;

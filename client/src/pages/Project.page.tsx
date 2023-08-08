@@ -14,6 +14,7 @@ import ModalProject from '../components/modal/ModalProject.component';
 import { Typography } from '@material-tailwind/react';
 import { FaTrashAlt } from 'react-icons/fa';
 import { deleteProjectUser } from '../redux/projectUserSlice';
+import useAuthFromLocalStorage from '../hooks/useAuthFromLocalStorage';
 
 function Project() {
   const { isShowing, toggle } = useModal();
@@ -28,6 +29,9 @@ function Project() {
 
   const [projectShow, setProjectShow] = useState<IProject | null>(null);
 
+
+  useAuthFromLocalStorage();
+
   useEffect(() => {
     dispatch(getProjects());
     dispatch(getProjectStatus());
@@ -38,6 +42,8 @@ function Project() {
     await dispatch(deleteProjectUser(project));
     await dispatch(deleteProject(project));
   };
+
+  console.log(projects)
 
   return (
     <div className="relative p-4 grow h-screen w-[calc(100%-64rem)]">

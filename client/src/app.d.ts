@@ -22,12 +22,27 @@ interface IDaysOff {
   end_date: Date;
   days_off_status_id: nuumber;
   user_id: number;
-  days_off_status?: IDaysOffStatus
+  days_off_status?: IDaysOffStatus;
 }
 
 interface IDaysOffStatus {
   id?: number;
   name: string;
+}
+
+interface IDomain {
+  id?: number;
+  domain_name: string;
+  created_at: Date;
+  renew_at: Date;
+  is_owner: boolean;
+  account_name?: string;
+  project_id: number;
+  host_id: number;
+  server_id: number | null;
+  is_archived?: boolean;
+  Subdomain?: ISubdomain[]
+  host?: IHost
 }
 
 interface IEmergencyContact {
@@ -41,6 +56,13 @@ interface IEmergencyContact {
 interface IEmergencyUser {
   user_id: number;
   emergency_contact_id: number;
+}
+
+interface IHost {
+  id?: number;
+  name: string;
+  link: string;
+  is_archived?: boolean;
 }
 
 interface IInteraction {
@@ -129,6 +151,8 @@ interface IProject {
   prospect_id: number | null;
   project_status?: IProjectStatus;
   project_type?: IProjectType;
+  Domain?: IDomain[]
+  Server?: IServer[]
 }
 
 interface IProjectUser {
@@ -139,6 +163,40 @@ interface IProjectUser {
 interface ISource {
   id?: number;
   name: string;
+  is_archived?: boolean;
+}
+
+interface IServer {
+  id?: number;
+  name: string;
+  created_at: Date;
+  renew_at: Date;
+  is_owner: boolean;
+  account_name?: string;
+  project_id: number;
+  host_id: number;
+  is_dev: boolean;
+  is_prod: boolean;
+  ipv4: string;
+  ipv6: string;
+  sftp: string;
+  ssh: string;
+  bdd_host_name: string;
+  server_type_id: number;
+  is_archived?: boolean;
+}
+
+interface IServerType {
+  id?: number;
+  name: string;
+  is_archived?: boolean;
+}
+
+interface ISubdomain {
+  id?: number;
+  name: string;
+  domain_id: number;
+  server_id: number | null;
   is_archived?: boolean;
 }
 

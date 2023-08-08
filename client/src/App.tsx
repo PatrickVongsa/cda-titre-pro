@@ -15,6 +15,9 @@ import Parameters from './pages/Parameters.page';
 import NoMatch from './pages/404.page';
 import Employee from './pages/Employee.page';
 import Login from './pages/Login.page';
+import Domain from './pages/Domain.page';
+import Subdomain from './pages/Subdomain.page';
+import Server from './pages/Server.page';
 
 function App() {
   return (
@@ -25,10 +28,13 @@ function App() {
           <Route path="prospects" element={<Prospect />} />
           <Route path="clients" element={<Client />} />
           <Route path="contacts" element={<Contact />} />
-          <Route path="planning" element={<Planning />} />
+          {/* <Route path="planning" element={<Planning />} /> */}
           <Route path="projects" element={<Project />} />
+          <Route path="domains" element={<Domain />} />
+          <Route path="subdomains" element={<Subdomain />} />
+          <Route path="servers" element={<Server />} />
           <Route path="employees" element={<Employee />} />
-          <Route path="estimation-invoice" element={<Invoice />} />
+          {/* <Route path="estimation-invoice" element={<Invoice />} /> */}
           <Route path="parameters" element={<Parameters />} />
           <Route path="*" element={<NoMatch />} />
         </Route>

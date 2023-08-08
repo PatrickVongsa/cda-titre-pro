@@ -12,6 +12,7 @@ import DetaiUser from '../components/details/DetaiUser.component';
 import TabContainer from '../components/tabsCustomer/TabContainer.component';
 import DetailCustomer from '../components/details/DetaiCustomer.component';
 import CardCustomer from '../components/cards/CardCustomer.component';
+import useAuthFromLocalStorage from '../hooks/useAuthFromLocalStorage';
 
 function Client() {
   const { isShowing, toggle } = useModal();
@@ -23,6 +24,9 @@ function Client() {
   const [displayClient, setDisplayClient] = useState<IProspect | null>(null);
 
   const handleSetDisplayUser = (prospect: IProspect | null) => setDisplayClient(prospect);
+
+
+  useAuthFromLocalStorage();
 
   useEffect(() => {
     dispatch(getProspects());
