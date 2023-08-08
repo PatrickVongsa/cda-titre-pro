@@ -13,6 +13,13 @@ const getProjects = async (req: Request, res: Response) => {
       include: {
         project_status: true,
         project_type: true,
+        Domain: {
+          include: {
+            Subdomain:true,
+            host: true,
+          }
+        },
+        Server: true,
       },
     });
     res.status(200).json(projects);
@@ -34,6 +41,13 @@ const getOneProject = async (req: Request, res: Response) => {
       include: {
         project_status: true,
         project_type: true,
+        Domain: {
+          include: {
+            Subdomain:true,
+            host: true,
+          }
+        },
+        Server: true,
       },
     });
     res.status(200).json(project);
@@ -85,6 +99,13 @@ const createProject = async (req: Request, res: Response) => {
       include: {
         project_status: true,
         project_type: true,
+        Domain: {
+          include: {
+            Subdomain:true,
+            host: true,
+          }
+        },
+        Server: true,
       },
     });
     res.status(200).json(result);
@@ -147,6 +168,13 @@ const updateProject = async (req: Request, res: Response) => {
       include: {
         project_status: true,
         project_type: true,
+        Domain: {
+          include: {
+            Subdomain:true,
+            host: true,
+          }
+        },
+        Server: true,
       },
     });
     res.status(200).json(updatedProject);

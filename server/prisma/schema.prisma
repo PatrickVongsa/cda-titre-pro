@@ -37,7 +37,7 @@ model Catalog {
 
 //**
 //* Company
-//* représente les infos de l'entreprise
+//* représente les infos de l'entreprise (Webgo Agency)
 //**
 model Company {
   id          Int    @id @default(autoincrement())
@@ -90,6 +90,27 @@ model Days_off_status {
   id       Int        @id @default(autoincrement())
   name     String     @db.VarChar(255)
   Days_off Days_off[]
+}
+
+//**
+//* Domain
+//* représente les informations sur l'hebergement et le nom de domaine client
+//**
+model Domain {
+  id           Int         @id @default(autoincrement())
+  domain_name  String      @db.VarChar(255)
+  created_at   DateTime    @db.DateTime(0)
+  renew_at     DateTime    @db.DateTime(0)
+  is_owner     Boolean
+  account_name String?     @db.VarChar(255)
+  project      Project     @relation(fields: [project_id], references: [id])
+  project_id   Int
+  host         Host        @relation(fields: [host_id], references: [id])
+  host_id      Int
+  server       Server?     @relation(fields: [server_id], references: [id])
+  server_id    Int?
+  is_archived  Boolean
+  Subdomain    Subdomain[]
 }
 
 //**
@@ -146,6 +167,19 @@ model Estimation_cost_catalog {
   price_applied      Float
 
   @@id([estimation_cost_id, catalog_id])
+}
+
+//**
+//* Host
+//* représente l'hebergeur d'un projet
+//**
+model Host {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(255)
+  link        String   @db.VarChar(255)
+  is_archived Boolean
+  Domain      Domain[]
+  Server      Server[]
 }
 
 //**
@@ -221,6 +255,8 @@ model Project {
   project_user      Project_user[]
   prospect          Prospect?      @relation(fields: [prospect_id], references: [id])
   prospect_id       Int?
+  Domain            Domain[]
+  Server            Server[]
 }
 
 //**
@@ -313,6 +349,46 @@ model Prospect_status {
 }
 
 //**
+//* Server
+//* représente le serveur de déploiement
+//**
+model Server {
+  id             Int         @id @default(autoincrement())
+  name           String      @db.VarChar(255)
+  created_at     DateTime    @db.DateTime(0)
+  renew_at       DateTime    @db.DateTime(0)
+  is_owner       Boolean
+  account_name   String?     @db.VarChar(255)
+  project        Project     @relation(fields: [project_id], references: [id])
+  project_id     Int
+  host           Host        @relation(fields: [host_id], references: [id])
+  host_id        Int
+  Subdomain      Subdomain[]
+  Domain         Domain[]
+  is_archived    Boolean
+  is_dev         Boolean
+  is_prod        Boolean
+  ipv4           String?     @db.VarChar(255)
+  ipv6           String?     @db.VarChar(255)
+  stfp           String?     @db.VarChar(255)
+  ssh            String?     @db.VarChar(255)
+  bdd_host_name  String?     @db.VarChar(255)
+  server_type    Server_type @relation(fields: [server_type_id], references: [id])
+  server_type_id Int
+}
+
+//**
+//* Server_type
+//* représente le type du server
+//**
+model Server_type {
+  id          Int      @id @default(autoincrement())
+  name        String?  @db.VarChar(255)
+  is_archived Boolean?
+  Server      Server[]
+}
+
+//**
 //* Source
 //* représente la source de provenance d'un prospect
 //**
@@ -321,6 +397,21 @@ model Source {
   name        String?    @db.VarChar(255)
   prospects   Prospect[]
   is_archived Boolean?
+}
+
+//**
+//* Subdomain
+//* représente le sous-domaine
+//*
+//**
+model Subdomain {
+  id          Int     @id @default(autoincrement())
+  name        String  @db.VarChar(255)
+  domain      Domain  @relation(fields: [domain_id], references: [id])
+  domain_id   Int
+  server      Server? @relation(fields: [server_id], references: [id])
+  server_id   Int?
+  is_archived Boolean
 }
 
 //**

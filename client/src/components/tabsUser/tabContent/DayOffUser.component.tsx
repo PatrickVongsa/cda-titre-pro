@@ -35,7 +35,12 @@ function DayOffUser({ user }: IProps) {
         <div className="overflow-auto">
           <div className="flex flex-col gap-2 pr-4">
             {daysOff.length === 0 && <p>pas de demande faites</p>}
-            {daysOff.length > 0 && daysOff.map((doff, i: number) => <CardDaysOff daysOff={doff} setDaysOff={handlesetDaysOffUpdate} />)}
+            {daysOff.length > 0 &&
+              daysOff.map((doff, i: number) => {
+                if (user.id === doff.user_id) {
+                  return <CardDaysOff key={i + 32155555566} daysOff={doff} setDaysOff={handlesetDaysOffUpdate} />;
+                }
+              })}
           </div>
         </div>
       </div>
