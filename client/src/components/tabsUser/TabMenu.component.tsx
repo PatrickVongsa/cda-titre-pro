@@ -1,5 +1,4 @@
 import React from 'react';
-import { ITabMenu } from './TabContainer.component';
 
 interface IProps {
   menuTab: ITabMenu[];

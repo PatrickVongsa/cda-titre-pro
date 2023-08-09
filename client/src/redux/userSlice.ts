@@ -15,7 +15,7 @@ export const getUsers = createAsyncThunk('users/getUsers', () => {
   return allUsers();
 });
 
-export const addUser = createAsyncThunk('users/addUser', async (newUser: IUser) => {
+export const addUser = createAsyncThunk('users/addUser', async (newUser: Partial<IUser>) => {
   const response = await addOneUser(newUser);
   return response;
 });
