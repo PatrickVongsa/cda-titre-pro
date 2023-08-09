@@ -10,7 +10,7 @@ export const allUsers = async () => {
   return (await instance.get('/'))?.data;
 };
 
-export const addOneUser = async (newUser: IUser) => {
+export const addOneUser = async (newUser: Partial<IUser>) => {
   return (await instance.post('/', newUser))?.data;
 };
 
